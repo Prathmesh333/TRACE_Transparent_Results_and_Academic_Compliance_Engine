@@ -1,364 +1,251 @@
 """
-Data API Routes - Fetch data from database for frontend
+Data API Routes - Fetch data from CSV storage for frontend
 """
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select, func
-from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
-from pydantic import BaseModel
-from datetime import datetime
-
-from app.core.database import get_db
-from app.models.models import User, Student, Teacher, Course, Exam, Submission, Grade, Attendance, RiskAssessment, Resource, Ticket
+from app.api.schemas import (
+    StatsResponse, StudentResponse, GradeResponse, RiskStudentResponse, 
+    SchoolResponse, StudentUpdate
+)
+from app.core.csv_db import csv_db
 
 router = APIRouter(prefix="/data", tags=["Data"])
 
-
-# Response Models
-class StudentResponse(BaseModel):
-    id: str
-    registration_number: str
-    name: str
-    email: str
-    department: str
-    current_semester: int
-    
-    class Config:
-        from_attributes = True
-
-
-class StatsResponse(BaseModel):
-    total_students: int
-    total_submissions: int
-    auto_approved_rate: float
-    pending_review: int
-    avg_confidence: float
-
-
-class GradeResponse(BaseModel):
-    id: str
-    student_name: str
-    student_reg: str
-    exam_name: str
-    score: float
-    max_score: float
-    confidence: float
-    status: str
-
-
-class RiskStudentResponse(BaseModel):
-    id: str
-    student_name: str
-    student_reg: str
-    risk_level: str
-    probability: float
-    factors: list
-    
-
 # Endpoints
 @router.get("/stats", response_model=StatsResponse)
-async def get_dashboard_stats(db: AsyncSession = Depends(get_db)):
+async def get_dashboard_stats():
     """Get dashboard statistics."""
     try:
-        # Total students
-        students_result = await db.execute(select(func.count(Student.id)))
-        total_students = students_result.scalar() or 0
-        
-        # Total submissions
-        submissions_result = await db.execute(select(func.count(Submission.id)))
-        total_submissions = submissions_result.scalar() or 0
-        
-        # Approved grades
-        approved_result = await db.execute(
-            select(func.count(Grade.id)).where(Grade.status == 'auto_approved')
-        )
-        approved_count = approved_result.scalar() or 0
-        
-        # Pending review
-        pending_result = await db.execute(
-            select(func.count(Grade.id)).where(Grade.status.in_(['pending', 'flagged']))
-        )
-        pending_count = pending_result.scalar() or 0
-        
-        # Average confidence
-        confidence_result = await db.execute(select(func.avg(Grade.ai_confidence)))
-        avg_confidence = confidence_result.scalar() or 0.0
-        
-        # Calculate approval rate
-        total_grades_result = await db.execute(select(func.count(Grade.id)))
-        total_grades = total_grades_result.scalar() or 1
-        approval_rate = (approved_count / total_grades) * 100 if total_grades > 0 else 0
-        
-        return StatsResponse(
-            total_students=total_students,
-            total_submissions=total_submissions,
-            auto_approved_rate=round(approval_rate, 1),
-            pending_review=pending_count,
-            avg_confidence=round(avg_confidence, 2) if avg_confidence else 0.0
-        )
+        stats = await csv_db.get_stats()
+        return StatsResponse(**stats)
     except Exception as e:
+        print(f"Error getting stats: {e}")
         return StatsResponse(
-            total_students=40,
-            total_submissions=369,
-            auto_approved_rate=89.0,
-            pending_review=12,
-            avg_confidence=0.87
+            total_students=0,
+            total_submissions=0,
+            auto_approved_rate=0.0,
+            pending_review=0,
+            avg_confidence=0.0
         )
-
 
 @router.get("/students", response_model=List[StudentResponse])
-async def get_students(
-    limit: int = 50,
-    offset: int = 0,
-    db: AsyncSession = Depends(get_db)
-):
-    """Get all students with user info."""
+async def get_students(limit: int = 50, offset: int = 0):
+    """Get all students."""
     try:
-        result = await db.execute(
-            select(Student, User)
-            .join(User, Student.user_id == User.id)
-            .offset(offset)
-            .limit(limit)
-        )
-        rows = result.all()
-        
-        students = []
-        for student, user in rows:
-            students.append(StudentResponse(
-                id=str(student.id),
-                registration_number=student.registration_number,
-                name=user.full_name,
-                email=user.email,
-                department=student.department,
-                current_semester=student.current_semester
-            ))
-        
-        return students
+        students = await csv_db.get_all_students(limit=limit)
+        return [StudentResponse(**s) for s in students]
     except Exception as e:
-        # Fallback data
+        print(f"Error getting students: {e}")
         return []
 
+@router.get("/schools", response_model=List[SchoolResponse])
+async def get_schools():
+    """Get all schools with stats."""
+    try:
+        schools = await csv_db.get_schools()
+        return [SchoolResponse(**s) for s in schools]
+    except Exception as e:
+        print(f"Error getting schools: {e}")
+        return []
 
+@router.get("/schools/{code}")
+async def get_school_details(code: str):
+    """Get students for a school grouped by semester."""
+    try:
+        details = await csv_db.get_school_details(code)
+        if not details:
+            raise HTTPException(status_code=404, detail="School not found")
+        return details
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/students/{student_id}")
+async def update_student(student_id: str, student_update: StudentUpdate):
+    """Update student details."""
+    try:
+        success = await csv_db.update_student(student_id, student_update)
+        if not success:
+            raise HTTPException(status_code=404, detail="Student not found")
+        return {"success": True, "message": "Student updated successfully", "data": student_update}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/admin/analytics")
+async def get_admin_analytics():
+    """Get detailed analytics for admin dashboard."""
+    try:
+        return await csv_db.get_admin_analytics()
+    except Exception as e:
+        print(f"Error getting analytics: {e}")
+        return {}
+
+# Stubbed endpoints for other features not yet migrated fully to CSV logic
 @router.get("/grades/recent", response_model=List[GradeResponse])
-async def get_recent_grades(
-    limit: int = 10,
-    db: AsyncSession = Depends(get_db)
-):
-    """Get recent grades."""
-    try:
-        result = await db.execute(
-            select(Grade, Submission, Student, User, Exam)
-            .join(Submission, Grade.submission_id == Submission.id)
-            .join(Student, Submission.student_id == Student.id)
-            .join(User, Student.user_id == User.id)
-            .join(Exam, Submission.exam_id == Exam.id)
-            .order_by(Grade.graded_at.desc())
-            .limit(limit)
-        )
-        rows = result.all()
-        
-        grades = []
-        for grade, submission, student, user, exam in rows:
-            grades.append(GradeResponse(
-                id=str(grade.id),
-                student_name=user.full_name,
-                student_reg=student.registration_number,
-                exam_name=exam.title,
-                score=grade.score,
-                max_score=grade.max_score,
-                confidence=grade.ai_confidence,
-                status=grade.status
-            ))
-        
-        return grades
-    except Exception as e:
-        return []
-
+async def get_recent_grades(limit: int = 10):
+    return []
 
 @router.get("/risk-students", response_model=List[RiskStudentResponse])
-async def get_risk_students(
-    limit: int = 20,
-    db: AsyncSession = Depends(get_db)
-):
+async def get_risk_students(limit: int = 20):
     """Get at-risk students."""
     try:
-        result = await db.execute(
-            select(RiskAssessment, Student, User)
-            .join(Student, RiskAssessment.student_id == Student.id)
-            .join(User, Student.user_id == User.id)
-            .order_by(RiskAssessment.probability.desc())
-            .limit(limit)
-        )
-        rows = result.all()
-        
-        students = []
-        for risk, student, user in rows:
-            factors = risk.contributing_factors.get('factors', []) if risk.contributing_factors else []
-            students.append(RiskStudentResponse(
-                id=str(student.id),
-                student_name=user.full_name,
-                student_reg=student.registration_number,
-                risk_level=risk.risk_level,
-                probability=risk.probability,
-                factors=factors
-            ))
-        
-        return students
+        risk_students = await csv_db.get_risk_students()
+        return [RiskStudentResponse(**s) for s in risk_students[:limit]]
     except Exception as e:
+        print(f"Error getting risk students: {e}")
         return []
-
 
 @router.get("/risk-counts")
-async def get_risk_counts(db: AsyncSession = Depends(get_db)):
+async def get_risk_counts():
     """Get count of students by risk level."""
     try:
-        critical = await db.execute(
-            select(func.count(RiskAssessment.id)).where(RiskAssessment.risk_level == 'critical')
-        )
-        high = await db.execute(
-            select(func.count(RiskAssessment.id)).where(RiskAssessment.risk_level == 'high')
-        )
-        medium = await db.execute(
-            select(func.count(RiskAssessment.id)).where(RiskAssessment.risk_level == 'medium')
-        )
-        low = await db.execute(
-            select(func.count(RiskAssessment.id)).where(RiskAssessment.risk_level == 'low')
-        )
-        
-        return {
-            "critical": critical.scalar() or 0,
-            "high": high.scalar() or 0,
-            "medium": medium.scalar() or 0,
-            "low": low.scalar() or 0
-        }
+        return await csv_db.get_risk_counts()
     except Exception as e:
-        return {"critical": 2, "high": 5, "medium": 12, "low": 21}
-
+        print(f"Error getting risk counts: {e}")
+        return {"critical": 0, "high": 0, "medium": 0, "low": 0}
 
 @router.get("/tickets")
-async def get_tickets(limit: int = 20, db: AsyncSession = Depends(get_db)):
-    """Get support tickets."""
-    try:
-        result = await db.execute(
-            select(Ticket, Student, User)
-            .join(Student, Ticket.student_id == Student.id)
-            .join(User, Student.user_id == User.id)
-            .order_by(Ticket.created_at.desc())
-            .limit(limit)
-        )
-        rows = result.all()
-        
-        tickets = []
-        for ticket, student, user in rows:
-            tickets.append({
-                "id": str(ticket.id)[:8].upper(),
-                "student": user.full_name,
-                "subject": ticket.subject,
-                "priority": ticket.urgency,
-                "status": ticket.status,
-                "created": ticket.created_at.strftime("%Y-%m-%d %H:%M")
-            })
-        
-        return tickets
-    except Exception as e:
-        return []
-
+async def get_tickets(limit: int = 20):
+    return []
 
 @router.get("/resources")
-async def get_resources(db: AsyncSession = Depends(get_db)):
-    """Get learning resources."""
-    try:
-        result = await db.execute(select(Resource).limit(20))
-        resources = result.scalars().all()
-        
-        return [{
-            "id": str(r.id),
-            "title": r.title,
-            "type": r.resource_type,
-            "difficulty": r.difficulty,
-            "url": r.url
-        } for r in resources]
-    except Exception as e:
-        return []
-
+async def get_resources():
+    return []
 
 @router.get("/attendance/stats")
-async def get_attendance_stats(db: AsyncSession = Depends(get_db)):
+async def get_attendance_stats():
     """Get attendance statistics."""
     try:
-        # Total attendance records
-        total_result = await db.execute(select(func.count(Attendance.id)))
-        total = total_result.scalar() or 0
-        
-        # Present count
-        present_result = await db.execute(
-            select(func.count(Attendance.id)).where(Attendance.status == 'present')
-        )
-        present = present_result.scalar() or 0
-        
-        # Absent count
-        absent_result = await db.execute(
-            select(func.count(Attendance.id)).where(Attendance.status == 'absent')
-        )
-        absent = absent_result.scalar() or 0
-        
-        # Calculate rate
-        attendance_rate = (present / total * 100) if total > 0 else 0
-        
-        return {
-            "total_records": total,
-            "present_count": present,
-            "absent_count": absent,
-            "attendance_rate": round(attendance_rate, 1)
-        }
+        return await csv_db.get_attendance_stats()
     except Exception as e:
-        return {"total_records": 0, "present_count": 0, "absent_count": 0, "attendance_rate": 0}
+        print(f"Error getting attendance stats: {e}")
+        return {"average_attendance": 0, "total_students": 0}
 
+@router.get("/department/analytics")
+async def get_department_analytics():
+    """Get comprehensive department analytics."""
+    try:
+        return await csv_db.get_department_analytics()
+    except Exception as e:
+        print(f"Error getting department analytics: {e}")
+        return {}
 
 @router.get("/courses")
-async def get_courses(db: AsyncSession = Depends(get_db)):
-    """Get all courses with teacher info."""
+async def get_courses():
+    return []
+
+@router.get("/teacher/courses")
+async def get_teacher_courses(teacher_email: str):
+    """Get courses for a specific teacher."""
     try:
-        result = await db.execute(
-            select(Course, Teacher, User)
-            .join(Teacher, Course.teacher_id == Teacher.id)
-            .join(User, Teacher.user_id == User.id)
-            .limit(20)
-        )
-        rows = result.all()
-        
-        return [{
-            "id": str(course.id),
-            "code": course.code,
-            "name": course.name,
-            "credits": course.credits,
-            "semester": course.semester,
-            "teacher": user.full_name
-        } for course, teacher, user in rows]
+        courses = await csv_db.get_teacher_courses(teacher_email)
+        return courses
     except Exception as e:
+        print(f"Error getting teacher courses: {e}")
         return []
 
+@router.get("/teacher/stats")
+async def get_teacher_stats(teacher_email: str):
+    """Get statistics for a teacher."""
+    try:
+        stats = await csv_db.get_teacher_stats(teacher_email)
+        return stats
+    except Exception as e:
+        print(f"Error getting teacher stats: {e}")
+        return {"total_students": 0, "total_courses": 0, "avg_attendance": 0, "at_risk_students": 0}
+
+@router.get("/teacher/grading-stats")
+async def get_teacher_grading_stats(teacher_email: str):
+    """Get grading statistics for teacher."""
+    try:
+        stats = await csv_db.get_grading_stats(teacher_email)
+        return stats
+    except Exception as e:
+        print(f"Error getting grading stats: {e}")
+        return {"total_submissions": 0, "pending_review": 0, "approved": 0, "ai_accuracy": 0}
+
+@router.get("/course/{course_code}/assignments")
+async def get_course_assignments(course_code: str):
+    """Get assignments for a course."""
+    try:
+        assignments = await csv_db.get_course_assignments(course_code)
+        return assignments
+    except Exception as e:
+        print(f"Error getting assignments: {e}")
+        return []
+
+@router.get("/assignment/{assignment_id}/submissions")
+async def get_assignment_submissions(assignment_id: str):
+    """Get submissions for an assignment."""
+    try:
+        submissions = await csv_db.get_assignment_submissions(assignment_id)
+        return submissions
+    except Exception as e:
+        print(f"Error getting submissions: {e}")
+        return []
+
+@router.post("/assignment/submit")
+async def submit_assignment(data: dict):
+    """Submit an assignment for AI grading."""
+    try:
+        result = await csv_db.submit_assignment(
+            data["assignment_id"],
+            data["student_id"],
+            data["student_name"],
+            data["student_reg"],
+            data["course_code"],
+            data["submission_text"],
+            data["file_name"]
+        )
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.put("/submission/{submission_id}/verify")
+async def verify_submission(submission_id: str, data: dict):
+    """Teacher verifies and approves AI grading."""
+    try:
+        success = await csv_db.verify_submission(
+            submission_id,
+            data["teacher_score"],
+            data["teacher_feedback"],
+            data["approved"]
+        )
+        if not success:
+            raise HTTPException(status_code=404, detail="Submission not found")
+        return {"success": True, "message": "Submission verified successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.get("/course/{course_code}/attendance")
+async def get_course_attendance(course_code: str):
+    """Get attendance records for a specific course."""
+    try:
+        attendance = await csv_db.get_course_attendance(course_code)
+        return attendance
+    except Exception as e:
+        print(f"Error getting course attendance: {e}")
+        return []
+
+@router.put("/attendance/{attendance_id}")
+async def update_attendance(attendance_id: str, attended: int):
+    """Update attendance for a student."""
+    try:
+        success = await csv_db.update_course_attendance(attendance_id, attended)
+        if not success:
+            raise HTTPException(status_code=404, detail="Attendance record not found")
+        return {"success": True, "message": "Attendance updated successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/exams")
-async def get_exams(db: AsyncSession = Depends(get_db)):
-    """Get all exams."""
-    try:
-        result = await db.execute(
-            select(Exam, Course)
-            .join(Course, Exam.course_id == Course.id)
-            .order_by(Exam.exam_date.desc())
-            .limit(20)
-        )
-        rows = result.all()
-        
-        return [{
-            "id": str(exam.id),
-            "title": exam.title,
-            "course_code": course.code,
-            "course_name": course.name,
-            "exam_date": exam.exam_date.strftime("%Y-%m-%d"),
-            "total_marks": exam.total_marks
-        } for exam, course in rows]
-    except Exception as e:
-        return []
+async def get_exams():
+    return []

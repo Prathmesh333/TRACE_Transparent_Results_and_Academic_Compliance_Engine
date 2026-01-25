@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.core.database import init_db
+from app.core.config import settings
 from app.api.routes import documents, grading, verification, prediction, management, auth, data
 
 
@@ -17,8 +17,7 @@ async def lifespan(app: FastAPI):
     """Handle startup and shutdown events."""
     # Startup
     print(f"Starting {settings.app_name} v{settings.app_version}")
-    await init_db()
-    print("Database initialized")
+    # CSV Service doesn't need explicit init, just file checks which happen on access
     yield
     # Shutdown
     print("Shutting down...")

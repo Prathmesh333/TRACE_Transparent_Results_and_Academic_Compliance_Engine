@@ -1,0 +1,15 @@
+id,code,name,credits,semester,teacher_id
+SCIS101,CS501,Advanced Algorithms and Data Structures,4,1,f-SCIS-1
+SCIS102,CS502,Machine Learning,4,1,f-SCIS-2
+SCIS103,CS503,Computer Vision,4,1,f-SCIS-3
+SCIS104,CS504,Database Management Systems,3,1,f-SCIS-4
+SCIS201,CS601,Deep Learning,4,2,f-SCIS-1
+SCIS202,CS602,Natural Language Processing,4,2,f-SCIS-2
+SCIS203,CS603,Distributed Systems,4,2,f-SCIS-3
+SCIS204,CS604,Cloud Computing,3,2,f-SCIS-4
+SCIS301,IT501,Information Security,4,1,f-SCIS-0
+SCIS302,IT502,Software Engineering,4,1,f-SCIS-1
+SCIS303,IT503,Web Technologies,3,1,f-SCIS-2
+SCIS401,IT601,Big Data Analytics,4,2,f-SCIS-3
+SCIS402,IT602,Internet of Things,4,2,f-SCIS-4
+SCIS403,IT603,Blockchain Technology,3,2,f-SCIS-0

@@ -5,90 +5,73 @@ Login, registration, and token management
 
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from typing import Optional
 
-from app.core.database import get_db
 from app.core.security import (
     verify_password,
     get_password_hash,
     create_access_token,
 )
 from app.core.config import settings
-from app.models import User
 from app.api.schemas import (
     UserCreate,
     UserResponse,
     LoginRequest,
     TokenResponse,
 )
+from app.core.csv_db import csv_db
 
 router = APIRouter()
 
 
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
-async def register_user(
-    user_data: UserCreate,
-    db: AsyncSession = Depends(get_db)
-):
+async def register_user(user_data: UserCreate):
     """Register a new user."""
     # Check if email exists
-    result = await db.execute(
-        select(User).where(User.email == user_data.email)
-    )
-    if result.scalar_one_or_none():
+    existing = await csv_db.get_user_by_email(user_data.email)
+    if existing:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered"
         )
     
-    # Create user
-    user = User(
-        email=user_data.email,
-        hashed_password=get_password_hash(user_data.password),
-        full_name=user_data.full_name,
-        role=user_data.role,
-        phone=user_data.phone,
+    # For Hackathon CSV version: we won't implement full user creation as it requires writing to users.csv
+    # and maintaining IDs. We'll default to error or dummy success.
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED,
+        detail="Registration disabled for CSV mode. Please use demo accounts."
     )
-    db.add(user)
-    await db.flush()
-    await db.refresh(user)
-    
-    return user
 
 
 @router.post("/login", response_model=TokenResponse)
-async def login(
-    login_data: LoginRequest,
-    db: AsyncSession = Depends(get_db)
-):
+async def login(login_data: LoginRequest):
     """Authenticate user and return access token."""
-    # Find user
-    result = await db.execute(
-        select(User).where(User.email == login_data.email)
-    )
-    user = result.scalar_one_or_none()
+    user = await csv_db.get_user_by_email(login_data.email)
     
-    if not user or not verify_password(login_data.password, user.hashed_password):
+    # In CSV we stored plain text or just assume success if password matches demo123 for simplicity in hackathon
+    # or proper check if we stored hash. 
+    # For now, simplistic check:
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
-    if not user.is_active:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="User account is disabled"
+        
+    if login_data.password != user["password"] and login_data.password != "demo123":
+         raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
         )
     
     # Create access token
     access_token_expires = timedelta(minutes=settings.access_token_expire_minutes)
     access_token = create_access_token(
         data={
-            "sub": str(user.id),
-            "email": user.email,
-            "role": user.role
+            "sub": str(user["id"]),
+            "email": user["email"],
+            "role": user["role"]
         },
         expires_delta=access_token_expires
     )
@@ -97,9 +80,15 @@ async def login(
         access_token=access_token,
         token_type="bearer",
         expires_in=settings.access_token_expire_minutes * 60,
-        user=UserResponse.model_validate(user)
+        user=UserResponse(
+            id=user["id"],
+            email=user["email"],
+            full_name=user["full_name"],
+            role=user["role"],
+            is_active=True,
+            created_at="2024-01-01T00:00:00" # Dummy
+        )
     )
-
 
 @router.get("/me", response_model=UserResponse)
 async def get_current_user():
@@ -110,18 +99,11 @@ async def get_current_user():
         detail="Endpoint under development"
     )
 
-
 @router.post("/demo-login")
-async def demo_login(
-    login_data: LoginRequest,
-    db: AsyncSession = Depends(get_db)
-):
+async def demo_login(login_data: LoginRequest):
     """Demo login - accepts any password for demo accounts (hackathon mode)."""
     # Find user by email
-    result = await db.execute(
-        select(User).where(User.email == login_data.email)
-    )
-    user = result.scalar_one_or_none()
+    user = await csv_db.get_user_by_email(login_data.email)
     
     if not user:
         raise HTTPException(
@@ -139,45 +121,34 @@ async def demo_login(
     # Get additional profile info based on role
     profile_data = {}
     
-    if user.role == "student":
-        from app.models.models import Student
-        student_result = await db.execute(
-            select(Student).where(Student.user_id == user.id)
-        )
-        student = student_result.scalar_one_or_none()
-        if student:
-            profile_data = {
-                "registration_number": student.registration_number,
-                "school_id": student.school_id,
-                "department": student.department,
-                "program": student.program,
-                "semester": student.current_semester
-            }
+    if user["role"] == "student":
+        # Mock profile data for CSV mode
+         profile_data = {
+            "registration_number": "2023101103",
+            "school_id": "1",
+            "department": "SCIS",
+            "program": "M.Tech",
+            "semester": 1
+        }
     
-    elif user.role == "teacher":
-        from app.models.models import Teacher
-        teacher_result = await db.execute(
-            select(Teacher).where(Teacher.user_id == user.id)
-        )
-        teacher = teacher_result.scalar_one_or_none()
-        if teacher:
-            profile_data = {
-                "employee_id": teacher.employee_id,
-                "school_id": teacher.school_id,
-                "department": teacher.department,
-                "designation": teacher.designation
-            }
+    elif user["role"] == "teacher":
+         profile_data = {
+            "employee_id": "T101",
+            "school_id": "1",
+            "department": "SCIS",
+            "designation": "Professor"
+        }
     
     return {
         "success": True,
         "user": {
-            "id": str(user.id),
-            "email": user.email,
-            "full_name": user.full_name,
-            "role": user.role,
-            "is_active": user.is_active,
+            "id": str(user["id"]),
+            "email": user["email"],
+            "full_name": user["full_name"],
+            "role": user["role"],
+            "is_active": True,
             **profile_data
         },
-        "message": f"Welcome, {user.full_name}!"
+        "message": f"Welcome, {user['full_name']}!"
     }
 

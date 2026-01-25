@@ -1,0 +1,4 @@
+teacher_id,teacher_email,course_id,course_code,course_name,school_code,semester,total_students,credits
+f-SCIS-1,teacher@uohyd.ac.in,SCIS101,CS501,Advanced Algorithms and Data Structures,SCIS,1,20,4
+f-SCIS-1,teacher@uohyd.ac.in,SCIS201,CS601,Deep Learning,SCIS,2,16,4
+f-SCIS-1,teacher@uohyd.ac.in,SCIS302,IT502,Software Engineering,SCIS,1,20,4

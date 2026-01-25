@@ -1,0 +1,52 @@
+student_id,student_name,student_reg,school_code,department,total_classes,attended,attendance_rate,absent_days,late_days
+s-SCIS-1-0,Aarav Sharma,23SCIS100,SCIS,M.Tech Computer Science,45,42,0.93,3,2
+s-SCIS-1-1,Priya Patel,23SCIS101,SCIS,M.Tech Computer Science,45,44,0.98,1,0
+s-SCIS-1-2,Rohan Kumar,23SCIS102,SCIS,M.Tech Computer Science,45,29,0.64,16,3
+s-SCIS-1-3,Ananya Reddy,23SCIS103,SCIS,M.Tech Computer Science,45,41,0.91,4,1
+s-SCIS-1-4,Vikram Singh,23SCIS104,SCIS,M.Tech Computer Science,45,43,0.96,2,1
+s-SCIS-1-5,Sneha Gupta,23SCIS105,SCIS,M.Tech Computer Science,45,40,0.89,5,2
+s-SCIS-1-6,Arjun Nair,23SCIS106,SCIS,M.Tech Computer Science,45,42,0.93,3,1
+s-SCIS-1-7,Diya Iyer,23SCIS107,SCIS,M.Tech Computer Science,45,26,0.58,19,4
+s-SCIS-1-8,Karthik Rao,23SCIS108,SCIS,M.Tech Computer Science,45,38,0.84,7,3
+s-SCIS-1-9,Ishita Verma,23SCIS109,SCIS,M.Tech Computer Science,45,43,0.96,2,0
+s-SCIS-1-10,Aditya Joshi,23SCIS110,SCIS,M.Tech Information Technology,45,41,0.91,4,2
+s-SCIS-1-11,Meera Desai,23SCIS111,SCIS,M.Tech Information Technology,45,44,0.98,1,1
+s-SCIS-1-12,Siddharth Menon,23SCIS112,SCIS,M.Tech Information Technology,45,39,0.87,6,2
+s-SCIS-1-13,Kavya Krishnan,23SCIS113,SCIS,M.Tech Information Technology,45,42,0.93,3,1
+s-SCIS-1-14,Rahul Bhat,23SCIS114,SCIS,M.Tech Information Technology,45,31,0.69,14,5
+s-SCIS-1-15,Tanvi Agarwal,23SCIS115,SCIS,M.Tech Information Technology,45,43,0.96,2,0
+s-SCIS-1-16,Nikhil Pandey,23SCIS116,SCIS,M.Tech Information Technology,45,40,0.89,5,3
+s-SCIS-1-17,Riya Malhotra,23SCIS117,SCIS,M.Tech Information Technology,45,35,0.78,10,4
+s-SCIS-1-18,Varun Kapoor,23SCIS118,SCIS,M.Tech Information Technology,45,42,0.93,3,1
+s-SCIS-1-19,Pooja Srinivasan,23SCIS119,SCIS,M.Tech Information Technology,45,44,0.98,1,0
+s-SCIS-2-0,Akash Pillai,22SCIS200,SCIS,M.Tech Computer Science,50,46,0.92,4,2
+s-SCIS-2-1,Nisha Chopra,22SCIS201,SCIS,M.Tech Computer Science,50,48,0.96,2,1
+s-SCIS-2-2,Harsh Bansal,22SCIS202,SCIS,M.Tech Computer Science,50,45,0.90,5,2
+s-SCIS-2-3,Simran Kaur,22SCIS203,SCIS,M.Tech Computer Science,50,38,0.76,12,3
+s-SCIS-2-4,Yash Saxena,22SCIS204,SCIS,M.Tech Computer Science,50,47,0.94,3,1
+s-SCIS-2-5,Anjali Bhatt,22SCIS205,SCIS,M.Tech Computer Science,50,49,0.98,1,0
+s-SCIS-2-6,Manish Tiwari,22SCIS206,SCIS,M.Tech Computer Science,50,44,0.88,6,3
+s-SCIS-2-7,Divya Naidu,22SCIS207,SCIS,M.Tech Computer Science,50,46,0.92,4,2
+s-SCIS-2-8,Pranav Mishra,22SCIS208,SCIS,M.Tech Computer Science,50,36,0.72,14,4
+s-SCIS-2-9,Shreya Kulkarni,22SCIS209,SCIS,M.Tech Computer Science,50,48,0.96,2,1
+s-SCIS-2-10,Gaurav Shetty,22SCIS210,SCIS,M.Tech Information Technology,50,45,0.90,5,2
+s-SCIS-2-11,Neha Yadav,22SCIS211,SCIS,M.Tech Information Technology,50,33,0.66,17,5
+s-SCIS-2-12,Abhishek Dubey,22SCIS212,SCIS,M.Tech Information Technology,50,47,0.94,3,1
+s-SCIS-2-13,Kritika Jain,22SCIS213,SCIS,M.Tech Information Technology,50,46,0.92,4,2
+s-SCIS-2-14,Vishal Hegde,22SCIS214,SCIS,M.Tech Information Technology,50,48,0.96,2,0
+s-SCIS-2-15,Swati Ghosh,22SCIS215,SCIS,M.Tech Information Technology,50,44,0.88,6,3
+s-SoP-1-0,Aryan Mehta,23PHY100,SoP,M.Sc Physics,40,38,0.95,2,1
+s-SoP-1-1,Sanya Kapoor,23PHY101,SoP,M.Sc Physics,40,39,0.98,1,0
+s-SoP-1-2,Kabir Malhotra,23PHY102,SoP,M.Sc Physics,40,36,0.90,4,2
+s-SoP-1-3,Isha Agarwal,23PHY103,SoP,M.Sc Physics,40,37,0.93,3,1
+s-SoP-1-4,Dev Patel,23PHY104,SoP,M.Sc Physics,40,25,0.63,15,4
+s-SoP-1-5,Myra Reddy,23PHY105,SoP,M.Sc Physics,40,38,0.95,2,1
+s-SoP-1-6,Reyansh Kumar,23PHY106,SoP,M.Sc Physics,40,37,0.93,3,2
+s-SoP-1-7,Kiara Singh,23PHY107,SoP,M.Sc Physics,40,39,0.98,1,0
+s-SoP-1-8,Vihaan Sharma,23PHY108,SoP,M.Sc Physics,40,35,0.88,5,3
+s-SoP-1-9,Saanvi Gupta,23PHY109,SoP,M.Sc Physics,40,22,0.55,18,5
+s-SoP-1-10,Ayaan Joshi,23PHY110,SoP,M.Sc Physics,40,38,0.95,2,1
+s-SoP-1-11,Anvi Desai,23PHY111,SoP,M.Sc Physics,40,37,0.93,3,2
+s-SoP-1-12,Atharv Nair,23PHY112,SoP,M.Sc Physics,40,30,0.75,10,4
+s-SoP-1-13,Navya Iyer,23PHY113,SoP,M.Sc Physics,40,39,0.98,1,0
+s-SoP-1-14,Vivaan Rao,23PHY114,SoP,M.Sc Physics,40,38,0.95,2,1

@@ -1,0 +1,13 @@
+id,code,name,credits,semester,teacher_id
+SLS101,SLS101,Advanced Topic SLS 1-1,4,1,f-SLS-2
+SLS102,SLS102,Advanced Topic SLS 1-2,4,1,f-SLS-2
+SLS103,SLS103,Advanced Topic SLS 1-3,4,1,f-SLS-3
+SLS201,SLS201,Advanced Topic SLS 2-1,4,2,f-SLS-0
+SLS202,SLS202,Advanced Topic SLS 2-2,4,2,f-SLS-2
+SLS203,SLS203,Advanced Topic SLS 2-3,4,2,f-SLS-3
+SLS301,SLS301,Advanced Topic SLS 3-1,4,3,f-SLS-2
+SLS302,SLS302,Advanced Topic SLS 3-2,4,3,f-SLS-2
+SLS303,SLS303,Advanced Topic SLS 3-3,4,3,f-SLS-0
+SLS401,SLS401,Advanced Topic SLS 4-1,4,4,f-SLS-0
+SLS402,SLS402,Advanced Topic SLS 4-2,4,4,f-SLS-2
+SLS403,SLS403,Advanced Topic SLS 4-3,4,4,f-SLS-1

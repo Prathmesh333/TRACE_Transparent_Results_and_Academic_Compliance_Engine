@@ -1,0 +1,13 @@
+id,code,name,credits,semester,teacher_id
+SMS101,SMS101,Advanced Topic SMS 1-1,4,1,f-SMS-1
+SMS102,SMS102,Advanced Topic SMS 1-2,4,1,f-SMS-2
+SMS103,SMS103,Advanced Topic SMS 1-3,4,1,f-SMS-2
+SMS201,SMS201,Advanced Topic SMS 2-1,4,2,f-SMS-1
+SMS202,SMS202,Advanced Topic SMS 2-2,4,2,f-SMS-1
+SMS203,SMS203,Advanced Topic SMS 2-3,4,2,f-SMS-4
+SMS301,SMS301,Advanced Topic SMS 3-1,4,3,f-SMS-3
+SMS302,SMS302,Advanced Topic SMS 3-2,4,3,f-SMS-4
+SMS303,SMS303,Advanced Topic SMS 3-3,4,3,f-SMS-4
+SMS401,SMS401,Advanced Topic SMS 4-1,4,4,f-SMS-4
+SMS402,SMS402,Advanced Topic SMS 4-2,4,4,f-SMS-4
+SMS403,SMS403,Advanced Topic SMS 4-3,4,4,f-SMS-3

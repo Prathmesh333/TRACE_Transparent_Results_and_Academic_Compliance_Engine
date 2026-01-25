@@ -46,6 +46,67 @@ class TokenResponse(BaseModel):
 
 
 # ============================================
+# Data API Response Models
+# ============================================
+
+class StatsResponse(BaseModel):
+    total_students: int
+    total_submissions: int
+    auto_approved_rate: float
+    pending_review: int
+    avg_confidence: float
+
+
+class StudentResponse(BaseModel):
+    id: str
+    registration_number: str
+    name: str
+    email: str
+    department: str
+    current_semester: int
+    
+    class Config:
+        from_attributes = True
+
+
+class GradeResponse(BaseModel):
+    id: str
+    student_name: str
+    student_reg: str
+    exam_name: str
+    score: float
+    max_score: float
+    confidence: float
+    status: str
+
+
+class RiskStudentResponse(BaseModel):
+    id: str
+    student_name: str
+    student_reg: str
+    risk_level: str
+    probability: float
+    factors: list
+
+
+class SchoolResponse(BaseModel):
+    id: str
+    name: str
+    code: str
+    description: Optional[str] = None
+    head_of_school: Optional[str] = None
+    department_count: int = 0
+    course_count: int = 0
+
+
+class StudentUpdate(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    department: Optional[str] = None
+    current_semester: Optional[int] = None
+
+
+# ============================================
 # Document Upload Schemas
 # ============================================
 
@@ -325,3 +386,28 @@ class HealthResponse(BaseModel):
     status: str
     version: str
     components: ComponentHealth
+
+
+# ============================================
+# Admin Schemas
+# ============================================
+
+class SchoolResponse(BaseModel):
+    id: str
+    name: str
+    code: str
+    description: Optional[str] = None
+    head_of_school: Optional[str] = None
+    department_count: int = 0
+    course_count: int = 0
+
+    class Config:
+        from_attributes = True
+
+class StudentUpdate(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+    department: Optional[str] = None
+    current_semester: Optional[int] = None
+    registration_number: Optional[str] = None
+

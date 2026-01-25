@@ -1,0 +1,4 @@
+id,course_code,course_name,assignment_title,description,max_score,due_date,created_by,created_at
+a1,CS501,Advanced Algorithms and Data Structures,Algorithm Analysis Assignment,Analyze time and space complexity of sorting algorithms,100,2024-02-01,teacher@uohyd.ac.in,2024-01-20
+a2,CS601,Deep Learning,Neural Network Implementation,Implement a basic neural network from scratch,100,2024-02-05,teacher@uohyd.ac.in,2024-01-22
+a3,IT502,Software Engineering,Design Patterns Report,Write a report on common design patterns,100,2024-02-03,teacher@uohyd.ac.in,2024-01-21

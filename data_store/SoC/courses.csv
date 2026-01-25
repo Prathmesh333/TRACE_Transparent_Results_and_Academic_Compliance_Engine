@@ -1,0 +1,13 @@
+id,code,name,credits,semester,teacher_id
+SoC101,SoC101,Advanced Topic SoC 1-1,4,1,f-SoC-1
+SoC102,SoC102,Advanced Topic SoC 1-2,4,1,f-SoC-1
+SoC103,SoC103,Advanced Topic SoC 1-3,4,1,f-SoC-3
+SoC201,SoC201,Advanced Topic SoC 2-1,4,2,f-SoC-4
+SoC202,SoC202,Advanced Topic SoC 2-2,4,2,f-SoC-3
+SoC203,SoC203,Advanced Topic SoC 2-3,4,2,f-SoC-4
+SoC301,SoC301,Advanced Topic SoC 3-1,4,3,f-SoC-4
+SoC302,SoC302,Advanced Topic SoC 3-2,4,3,f-SoC-3
+SoC303,SoC303,Advanced Topic SoC 3-3,4,3,f-SoC-1
+SoC401,SoC401,Advanced Topic SoC 4-1,4,4,f-SoC-2
+SoC402,SoC402,Advanced Topic SoC 4-2,4,4,f-SoC-4
+SoC403,SoC403,Advanced Topic SoC 4-3,4,4,f-SoC-0
