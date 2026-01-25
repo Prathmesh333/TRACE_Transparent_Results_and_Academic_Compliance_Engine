@@ -1781,19 +1781,27 @@ function StudentAssignments({ user }) {
       // Read file content
       const text = await file.text()
       
+      // Prepare submission data - assignment object has: id, course_code, assignment_title, max_score
+      const submissionData = {
+        student_id: user.student_id,
+        student_name: user.full_name || user.name || user.email?.split('@')[0] || 'Student',
+        assignment_id: assignment.id,
+        assignment_title: assignment.assignment_title,
+        course_code: assignment.course_code,
+        submission_text: text,
+        max_score: assignment.max_score
+      }
+      
+      // Debug: Log what we're sending
+      console.log('Assignment object:', assignment)
+      console.log('User object:', user)
+      console.log('Submitting assignment:', submissionData)
+      
       // Submit to backend for AI grading
-      const response = await fetch(`${API_BASE}/grading/submit`, {
+      const response = await fetch(`${API_BASE}/grades/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          student_id: user.student_id || 's-SCIS-1-0',
-          student_name: user.name,
-          assignment_id: assignment.assignment_id,
-          assignment_title: assignment.assignment_title,
-          course_code: assignment.course_code,
-          submission_text: text,
-          max_score: assignment.max_score
-        })
+        body: JSON.stringify(submissionData)
       })
 
       if (response.ok) {
@@ -1809,11 +1817,14 @@ function StudentAssignments({ user }) {
         const data = await fetchAPI(`/data/student/${studentId}/assignments`)
         setAssignments(data || [])
       } else {
-        alert('Failed to submit assignment. Please try again.')
+        const errorData = await response.json().catch(() => ({}))
+        const errorMsg = errorData.detail || `Failed to submit: ${response.status} ${response.statusText}`
+        console.error('Submission error:', errorMsg)
+        alert(errorMsg)
       }
     } catch (error) {
       console.error('Upload error:', error)
-      alert('Error uploading file. Please try again.')
+      alert(`Error uploading file: ${error.message}`)
     } finally {
       setUploading(false)
       if (fileInputRef.current) fileInputRef.current.value = ''
@@ -2251,7 +2262,13 @@ function LoginPage({ onLogin }) {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <div className="login-logo"><div className="logo-mark">TRACE</div><div><div className="login-title">TRACE</div><div className="login-subtitle">Transparent Results & Attendance Compliance Engine</div></div></div>
+          <div className="login-logo">
+            <img src="/logo.jpeg" alt="TRACE Logo" style={{ width: '60px', height: '60px', borderRadius: '12px', objectFit: 'cover' }} />
+            <div>
+              <div className="login-title">TRACE</div>
+              <div className="login-subtitle">Transparent Results & Attendance Compliance Engine</div>
+            </div>
+          </div>
         </div>
         <div className="login-roles">
           {Object.keys(demoCredentials).map(role => (
@@ -2302,7 +2319,12 @@ function Sidebar({ activeNav, setActiveNav, user, onLogout }) {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-header"><div className="logo"><div className="logo-mark">TRACE</div><span className="logo-text">TRACE</span></div></div>
+      <div className="sidebar-header">
+        <div className="logo">
+          <img src="/logo.jpeg" alt="TRACE Logo" style={{ width: '40px', height: '40px', borderRadius: '8px', objectFit: 'cover' }} />
+          <span className="logo-text">TRACE</span>
+        </div>
+      </div>
       <nav className="nav-container">
         {getNavItems().map((group, i) => (
           <div key={i} className="nav-group">

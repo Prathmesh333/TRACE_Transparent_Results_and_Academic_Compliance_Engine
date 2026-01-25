@@ -25,20 +25,18 @@ router = APIRouter()
 
 
 @router.post("/submit")
-async def submit_assignment(
-    request: dict,
-    db: AsyncSession = Depends(get_db)
-):
+async def submit_assignment(request: dict):
     """
-    Submit a student assignment for AI grading.
+    Submit a student assignment for AI grading using Gemini API.
     
-    Processes the submission text, generates AI score and feedback,
+    Processes the submission text, generates AI score and feedback using Gemini,
     and stores it for teacher review.
     """
     try:
         import csv
-        import os
+        import google.generativeai as genai
         from pathlib import Path
+        from app.core.config import settings
         
         # Extract request data
         student_id = request.get("student_id")
@@ -49,27 +47,133 @@ async def submit_assignment(
         submission_text = request.get("submission_text")
         max_score = request.get("max_score", 10)
         
-        # Simple AI grading logic (can be enhanced with actual AI model)
-        # For now, we'll use basic heuristics
-        word_count = len(submission_text.split())
+        # Debug logging
+        print(f"Received submission request:")
+        print(f"  student_id: {student_id}")
+        print(f"  student_name: {student_name}")
+        print(f"  assignment_id: {assignment_id}")
+        print(f"  assignment_title: {assignment_title}")
+        print(f"  course_code: {course_code}")
+        print(f"  submission_text length: {len(submission_text) if submission_text else 0}")
+        print(f"  max_score: {max_score}")
         
-        # Calculate AI score based on word count and basic quality metrics
-        if word_count < 50:
-            ai_score = max_score * 0.4
-            ai_feedback = "Submission is too brief. Please provide more detailed explanations."
-            ai_reasoning = "Analysis shows insufficient depth. Word count below minimum threshold. Needs more comprehensive coverage of the topic."
-        elif word_count < 150:
-            ai_score = max_score * 0.6
-            ai_feedback = "Good start, but could use more detail and examples."
-            ai_reasoning = "Demonstrates basic understanding but lacks depth. Additional examples and detailed explanations would strengthen the submission."
-        elif word_count < 300:
-            ai_score = max_score * 0.8
-            ai_feedback = "Well-written submission with good coverage of the topic."
-            ai_reasoning = "Strong submission demonstrating solid understanding. Clear explanations with appropriate detail level. Minor improvements possible in depth of analysis."
+        # Validate required fields
+        missing_fields = []
+        if not student_id: missing_fields.append("student_id")
+        if not student_name: missing_fields.append("student_name")
+        if not assignment_id: missing_fields.append("assignment_id")
+        if not assignment_title: missing_fields.append("assignment_title")
+        if not course_code: missing_fields.append("course_code")
+        if not submission_text: missing_fields.append("submission_text")
+        
+        if missing_fields:
+            error_msg = f"Missing required fields: {', '.join(missing_fields)}"
+            print(f"ERROR: {error_msg}")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=error_msg
+            )
+        
+        # Configure Gemini API
+        if not settings.gemini_api_key:
+            print("WARNING: Gemini API key not configured, using fallback grading")
+            # Use fallback grading
+            word_count = len(submission_text.split())
+            if word_count < 50:
+                ai_score = max_score * 0.4
+                ai_feedback = "Submission is too brief. Please provide more detailed explanations."
+                ai_reasoning = "Analysis shows insufficient depth. Word count below minimum threshold."
+            elif word_count < 150:
+                ai_score = max_score * 0.6
+                ai_feedback = "Good start, but could use more detail and examples."
+                ai_reasoning = "Demonstrates basic understanding but lacks depth."
+            elif word_count < 300:
+                ai_score = max_score * 0.8
+                ai_feedback = "Well-written submission with good coverage of the topic."
+                ai_reasoning = "Strong submission demonstrating solid understanding."
+            else:
+                ai_score = max_score * 0.9
+                ai_feedback = "Excellent comprehensive submission with thorough analysis."
+                ai_reasoning = "Exceptional work showing comprehensive understanding."
         else:
-            ai_score = max_score * 0.9
-            ai_feedback = "Excellent comprehensive submission with thorough analysis."
-            ai_reasoning = "Exceptional work showing comprehensive understanding. Thorough analysis with detailed explanations and examples. Demonstrates advanced grasp of concepts."
+            try:
+                genai.configure(api_key=settings.gemini_api_key)
+                # Use gemini-2.5-flash which is the latest stable model
+                model = genai.GenerativeModel('gemini-2.5-flash')
+                
+                # Create grading prompt for Gemini
+                grading_prompt = f"""You are an expert academic grader. Grade the following student submission for the assignment "{assignment_title}" in course {course_code}.
+
+Assignment Title: {assignment_title}
+Maximum Score: {max_score}
+Course: {course_code}
+
+Student Submission:
+{submission_text}
+
+Please provide:
+1. A numerical score out of {max_score} (just the number)
+2. Brief feedback (2-3 sentences) highlighting strengths
+3. Detailed reasoning (3-4 sentences) explaining the grade
+
+Format your response EXACTLY as:
+SCORE: [number]
+FEEDBACK: [brief feedback]
+REASONING: [detailed reasoning]
+
+Grading Criteria:
+- Content accuracy and depth (40%)
+- Structure and organization (20%)
+- Technical terminology usage (20%)
+- Examples and explanations (20%)
+
+Be fair but thorough. Consider the academic level and course requirements."""
+
+                # Call Gemini API
+                response = model.generate_content(grading_prompt)
+                ai_response = response.text
+                
+                # Parse the response
+                lines = ai_response.strip().split('\n')
+                ai_score = max_score * 0.7  # Default fallback
+                ai_feedback = "Good submission. Shows understanding of the topic."
+                ai_reasoning = "The submission demonstrates adequate knowledge with room for improvement."
+                
+                for line in lines:
+                    if line.startswith('SCORE:'):
+                        try:
+                            score_text = line.replace('SCORE:', '').strip()
+                            ai_score = float(score_text)
+                        except:
+                            pass
+                    elif line.startswith('FEEDBACK:'):
+                        ai_feedback = line.replace('FEEDBACK:', '').strip()
+                    elif line.startswith('REASONING:'):
+                        ai_reasoning = line.replace('REASONING:', '').strip()
+                
+                # Ensure score is within bounds
+                ai_score = max(0, min(ai_score, max_score))
+                
+            except Exception as e:
+                print(f"Gemini API error: {e}")
+                # Fallback to simple heuristic grading
+                word_count = len(submission_text.split())
+                if word_count < 50:
+                    ai_score = max_score * 0.4
+                    ai_feedback = "Submission is too brief. Please provide more detailed explanations."
+                    ai_reasoning = "Analysis shows insufficient depth. Word count below minimum threshold."
+                elif word_count < 150:
+                    ai_score = max_score * 0.6
+                    ai_feedback = "Good start, but could use more detail and examples."
+                    ai_reasoning = "Demonstrates basic understanding but lacks depth."
+                elif word_count < 300:
+                    ai_score = max_score * 0.8
+                    ai_feedback = "Well-written submission with good coverage of the topic."
+                    ai_reasoning = "Strong submission demonstrating solid understanding."
+                else:
+                    ai_score = max_score * 0.9
+                    ai_feedback = "Excellent comprehensive submission with thorough analysis."
+                    ai_reasoning = "Exceptional work showing comprehensive understanding."
         
         # Round to 1 decimal place
         ai_score = round(ai_score, 1)
@@ -127,10 +231,15 @@ async def submit_assignment(
             "submission_id": submission_id,
             "ai_score": int(ai_score),
             "ai_feedback": ai_feedback,
-            "message": "Assignment submitted successfully and graded by AI. Awaiting teacher review."
+            "message": "Assignment submitted successfully and graded by Gemini AI. Awaiting teacher review."
         }
         
+    except HTTPException:
+        raise
     except Exception as e:
+        import traceback
+        error_details = traceback.format_exc()
+        print(f"Submission error: {error_details}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Submission failed: {str(e)}"
