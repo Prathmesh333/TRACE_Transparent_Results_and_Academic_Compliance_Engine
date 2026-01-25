@@ -9,23 +9,163 @@ ca7,CS501,Advanced Algorithms and Data Structures,s-SCIS-1-6,Arjun Nair,23SCIS10
 ca8,CS501,Advanced Algorithms and Data Structures,s-SCIS-1-7,Diya Iyer,23SCIS107,45,26,0.58,2024-01-25
 ca9,CS501,Advanced Algorithms and Data Structures,s-SCIS-1-8,Karthik Rao,23SCIS108,45,38,0.84,2024-01-25
 ca10,CS501,Advanced Algorithms and Data Structures,s-SCIS-1-9,Ishita Verma,23SCIS109,45,43,0.96,2024-01-25
-ca11,CS601,Deep Learning,s-SCIS-2-0,Akash Pillai,22SCIS200,50,46,0.92,2024-01-25
-ca12,CS601,Deep Learning,s-SCIS-2-1,Nisha Chopra,22SCIS201,50,48,0.96,2024-01-25
-ca13,CS601,Deep Learning,s-SCIS-2-2,Harsh Bansal,22SCIS202,50,45,0.90,2024-01-25
-ca14,CS601,Deep Learning,s-SCIS-2-3,Simran Kaur,22SCIS203,50,38,0.76,2024-01-25
-ca15,CS601,Deep Learning,s-SCIS-2-4,Yash Saxena,22SCIS204,50,47,0.94,2024-01-25
-ca16,CS601,Deep Learning,s-SCIS-2-5,Anjali Bhatt,22SCIS205,50,49,0.98,2024-01-25
-ca17,CS601,Deep Learning,s-SCIS-2-6,Manish Tiwari,22SCIS206,50,44,0.88,2024-01-25
-ca18,CS601,Deep Learning,s-SCIS-2-7,Divya Naidu,22SCIS207,50,46,0.92,2024-01-25
-ca19,CS601,Deep Learning,s-SCIS-2-8,Pranav Mishra,22SCIS208,50,36,0.72,2024-01-25
-ca20,CS601,Deep Learning,s-SCIS-2-9,Shreya Kulkarni,22SCIS209,50,48,0.96,2024-01-25
-ca21,IT502,Software Engineering,s-SCIS-1-10,Aditya Joshi,23SCIS110,45,41,0.91,2024-01-25
-ca22,IT502,Software Engineering,s-SCIS-1-11,Meera Desai,23SCIS111,45,44,0.98,2024-01-25
-ca23,IT502,Software Engineering,s-SCIS-1-12,Siddharth Menon,23SCIS112,45,39,0.87,2024-01-25
-ca24,IT502,Software Engineering,s-SCIS-1-13,Kavya Krishnan,23SCIS113,45,42,0.93,2024-01-25
-ca25,IT502,Software Engineering,s-SCIS-1-14,Rahul Bhat,23SCIS114,45,31,0.69,2024-01-25
-ca26,IT502,Software Engineering,s-SCIS-1-15,Tanvi Agarwal,23SCIS115,45,43,0.96,2024-01-25
-ca27,IT502,Software Engineering,s-SCIS-1-16,Nikhil Pandey,23SCIS116,45,40,0.89,2024-01-25
-ca28,IT502,Software Engineering,s-SCIS-1-17,Riya Malhotra,23SCIS117,45,35,0.78,2024-01-25
-ca29,IT502,Software Engineering,s-SCIS-1-18,Varun Kapoor,23SCIS118,45,42,0.93,2024-01-25
-ca30,IT502,Software Engineering,s-SCIS-1-19,Pooja Srinivasan,23SCIS119,45,44,0.98,2024-01-25
+ca11,CS502,Machine Learning,s-SCIS-1-0,Aarav Sharma,23SCIS100,45,42,0.93,2024-01-25
+ca12,CS502,Machine Learning,s-SCIS-1-1,Priya Patel,23SCIS101,45,44,0.98,2024-01-25
+ca13,CS502,Machine Learning,s-SCIS-1-2,Rohan Kumar,23SCIS102,45,35,0.78,2024-01-25
+ca14,CS502,Machine Learning,s-SCIS-1-5,Sneha Gupta,23SCIS105,45,40,0.89,2024-01-25
+ca15,CS502,Machine Learning,s-SCIS-1-7,Diya Iyer,23SCIS107,45,24,0.53,2024-01-25
+ca16,CS502,Machine Learning,s-SCIS-1-9,Ishita Verma,23SCIS109,45,43,0.96,2024-01-25
+ca17,CS503,Database Systems,s-SCIS-1-0,Aarav Sharma,23SCIS100,45,42,0.93,2024-01-25
+ca18,CS503,Database Systems,s-SCIS-1-1,Priya Patel,23SCIS101,45,44,0.98,2024-01-25
+ca19,CS503,Database Systems,s-SCIS-1-2,Rohan Kumar,23SCIS102,45,36,0.80,2024-01-25
+ca20,CS503,Database Systems,s-SCIS-1-3,Ananya Reddy,23SCIS103,45,41,0.91,2024-01-25
+ca21,CS503,Database Systems,s-SCIS-1-4,Vikram Singh,23SCIS104,45,43,0.96,2024-01-25
+ca22,CS503,Database Systems,s-SCIS-1-5,Sneha Gupta,23SCIS105,45,40,0.89,2024-01-25
+ca23,CS503,Database Systems,s-SCIS-1-6,Arjun Nair,23SCIS106,45,42,0.93,2024-01-25
+ca24,CS503,Database Systems,s-SCIS-1-7,Diya Iyer,23SCIS107,45,27,0.60,2024-01-25
+ca25,CS503,Database Systems,s-SCIS-1-8,Karthik Rao,23SCIS108,45,38,0.84,2024-01-25
+ca26,CS503,Database Systems,s-SCIS-1-9,Ishita Verma,23SCIS109,45,43,0.96,2024-01-25
+ca27,CS504,Computer Networks,s-SCIS-1-0,Aarav Sharma,23SCIS100,45,41,0.91,2024-01-25
+ca28,CS504,Computer Networks,s-SCIS-1-1,Priya Patel,23SCIS101,45,44,0.98,2024-01-25
+ca29,CS504,Computer Networks,s-SCIS-1-2,Rohan Kumar,23SCIS102,45,34,0.76,2024-01-25
+ca30,CS504,Computer Networks,s-SCIS-1-3,Ananya Reddy,23SCIS103,45,41,0.91,2024-01-25
+ca31,CS504,Computer Networks,s-SCIS-1-4,Vikram Singh,23SCIS104,45,43,0.96,2024-01-25
+ca32,CS504,Computer Networks,s-SCIS-1-5,Sneha Gupta,23SCIS105,45,39,0.87,2024-01-25
+ca33,CS504,Computer Networks,s-SCIS-1-6,Arjun Nair,23SCIS106,45,42,0.93,2024-01-25
+ca34,CS504,Computer Networks,s-SCIS-1-7,Diya Iyer,23SCIS107,45,25,0.56,2024-01-25
+ca35,CS504,Computer Networks,s-SCIS-1-8,Karthik Rao,23SCIS108,45,38,0.84,2024-01-25
+ca36,CS504,Computer Networks,s-SCIS-1-9,Ishita Verma,23SCIS109,45,43,0.96,2024-01-25
+ca37,IT501,Information Security,s-SCIS-1-10,Aditya Joshi,23SCIS110,45,41,0.91,2024-01-25
+ca38,IT501,Information Security,s-SCIS-1-11,Meera Desai,23SCIS111,45,44,0.98,2024-01-25
+ca39,IT501,Information Security,s-SCIS-1-12,Siddharth Menon,23SCIS112,45,39,0.87,2024-01-25
+ca40,IT501,Information Security,s-SCIS-1-13,Kavya Krishnan,23SCIS113,45,42,0.93,2024-01-25
+ca41,IT501,Information Security,s-SCIS-1-14,Rahul Bhat,23SCIS114,45,31,0.69,2024-01-25
+ca42,IT501,Information Security,s-SCIS-1-15,Tanvi Agarwal,23SCIS115,45,43,0.96,2024-01-25
+ca43,IT501,Information Security,s-SCIS-1-16,Nikhil Pandey,23SCIS116,45,40,0.89,2024-01-25
+ca44,IT501,Information Security,s-SCIS-1-17,Riya Malhotra,23SCIS117,45,35,0.78,2024-01-25
+ca45,IT501,Information Security,s-SCIS-1-18,Varun Kapoor,23SCIS118,45,42,0.93,2024-01-25
+ca46,IT501,Information Security,s-SCIS-1-19,Pooja Srinivasan,23SCIS119,45,44,0.98,2024-01-25
+ca47,IT502,Software Engineering,s-SCIS-1-10,Aditya Joshi,23SCIS110,45,41,0.91,2024-01-25
+ca48,IT502,Software Engineering,s-SCIS-1-11,Meera Desai,23SCIS111,45,44,0.98,2024-01-25
+ca49,IT502,Software Engineering,s-SCIS-1-12,Siddharth Menon,23SCIS112,45,39,0.87,2024-01-25
+ca50,IT502,Software Engineering,s-SCIS-1-13,Kavya Krishnan,23SCIS113,45,42,0.93,2024-01-25
+ca51,IT502,Software Engineering,s-SCIS-1-14,Rahul Bhat,23SCIS114,45,31,0.69,2024-01-25
+ca52,IT502,Software Engineering,s-SCIS-1-15,Tanvi Agarwal,23SCIS115,45,43,0.96,2024-01-25
+ca53,IT502,Software Engineering,s-SCIS-1-16,Nikhil Pandey,23SCIS116,45,40,0.89,2024-01-25
+ca54,IT502,Software Engineering,s-SCIS-1-17,Riya Malhotra,23SCIS117,45,35,0.78,2024-01-25
+ca55,IT502,Software Engineering,s-SCIS-1-18,Varun Kapoor,23SCIS118,45,42,0.93,2024-01-25
+ca56,IT502,Software Engineering,s-SCIS-1-19,Pooja Srinivasan,23SCIS119,45,44,0.98,2024-01-25
+ca57,IT503,Web Technologies,s-SCIS-1-10,Aditya Joshi,23SCIS110,45,41,0.91,2024-01-25
+ca58,IT503,Web Technologies,s-SCIS-1-11,Meera Desai,23SCIS111,45,44,0.98,2024-01-25
+ca59,IT503,Web Technologies,s-SCIS-1-12,Siddharth Menon,23SCIS112,45,39,0.87,2024-01-25
+ca60,IT503,Web Technologies,s-SCIS-1-13,Kavya Krishnan,23SCIS113,45,42,0.93,2024-01-25
+ca61,IT503,Web Technologies,s-SCIS-1-14,Rahul Bhat,23SCIS114,45,31,0.69,2024-01-25
+ca62,IT503,Web Technologies,s-SCIS-1-15,Tanvi Agarwal,23SCIS115,45,43,0.96,2024-01-25
+ca63,IT503,Web Technologies,s-SCIS-1-16,Nikhil Pandey,23SCIS116,45,40,0.89,2024-01-25
+ca64,IT503,Web Technologies,s-SCIS-1-17,Riya Malhotra,23SCIS117,45,35,0.78,2024-01-25
+ca65,IT503,Web Technologies,s-SCIS-1-18,Varun Kapoor,23SCIS118,45,42,0.93,2024-01-25
+ca66,IT503,Web Technologies,s-SCIS-1-19,Pooja Srinivasan,23SCIS119,45,44,0.98,2024-01-25
+ca67,IT504,Cloud Computing,s-SCIS-1-10,Aditya Joshi,23SCIS110,45,41,0.91,2024-01-25
+ca68,IT504,Cloud Computing,s-SCIS-1-11,Meera Desai,23SCIS111,45,44,0.98,2024-01-25
+ca69,IT504,Cloud Computing,s-SCIS-1-12,Siddharth Menon,23SCIS112,45,39,0.87,2024-01-25
+ca70,IT504,Cloud Computing,s-SCIS-1-13,Kavya Krishnan,23SCIS113,45,42,0.93,2024-01-25
+ca71,IT504,Cloud Computing,s-SCIS-1-14,Rahul Bhat,23SCIS114,45,31,0.69,2024-01-25
+ca72,IT504,Cloud Computing,s-SCIS-1-15,Tanvi Agarwal,23SCIS115,45,43,0.96,2024-01-25
+ca73,IT504,Cloud Computing,s-SCIS-1-16,Nikhil Pandey,23SCIS116,45,40,0.89,2024-01-25
+ca74,IT504,Cloud Computing,s-SCIS-1-17,Riya Malhotra,23SCIS117,45,35,0.78,2024-01-25
+ca75,IT504,Cloud Computing,s-SCIS-1-18,Varun Kapoor,23SCIS118,45,42,0.93,2024-01-25
+ca76,IT504,Cloud Computing,s-SCIS-1-19,Pooja Srinivasan,23SCIS119,45,44,0.98,2024-01-25
+ca77,CS601,Deep Learning,s-SCIS-2-0,Akash Pillai,22SCIS200,50,46,0.92,2024-01-25
+ca78,CS601,Deep Learning,s-SCIS-2-1,Nisha Chopra,22SCIS201,50,48,0.96,2024-01-25
+ca79,CS601,Deep Learning,s-SCIS-2-2,Harsh Bansal,22SCIS202,50,45,0.90,2024-01-25
+ca80,CS601,Deep Learning,s-SCIS-2-3,Simran Kaur,22SCIS203,50,38,0.76,2024-01-25
+ca81,CS601,Deep Learning,s-SCIS-2-4,Yash Saxena,22SCIS204,50,47,0.94,2024-01-25
+ca82,CS601,Deep Learning,s-SCIS-2-5,Anjali Bhatt,22SCIS205,50,49,0.98,2024-01-25
+ca83,CS601,Deep Learning,s-SCIS-2-6,Manish Tiwari,22SCIS206,50,44,0.88,2024-01-25
+ca84,CS601,Deep Learning,s-SCIS-2-7,Divya Naidu,22SCIS207,50,46,0.92,2024-01-25
+ca85,CS601,Deep Learning,s-SCIS-2-8,Pranav Mishra,22SCIS208,50,36,0.72,2024-01-25
+ca86,CS601,Deep Learning,s-SCIS-2-9,Shreya Kulkarni,22SCIS209,50,48,0.96,2024-01-25
+ca87,CS602,Natural Language Processing,s-SCIS-2-0,Akash Pillai,22SCIS200,50,46,0.92,2024-01-25
+ca88,CS602,Natural Language Processing,s-SCIS-2-1,Nisha Chopra,22SCIS201,50,48,0.96,2024-01-25
+ca89,CS602,Natural Language Processing,s-SCIS-2-2,Harsh Bansal,22SCIS202,50,45,0.90,2024-01-25
+ca90,CS602,Natural Language Processing,s-SCIS-2-3,Simran Kaur,22SCIS203,50,38,0.76,2024-01-25
+ca91,CS602,Natural Language Processing,s-SCIS-2-4,Yash Saxena,22SCIS204,50,47,0.94,2024-01-25
+ca92,CS602,Natural Language Processing,s-SCIS-2-5,Anjali Bhatt,22SCIS205,50,49,0.98,2024-01-25
+ca93,CS602,Natural Language Processing,s-SCIS-2-6,Manish Tiwari,22SCIS206,50,44,0.88,2024-01-25
+ca94,CS602,Natural Language Processing,s-SCIS-2-7,Divya Naidu,22SCIS207,50,46,0.92,2024-01-25
+ca95,CS602,Natural Language Processing,s-SCIS-2-8,Pranav Mishra,22SCIS208,50,36,0.72,2024-01-25
+ca96,CS602,Natural Language Processing,s-SCIS-2-9,Shreya Kulkarni,22SCIS209,50,48,0.96,2024-01-25
+ca97,CS603,Computer Vision,s-SCIS-2-0,Akash Pillai,22SCIS200,50,46,0.92,2024-01-25
+ca98,CS603,Computer Vision,s-SCIS-2-1,Nisha Chopra,22SCIS201,50,48,0.96,2024-01-25
+ca99,CS603,Computer Vision,s-SCIS-2-2,Harsh Bansal,22SCIS202,50,45,0.90,2024-01-25
+ca100,CS603,Computer Vision,s-SCIS-2-3,Simran Kaur,22SCIS203,50,38,0.76,2024-01-25
+ca101,CS603,Computer Vision,s-SCIS-2-4,Yash Saxena,22SCIS204,50,47,0.94,2024-01-25
+ca102,CS603,Computer Vision,s-SCIS-2-5,Anjali Bhatt,22SCIS205,50,49,0.98,2024-01-25
+ca103,CS603,Computer Vision,s-SCIS-2-6,Manish Tiwari,22SCIS206,50,44,0.88,2024-01-25
+ca104,CS603,Computer Vision,s-SCIS-2-7,Divya Naidu,22SCIS207,50,46,0.92,2024-01-25
+ca105,CS603,Computer Vision,s-SCIS-2-8,Pranav Mishra,22SCIS208,50,36,0.72,2024-01-25
+ca106,CS603,Computer Vision,s-SCIS-2-9,Shreya Kulkarni,22SCIS209,50,48,0.96,2024-01-25
+ca107,CS604,Distributed Systems,s-SCIS-2-0,Akash Pillai,22SCIS200,50,46,0.92,2024-01-25
+ca108,CS604,Distributed Systems,s-SCIS-2-1,Nisha Chopra,22SCIS201,50,48,0.96,2024-01-25
+ca109,CS604,Distributed Systems,s-SCIS-2-2,Harsh Bansal,22SCIS202,50,45,0.90,2024-01-25
+ca110,CS604,Distributed Systems,s-SCIS-2-3,Simran Kaur,22SCIS203,50,38,0.76,2024-01-25
+ca111,CS604,Distributed Systems,s-SCIS-2-4,Yash Saxena,22SCIS204,50,47,0.94,2024-01-25
+ca112,CS604,Distributed Systems,s-SCIS-2-5,Anjali Bhatt,22SCIS205,50,49,0.98,2024-01-25
+ca113,CS604,Distributed Systems,s-SCIS-2-6,Manish Tiwari,22SCIS206,50,44,0.88,2024-01-25
+ca114,CS604,Distributed Systems,s-SCIS-2-7,Divya Naidu,22SCIS207,50,46,0.92,2024-01-25
+ca115,CS604,Distributed Systems,s-SCIS-2-8,Pranav Mishra,22SCIS208,50,36,0.72,2024-01-25
+ca116,CS604,Distributed Systems,s-SCIS-2-9,Shreya Kulkarni,22SCIS209,50,48,0.96,2024-01-25
+ca117,IT601,Big Data Analytics,s-SCIS-2-10,Gaurav Shetty,22SCIS210,50,45,0.90,2024-01-25
+ca118,IT601,Big Data Analytics,s-SCIS-2-11,Neha Yadav,22SCIS211,50,33,0.66,2024-01-25
+ca119,IT601,Big Data Analytics,s-SCIS-2-12,Abhishek Dubey,22SCIS212,50,47,0.94,2024-01-25
+ca120,IT601,Big Data Analytics,s-SCIS-2-13,Kritika Jain,22SCIS213,50,46,0.92,2024-01-25
+ca121,IT601,Big Data Analytics,s-SCIS-2-14,Vishal Hegde,22SCIS214,50,48,0.96,2024-01-25
+ca122,IT601,Big Data Analytics,s-SCIS-2-15,Swati Ghosh,22SCIS215,50,44,0.88,2024-01-25
+ca123,IT602,Mobile Application Development,s-SCIS-2-10,Gaurav Shetty,22SCIS210,50,45,0.90,2024-01-25
+ca124,IT602,Mobile Application Development,s-SCIS-2-11,Neha Yadav,22SCIS211,50,33,0.66,2024-01-25
+ca125,IT602,Mobile Application Development,s-SCIS-2-12,Abhishek Dubey,22SCIS212,50,47,0.94,2024-01-25
+ca126,IT602,Mobile Application Development,s-SCIS-2-13,Kritika Jain,22SCIS213,50,46,0.92,2024-01-25
+ca127,IT602,Mobile Application Development,s-SCIS-2-14,Vishal Hegde,22SCIS214,50,48,0.96,2024-01-25
+ca128,IT602,Mobile Application Development,s-SCIS-2-15,Swati Ghosh,22SCIS215,50,44,0.88,2024-01-25
+ca129,IT603,DevOps Engineering,s-SCIS-2-10,Gaurav Shetty,22SCIS210,50,45,0.90,2024-01-25
+ca130,IT603,DevOps Engineering,s-SCIS-2-11,Neha Yadav,22SCIS211,50,33,0.66,2024-01-25
+ca131,IT603,DevOps Engineering,s-SCIS-2-12,Abhishek Dubey,22SCIS212,50,47,0.94,2024-01-25
+ca132,IT603,DevOps Engineering,s-SCIS-2-13,Kritika Jain,22SCIS213,50,46,0.92,2024-01-25
+ca133,IT603,DevOps Engineering,s-SCIS-2-14,Vishal Hegde,22SCIS214,50,48,0.96,2024-01-25
+ca134,IT603,DevOps Engineering,s-SCIS-2-15,Swati Ghosh,22SCIS215,50,44,0.88,2024-01-25
+ca135,IT604,Blockchain Technology,s-SCIS-2-10,Gaurav Shetty,22SCIS210,50,45,0.90,2024-01-25
+ca136,IT604,Blockchain Technology,s-SCIS-2-11,Neha Yadav,22SCIS211,50,33,0.66,2024-01-25
+ca137,IT604,Blockchain Technology,s-SCIS-2-12,Abhishek Dubey,22SCIS212,50,47,0.94,2024-01-25
+ca138,IT604,Blockchain Technology,s-SCIS-2-13,Kritika Jain,22SCIS213,50,46,0.92,2024-01-25
+ca139,IT604,Blockchain Technology,s-SCIS-2-14,Vishal Hegde,22SCIS214,50,48,0.96,2024-01-25
+ca140,IT604,Blockchain Technology,s-SCIS-2-15,Swati Ghosh,22SCIS215,50,44,0.88,2024-01-25
+ca141,PHY501,Quantum Mechanics,s-SoP-1-0,Aryan Mehta,23PHY100,40,38,0.95,2024-01-25
+ca142,PHY501,Quantum Mechanics,s-SoP-1-1,Sanya Kapoor,23PHY101,40,39,0.98,2024-01-25
+ca143,PHY501,Quantum Mechanics,s-SoP-1-2,Kabir Malhotra,23PHY102,40,36,0.90,2024-01-25
+ca144,PHY501,Quantum Mechanics,s-SoP-1-3,Isha Agarwal,23PHY103,40,37,0.93,2024-01-25
+ca145,PHY501,Quantum Mechanics,s-SoP-1-4,Dev Patel,23PHY104,40,25,0.63,2024-01-25
+ca146,PHY501,Quantum Mechanics,s-SoP-1-5,Myra Reddy,23PHY105,40,38,0.95,2024-01-25
+ca147,PHY501,Quantum Mechanics,s-SoP-1-6,Reyansh Kumar,23PHY106,40,37,0.93,2024-01-25
+ca148,PHY501,Quantum Mechanics,s-SoP-1-7,Kiara Singh,23PHY107,40,39,0.98,2024-01-25
+ca149,PHY501,Quantum Mechanics,s-SoP-1-8,Vihaan Sharma,23PHY108,40,35,0.88,2024-01-25
+ca150,PHY501,Quantum Mechanics,s-SoP-1-9,Saanvi Gupta,23PHY109,40,22,0.55,2024-01-25
+ca151,PHY502,Statistical Mechanics,s-SoP-1-0,Aryan Mehta,23PHY100,40,38,0.95,2024-01-25
+ca152,PHY502,Statistical Mechanics,s-SoP-1-1,Sanya Kapoor,23PHY101,40,39,0.98,2024-01-25
+ca153,PHY502,Statistical Mechanics,s-SoP-1-2,Kabir Malhotra,23PHY102,40,36,0.90,2024-01-25
+ca154,PHY502,Statistical Mechanics,s-SoP-1-3,Isha Agarwal,23PHY103,40,37,0.93,2024-01-25
+ca155,PHY502,Statistical Mechanics,s-SoP-1-4,Dev Patel,23PHY104,40,25,0.63,2024-01-25
+ca156,PHY502,Statistical Mechanics,s-SoP-1-5,Myra Reddy,23PHY105,40,38,0.95,2024-01-25
+ca157,PHY502,Statistical Mechanics,s-SoP-1-6,Reyansh Kumar,23PHY106,40,37,0.93,2024-01-25
+ca158,PHY502,Statistical Mechanics,s-SoP-1-7,Kiara Singh,23PHY107,40,39,0.98,2024-01-25
+ca159,PHY502,Statistical Mechanics,s-SoP-1-8,Vihaan Sharma,23PHY108,40,35,0.88,2024-01-25
+ca160,PHY502,Statistical Mechanics,s-SoP-1-9,Saanvi Gupta,23PHY109,40,22,0.55,2024-01-25
+ca161,PHY503,Classical Mechanics,s-SoP-1-0,Aryan Mehta,23PHY100,40,38,0.95,2024-01-25
+ca162,PHY503,Classical Mechanics,s-SoP-1-1,Sanya Kapoor,23PHY101,40,39,0.98,2024-01-25
+ca163,PHY503,Classical Mechanics,s-SoP-1-2,Kabir Malhotra,23PHY102,40,36,0.90,2024-01-25
+ca164,PHY503,Classical Mechanics,s-SoP-1-3,Isha Agarwal,23PHY103,40,37,0.93,2024-01-25
+ca165,PHY503,Classical Mechanics,s-SoP-1-4,Dev Patel,23PHY104,40,25,0.63,2024-01-25
+ca166,PHY503,Classical Mechanics,s-SoP-1-5,Myra Reddy,23PHY105,40,38,0.95,2024-01-25
+ca167,PHY503,Classical Mechanics,s-SoP-1-6,Reyansh Kumar,23PHY106,40,37,0.93,2024-01-25
+ca168,PHY503,Classical Mechanics,s-SoP-1-7,Kiara Singh,23PHY107,40,39,0.98,2024-01-25
+ca169,PHY503,Classical Mechanics,s-SoP-1-8,Vihaan Sharma,23PHY108,40,35,0.88,2024-01-25
+ca170,PHY503,Classical Mechanics,s-SoP-1-9,Saanvi Gupta,23PHY109,40,22,0.55,2024-01-25

@@ -1,17 +1,15 @@
 id,registration_number,name,email,department,phone
-s-SLS-1-0,23SLS100,Student SLS 1-0,23sls100@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-1,23SLS101,Student SLS 1-1,23sls101@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-2,23SLS102,Student SLS 1-2,23sls102@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-3,23SLS103,Student SLS 1-3,23sls103@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-4,23SLS104,Student SLS 1-4,23sls104@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-5,23SLS105,Student SLS 1-5,23sls105@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-6,23SLS106,Student SLS 1-6,23sls106@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-7,23SLS107,Student SLS 1-7,23sls107@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-8,23SLS108,Student SLS 1-8,23sls108@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-9,23SLS109,Student SLS 1-9,23sls109@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-10,23SLS110,Student SLS 1-10,23sls110@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-11,23SLS111,Student SLS 1-11,23sls111@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-12,23SLS112,Student SLS 1-12,23sls112@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-13,23SLS113,Student SLS 1-13,23sls113@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-14,23SLS114,Student SLS 1-14,23sls114@uohyd.ac.in,Main Dept,9876543210
-s-SLS-1-15,23SLS115,Student SLS 1-15,23sls115@uohyd.ac.in,Main Dept,9876543210
+s-SLS-1-0,23SLS249,Dev Srinivasan,23sls249@uohyd.ac.in,M.Sc Biotechnology,9876543049
+s-SLS-1-1,23SLS250,Aarav Mehta,23sls250@uohyd.ac.in,M.Sc Biotechnology,9876543050
+s-SLS-1-2,23SLS251,Vivaan Shah,23sls251@uohyd.ac.in,M.Sc Biotechnology,9876543051
+s-SLS-1-3,23SLS252,Aditya Chopra,23sls252@uohyd.ac.in,M.Sc Biotechnology,9876543052
+s-SLS-1-4,23SLS253,Vihaan Banerjee,23sls253@uohyd.ac.in,M.Sc Molecular Biology,9876543053
+s-SLS-1-5,23SLS254,Arjun Mukherjee,23sls254@uohyd.ac.in,M.Sc Molecular Biology,9876543054
+s-SLS-1-6,23SLS255,Sai Das,23sls255@uohyd.ac.in,M.Sc Molecular Biology,9876543055
+s-SLS-1-7,23SLS256,Arnav Ghosh,23sls256@uohyd.ac.in,M.Sc Molecular Biology,9876543056
+s-SLS-1-8,23SLS257,Ayaan Chatterjee,23sls257@uohyd.ac.in,M.Sc Genetics,9876543057
+s-SLS-1-9,23SLS258,Krishna Roy,23sls258@uohyd.ac.in,M.Sc Genetics,9876543058
+s-SLS-1-10,23SLS259,Ishaan Sen,23sls259@uohyd.ac.in,M.Sc Genetics,9876543059
+s-SLS-1-11,23SLS260,Shaurya Sharma,23sls260@uohyd.ac.in,M.Sc Genetics,9876543060
+s-SLS-1-12,23SLS261,Atharv Patel,23sls261@uohyd.ac.in,M.Sc Genetics,9876543061
+s-SLS-1-13,23SLS262,Advait Kumar,23sls262@uohyd.ac.in,M.Sc Genetics,9876543062

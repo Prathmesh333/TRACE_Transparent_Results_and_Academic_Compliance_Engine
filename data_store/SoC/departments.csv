@@ -1,2 +1,4 @@
-id,name,code
-SoC-D1,Main Dept,SoC-D1
+id,name,code,head
+d-SoC-1,M.Sc Organic Chemistry,SoC01,Dr. Vivaan Patel
+d-SoC-2,M.Sc Inorganic Chemistry,SoC02,Dr. Aditya Kumar
+d-SoC-3,M.Sc Physical Chemistry,SoC03,Dr. Vihaan Reddy

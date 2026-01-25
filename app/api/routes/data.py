@@ -304,6 +304,7 @@ async def get_student_grades(student_id: str):
         for g in grades_data:
             if g["student_id"] == student_id:
                 student_grades.append({
+                    "semester": int(g.get("semester", 1)),
                     "course_code": g["course_code"],
                     "course_name": g["course_name"],
                     "midterm_score": float(g["midterm_score"]),
@@ -317,6 +318,41 @@ async def get_student_grades(student_id: str):
     except Exception as e:
         print(f"Error getting student grades: {e}")
         return []
+
+@router.get("/student/{student_id}/courses")
+async def get_student_courses(student_id: str):
+    """Get courses for a student grouped by semester."""
+    try:
+        grades_data = await csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
+        course_attendance = await csv_db._read_csv(f"{csv_db.data_dir}/course_attendance.csv")
+        
+        # Get unique courses for student
+        courses_by_semester = {}
+        for g in grades_data:
+            if g["student_id"] == student_id:
+                semester = int(g.get("semester", 1))
+                if semester not in courses_by_semester:
+                    courses_by_semester[semester] = []
+                
+                # Find attendance for this course
+                attendance = next((a for a in course_attendance 
+                                 if a["student_id"] == student_id and a["course_code"] == g["course_code"]), None)
+                
+                courses_by_semester[semester].append({
+                    "course_code": g["course_code"],
+                    "course_name": g["course_name"],
+                    "current_grade": float(g["current_grade"]),
+                    "grade_letter": g["grade_letter"],
+                    "status": g["status"],
+                    "attendance_rate": float(attendance["attendance_rate"]) * 100 if attendance else 0,
+                    "total_classes": int(attendance["total_classes"]) if attendance else 0,
+                    "attended": int(attendance["attended"]) if attendance else 0
+                })
+        
+        return courses_by_semester
+    except Exception as e:
+        print(f"Error getting student courses: {e}")
+        return {}
 
 @router.get("/student/{student_id}/assignments")
 async def get_student_assignments(student_id: str):

@@ -1,3 +1,4 @@
-id,name,code
-SLS-D1,Dept A,SLS-D1
-SLS-D2,Dept B,SLS-D2
+id,name,code,head
+d-SLS-1,M.Sc Biotechnology,SLS01,Dr. Vivaan Patel
+d-SLS-2,M.Sc Molecular Biology,SLS02,Dr. Aditya Kumar
+d-SLS-3,M.Sc Genetics,SLS03,Dr. Vihaan Reddy

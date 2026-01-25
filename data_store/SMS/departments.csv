@@ -1,2 +1,4 @@
-id,name,code
-SMS-D1,Main Dept,SMS-D1
+id,name,code,head
+d-SMS-1,M.Sc Mathematics,SMS01,Dr. Vivaan Patel
+d-SMS-2,M.Sc Statistics,SMS02,Dr. Aditya Kumar
+d-SMS-3,M.Sc Applied Mathematics,SMS03,Dr. Vihaan Reddy

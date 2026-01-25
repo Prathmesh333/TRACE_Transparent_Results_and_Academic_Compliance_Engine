@@ -1,26 +1,14 @@
 id,registration_number,name,email,department,phone
-s-SLS-2-0,23SLS200,Student SLS 2-0,23sls200@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-1,23SLS201,Student SLS 2-1,23sls201@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-2,23SLS202,Student SLS 2-2,23sls202@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-3,23SLS203,Student SLS 2-3,23sls203@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-4,23SLS204,Student SLS 2-4,23sls204@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-5,23SLS205,Student SLS 2-5,23sls205@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-6,23SLS206,Student SLS 2-6,23sls206@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-7,23SLS207,Student SLS 2-7,23sls207@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-8,23SLS208,Student SLS 2-8,23sls208@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-9,23SLS209,Student SLS 2-9,23sls209@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-10,23SLS210,Student SLS 2-10,23sls210@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-11,23SLS211,Student SLS 2-11,23sls211@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-12,23SLS212,Student SLS 2-12,23sls212@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-13,23SLS213,Student SLS 2-13,23sls213@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-14,23SLS214,Student SLS 2-14,23sls214@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-15,23SLS215,Student SLS 2-15,23sls215@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-16,23SLS216,Student SLS 2-16,23sls216@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-17,23SLS217,Student SLS 2-17,23sls217@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-18,23SLS218,Student SLS 2-18,23sls218@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-19,23SLS219,Student SLS 2-19,23sls219@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-20,23SLS220,Student SLS 2-20,23sls220@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-21,23SLS221,Student SLS 2-21,23sls221@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-22,23SLS222,Student SLS 2-22,23sls222@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-23,23SLS223,Student SLS 2-23,23sls223@uohyd.ac.in,Main Dept,9876543210
-s-SLS-2-24,23SLS224,Student SLS 2-24,23sls224@uohyd.ac.in,Main Dept,9876543210
+s-SLS-2-0,23SLS263,Pranav Reddy,23sls263@uohyd.ac.in,M.Sc Biotechnology,9876543063
+s-SLS-2-1,23SLS264,Dhruv Singh,23sls264@uohyd.ac.in,M.Sc Biotechnology,9876543064
+s-SLS-2-2,23SLS265,Kabir Gupta,23sls265@uohyd.ac.in,M.Sc Biotechnology,9876543065
+s-SLS-2-3,23SLS266,Shivansh Nair,23sls266@uohyd.ac.in,M.Sc Biotechnology,9876543066
+s-SLS-2-4,23SLS267,Reyansh Iyer,23sls267@uohyd.ac.in,M.Sc Molecular Biology,9876543067
+s-SLS-2-5,23SLS268,Aadhya Rao,23sls268@uohyd.ac.in,M.Sc Molecular Biology,9876543068
+s-SLS-2-6,23SLS269,Ananya Verma,23sls269@uohyd.ac.in,M.Sc Molecular Biology,9876543069
+s-SLS-2-7,23SLS270,Pari Joshi,23sls270@uohyd.ac.in,M.Sc Molecular Biology,9876543070
+s-SLS-2-8,23SLS271,Anika Desai,23sls271@uohyd.ac.in,M.Sc Genetics,9876543071
+s-SLS-2-9,23SLS272,Diya Menon,23sls272@uohyd.ac.in,M.Sc Genetics,9876543072
+s-SLS-2-10,23SLS273,Ira Krishnan,23sls273@uohyd.ac.in,M.Sc Genetics,9876543073
+s-SLS-2-11,23SLS274,Myra Bhat,23sls274@uohyd.ac.in,M.Sc Genetics,9876543074
+s-SLS-2-12,23SLS275,Sara Agarwal,23sls275@uohyd.ac.in,M.Sc Genetics,9876543075

@@ -2,3 +2,20 @@ id,course_code,course_name,assignment_title,description,max_score,due_date,creat
 a1,CS501,Advanced Algorithms and Data Structures,Algorithm Analysis Assignment,Analyze time and space complexity of sorting algorithms,100,2024-02-01,teacher@uohyd.ac.in,2024-01-20
 a2,CS601,Deep Learning,Neural Network Implementation,Implement a basic neural network from scratch,100,2024-02-05,teacher@uohyd.ac.in,2024-01-22
 a3,IT502,Software Engineering,Design Patterns Report,Write a report on common design patterns,100,2024-02-03,teacher@uohyd.ac.in,2024-01-21
+a4,CS502,Machine Learning,Linear Regression Implementation,Implement linear regression with gradient descent,100,2024-02-08,teacher@uohyd.ac.in,2024-01-23
+a5,CS503,Database Systems,SQL Query Optimization,Optimize complex SQL queries and explain indexing strategies,100,2024-02-10,teacher@uohyd.ac.in,2024-01-24
+a6,CS504,Computer Networks,Network Protocol Analysis,Analyze TCP/IP protocol stack and packet flow,100,2024-02-12,teacher@uohyd.ac.in,2024-01-25
+a7,IT501,Information Security,Cryptography Assignment,Implement RSA encryption and analyze security,100,2024-02-15,teacher@uohyd.ac.in,2024-01-26
+a8,IT503,Web Technologies,RESTful API Design,Design and document a RESTful API for e-commerce,100,2024-02-18,teacher@uohyd.ac.in,2024-01-27
+a9,IT504,Cloud Computing,AWS Architecture Design,Design scalable cloud architecture using AWS services,100,2024-02-20,teacher@uohyd.ac.in,2024-01-28
+a10,CS602,Natural Language Processing,Text Classification Model,Build a text classification model using NLP techniques,100,2024-02-22,teacher@uohyd.ac.in,2024-01-29
+a11,CS603,Computer Vision,Image Recognition System,Implement image recognition using CNNs,100,2024-02-25,teacher@uohyd.ac.in,2024-01-30
+a12,CS604,Distributed Systems,Consensus Algorithm Implementation,Implement Raft consensus algorithm,100,2024-02-28,teacher@uohyd.ac.in,2024-02-01
+a13,IT601,Big Data Analytics,MapReduce Programming,Implement MapReduce for large dataset analysis,100,2024-03-02,teacher@uohyd.ac.in,2024-02-03
+a14,IT602,Mobile Application Development,Android App Development,Develop a mobile app with CRUD operations,100,2024-03-05,teacher@uohyd.ac.in,2024-02-05
+a15,IT603,DevOps Engineering,CI/CD Pipeline Setup,Setup complete CI/CD pipeline using Jenkins,100,2024-03-08,teacher@uohyd.ac.in,2024-02-07
+a16,IT604,Blockchain Technology,Smart Contract Development,Develop and deploy Ethereum smart contract,100,2024-03-10,teacher@uohyd.ac.in,2024-02-09
+a17,PHY501,Quantum Mechanics,Schrodinger Equation Solutions,Solve Schrodinger equation for various potentials,100,2024-03-12,teacher@uohyd.ac.in,2024-02-10
+a18,PHY502,Statistical Mechanics,Partition Function Calculations,Calculate partition functions for different systems,100,2024-03-15,teacher@uohyd.ac.in,2024-02-12
+a19,PHY503,Classical Mechanics,Lagrangian Mechanics Problems,Solve mechanics problems using Lagrangian formulation,100,2024-03-18,teacher@uohyd.ac.in,2024-02-14
+a20,CS501,Advanced Algorithms and Data Structures,Graph Algorithms Assignment,Implement and analyze graph traversal algorithms,100,2024-03-20,teacher@uohyd.ac.in,2024-02-16

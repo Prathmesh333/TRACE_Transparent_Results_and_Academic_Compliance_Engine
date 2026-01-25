@@ -1,6 +1,6 @@
-id,name,email,department,designation
-f-SMS-0,Dr. Faculty SMS 0,f0@sms.uohyd.ac.in,Main Dept,Professor
-f-SMS-1,Dr. Faculty SMS 1,f1@sms.uohyd.ac.in,Main Dept,Professor
-f-SMS-2,Dr. Faculty SMS 2,f2@sms.uohyd.ac.in,Main Dept,Professor
-f-SMS-3,Dr. Faculty SMS 3,f3@sms.uohyd.ac.in,Main Dept,Professor
-f-SMS-4,Dr. Faculty SMS 4,f4@sms.uohyd.ac.in,Main Dept,Professor
+id,name,email,designation
+f-SMS-1,Dr. Atharv Desai,faculty1@sms.uohyd.ac.in,Assistant Professor
+f-SMS-2,Dr. Advait Menon,faculty2@sms.uohyd.ac.in,Assistant Professor
+f-SMS-3,Dr. Pranav Krishnan,faculty3@sms.uohyd.ac.in,Assistant Professor
+f-SMS-4,Dr. Dhruv Bhat,faculty4@sms.uohyd.ac.in,Associate Professor
+f-SMS-5,Dr. Kabir Agarwal,faculty5@sms.uohyd.ac.in,Associate Professor

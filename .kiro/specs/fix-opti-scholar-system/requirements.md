@@ -1,26 +1,152 @@
-# Requirements Document: Fix Opti-Scholar System for University of Hyderabad
+# Requirements Document: TRACE System for University of Hyderabad
 
 ## Introduction
 
-The Opti-Scholar system is an AI-powered academic assessment and student success platform designed specifically for the University of Hyderabad (UoH). The system supports UoH's multi-center, multi-school hierarchical structure with role-based access for Admin, Department/School, Teachers, and Students. The system is currently non-functional due to multiple critical issues including Python version incompatibility, missing database initialization, incomplete API endpoints, missing environment configuration, and incomplete frontend implementation. This specification addresses all issues required to make the system fully operational with UoH-specific features.
+TRACE (Transparent Results & Attendance Compliance Engine) is an AI-powered academic assessment and student success platform designed specifically for the University of Hyderabad (UoH). The system supports UoH's multi-school hierarchical structure with role-based access for Admin, Teachers, and Students. The system has been successfully rebranded from Opti-Scholar to TRACE and now operates with a CSV-based data backend for rapid development and testing. This specification documents the current functional state and remaining features to be implemented for full UoH integration.
 
 ## Glossary
 
+- **TRACE**: Transparent Results & Attendance Compliance Engine - the rebranded application name
 - **Backend**: The FastAPI Python server that provides REST API endpoints
 - **Frontend**: The React/Vite application that provides the user interface
-- **Database**: SQLite database storing all application data
+- **CSV_Backend**: CSV-based data storage system for rapid development (current implementation)
+- **Database**: SQLite database for production deployment (future implementation)
 - **Gemini_AI**: Google's Gemini AI service used for grading and student assistance
 - **UoH**: University of Hyderabad
-- **School**: Academic division within UoH (e.g., School of Physics, School of Computer Science)
-- **Centre**: Research or academic center within UoH
+- **School**: Academic division within UoH (e.g., SCIS, SoP, SoC, SMS, SLS)
 - **Admin_View**: Top-level view with control over all schools and departments
-- **Department_View**: School/Department-level view for teachers and coordinators
+- **Teacher_View**: Teacher portal for course management, grading, and attendance
 - **Student_View**: Individual student portal with personalized data
-- **Attendance_Automation**: AI-powered face recognition for classroom attendance
-- **Seed_Data**: Sample data from UoH structure for testing and demonstration
+- **Attendance_Automation**: AI-powered face recognition for classroom attendance (planned)
+- **CSV_Data**: Comprehensive test data from UoH structure stored in CSV files
 - **API_Endpoint**: A REST API route that the frontend calls to fetch or modify data
 - **Environment_Config**: Configuration file (.env) containing API keys and settings
 - **Grade_Privacy**: Individual student grade visibility restrictions
+
+## Current System Status
+
+### ✅ Completed Features
+
+**1. Application Rebranding**
+- System rebranded from "Opti-Scholar" to "TRACE - Transparent Results & Attendance Compliance Engine"
+- Updated all UI elements including login page, sidebar, and navigation
+- Professional branding with TRACE logo throughout application
+
+**2. CSV-Based Data Backend**
+- Implemented comprehensive CSV data storage system
+- 9 CSV files with extensive test data:
+  - `schools.csv` - 5 active schools (SCIS, SoP, SoC, SMS, SLS)
+  - `users.csv` - Admin, teacher, and student accounts
+  - `teacher_courses.csv` - Course assignments
+  - `course_attendance.csv` - 170 attendance records
+  - `attendance_summary.csv` - 50 student summaries
+  - `grades_summary.csv` - 189 grade records with semester data
+  - `assignments.csv` - 20 assignments across courses
+  - `submissions.csv` - 25 submissions with AI grading
+  - `risk_assessments.csv` - 10 at-risk student records
+
+**3. Admin Dashboard (Fully Functional)**
+- Dashboard statistics (total students, schools, departments, at-risk students)
+- School directory with student counts and semester breakdown
+- Student directory grouped by semester
+- Analytics view with:
+  - School distribution with full names and progress bars
+  - Department risk analysis
+  - School-wise attendance statistics
+- Risk monitor showing at-risk students
+- All data integrated with CSV backend
+
+**4. Teacher Dashboard (Fully Functional)**
+- Dashboard statistics (courses, students, attendance, at-risk count)
+- AI Grading statistics (submissions, pending, approved, accuracy)
+- My Teaching Courses view with course list
+- AI Grading workflow (4-level navigation):
+  - Course selection
+  - Assignment selection
+  - Submission review
+  - Verification and score adjustment
+- Attendance management interface
+- Course-specific attendance tracking
+
+**5. Student Dashboard (Fully Functional)**
+- Dashboard with 4 key statistics:
+  - Attendance rate with color coding
+  - Average grade across all courses
+  - Total enrolled courses
+  - Assignment submission count
+- Attendance summary with breakdown
+- Profile information display
+- Pending submissions alert
+- Attendance warning if <75%
+
+**6. Student My Courses View**
+- Courses grouped by semester
+- 4 statistics cards (Total Courses, Average Grade, Average Attendance, Semesters)
+- Course table with:
+  - Course code and name
+  - Current grade and letter grade
+  - Attendance with progress bar (green ≥75%, orange <75%)
+  - Color-coded status badges
+
+**7. Student My Grades View**
+- Grades grouped by semester
+- 4 statistics cards (Overall Average, Performing Well, Need Improvement, Total Courses)
+- Detailed grade breakdown per course:
+  - Midterm, Assignments, Quizzes scores
+  - Current grade and letter grade
+  - Color-coded status (Excellent, Good, At Risk, Critical)
+- Academic alert for at-risk courses
+
+**8. Student Assignments View**
+- 4 statistics cards (Not Submitted, Under Review, Graded, Total)
+- Three sections:
+  - Pending Submissions (not yet submitted)
+  - Graded Assignments (teacher-verified with final scores)
+  - Under Review (submitted, showing AI feedback)
+- AI scores and feedback visible immediately
+- Teacher verification status
+
+**9. Student Attendance View**
+- 4 statistics cards (Attendance Rate, Classes Attended, Absent Days, Total Classes)
+- Attendance summary with progress bar
+- Attendance guidelines (Excellent ≥90%, Good 75-89%, Warning 60-74%, Critical <60%)
+- Color-coded alerts based on attendance level
+
+**10. API Endpoints (All Working)**
+- `/data/stats` - Dashboard statistics
+- `/data/schools` - School list with counts
+- `/data/schools/{code}` - School details by semester
+- `/data/students` - Student directory
+- `/data/admin/analytics` - Admin analytics
+- `/data/department/analytics` - Department risk analysis
+- `/data/attendance/stats` - Attendance statistics
+- `/data/risk-students` - At-risk students
+- `/data/risk-counts` - Risk level counts
+- `/data/teacher/courses` - Teacher's courses
+- `/data/teacher/stats` - Teacher statistics
+- `/data/teacher/grading-stats` - Grading statistics
+- `/data/course/{code}/attendance` - Course attendance
+- `/data/course/{code}/assignments` - Course assignments
+- `/data/assignment/{id}/submissions` - Assignment submissions
+- `/data/student/dashboard` - Student dashboard data
+- `/data/student/{id}/grades` - Student grades by semester
+- `/data/student/{id}/courses` - Student courses by semester
+- `/data/student/{id}/assignments` - Student assignments
+
+### 🚧 Pending Features
+
+The following features from the original requirements are not yet implemented:
+
+1. **Database Migration** - Currently using CSV backend, need to migrate to SQLite/PostgreSQL
+2. **Attendance Automation** - Face recognition for classroom attendance
+3. **Notification System** - Teacher-to-student notifications for class changes
+4. **AI-Powered Recommendations** - Personalized study plans and resource suggestions
+5. **Support Tickets** - Student support ticket system
+6. **Learning Resources** - Course resource management and sharing
+7. **Advanced Analytics** - Performance trends and predictive analytics
+8. **Mobile Responsiveness** - Full mobile optimization
+9. **Email Integration** - Automated email notifications
+10. **File Upload** - Assignment submission with file upload
 
 ## Requirements
 

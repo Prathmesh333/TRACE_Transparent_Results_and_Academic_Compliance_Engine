@@ -359,15 +359,25 @@ function AdminAnalyticsView() {
         <div className="card">
           <div className="card-header"><h3 className="card-title">School Distribution</h3></div>
           <div className="card-body">
-            {Object.entries(data.department_distribution).map(([dept, count], i) => (
-              <div key={i} style={{ marginBottom: '10px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                  <span>{dept}</span>
-                  <span>{count} students</span>
+            {Object.entries(data.department_distribution).filter(([_, count]) => count > 0).map(([school, count], i) => {
+              const schoolNames = {
+                'SCIS': 'Computer & Information Sciences',
+                'SoP': 'Physics',
+                'SoC': 'Chemistry',
+                'SMS': 'Mathematics & Statistics',
+                'SLS': 'Life Sciences'
+              }
+              const maxCount = Math.max(...Object.values(data.department_distribution))
+              return (
+                <div key={i} style={{ marginBottom: '10px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
+                    <span><b>{school}</b> - {schoolNames[school] || school}</span>
+                    <span>{count} students</span>
+                  </div>
+                  <div className="progress-bar"><div className="progress-fill" style={{ width: `${(count / maxCount) * 100}%` }}></div></div>
                 </div>
-                <div className="progress-bar"><div className="progress-fill" style={{ width: `${(count / 300) * 100}%` }}></div></div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </div>
@@ -1451,7 +1461,7 @@ function StudentDashboard({ user }) {
 }
 
 function StudentGrades({ user }) {
-  const [grades, setGrades] = useState([])
+  const [gradesBySemester, setGradesBySemester] = useState({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -1459,7 +1469,16 @@ function StudentGrades({ user }) {
       try {
         const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
         const data = await fetchAPI(`/data/student/${studentId}/grades`)
-        setGrades(data || [])
+        
+        // Group grades by semester
+        const grouped = (data || []).reduce((acc, grade) => {
+          const sem = grade.semester || 1
+          if (!acc[sem]) acc[sem] = []
+          acc[sem].push(grade)
+          return acc
+        }, {})
+        
+        setGradesBySemester(grouped)
       } catch (e) {
         console.error('Error loading grades:', e)
       }
@@ -1470,9 +1489,11 @@ function StudentGrades({ user }) {
 
   if (loading) return <LoadingSpinner />
 
+  const allGrades = Object.values(gradesBySemester).flat()
+
   // Calculate overall statistics
-  const avgGrade = grades.length > 0 
-    ? (grades.reduce((sum, g) => sum + g.current_grade, 0) / grades.length).toFixed(1)
+  const avgGrade = allGrades.length > 0 
+    ? (allGrades.reduce((sum, g) => sum + g.current_grade, 0) / allGrades.length).toFixed(1)
     : 0
 
   const getGradeColor = (status) => {
@@ -1492,72 +1513,77 @@ function StudentGrades({ user }) {
         <p className="page-description">View your academic performance across all courses</p>
       </div>
 
-      {grades.length > 0 && (
+      {allGrades.length > 0 && (
         <div className="stats-grid fade-in" style={{ marginBottom: '20px' }}>
           <div className="stat-card">
             <div className="stat-value">{avgGrade}</div>
             <div className="stat-label">Overall Average</div>
           </div>
           <div className="stat-card success">
-            <div className="stat-value">{grades.filter(g => g.status === 'Excellent' || g.status === 'Good').length}</div>
+            <div className="stat-value">{allGrades.filter(g => g.status === 'Excellent' || g.status === 'Good').length}</div>
             <div className="stat-label">Performing Well</div>
           </div>
           <div className="stat-card warning">
-            <div className="stat-value">{grades.filter(g => g.status === 'At Risk').length}</div>
+            <div className="stat-value">{allGrades.filter(g => g.status === 'At Risk' || g.status === 'Critical').length}</div>
             <div className="stat-label">Need Improvement</div>
           </div>
           <div className="stat-card info">
-            <div className="stat-value">{grades.length}</div>
+            <div className="stat-value">{allGrades.length}</div>
             <div className="stat-label">Total Courses</div>
           </div>
         </div>
       )}
 
-      <div className="card fade-in">
-        <div className="card-header"><h3 className="card-title">Course Grades</h3></div>
-        <div className="card-body" style={{ padding: 0 }}>
-          {grades.length > 0 ? (
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th>Course</th>
-                  <th>Midterm</th>
-                  <th>Assignments</th>
-                  <th>Quizzes</th>
-                  <th>Current Grade</th>
-                  <th>Letter</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {grades.map((grade, i) => (
-                  <tr key={i}>
-                    <td>
-                      <b>{grade.course_code}</b>
-                      <br />
-                      <small style={{ color: 'var(--text-muted)' }}>{grade.course_name}</small>
-                    </td>
-                    <td>{grade.midterm_score.toFixed(1)}</td>
-                    <td>{grade.assignment_avg.toFixed(1)}</td>
-                    <td>{grade.quiz_avg.toFixed(1)}</td>
-                    <td><b style={{ color: getGradeColor(grade.status) }}>{grade.current_grade.toFixed(1)}</b></td>
-                    <td><span className={`badge badge-${grade.status === 'Excellent' || grade.status === 'Good' ? 'success' : 'warning'}`}>{grade.grade_letter}</span></td>
-                    <td>
-                      <span style={{ color: getGradeColor(grade.status), fontSize: '13px' }}>
-                        {grade.status}
-                      </span>
-                    </td>
+      {Object.keys(gradesBySemester).length > 0 ? (
+        Object.entries(gradesBySemester).sort(([a], [b]) => parseInt(a) - parseInt(b)).map(([semester, grades]) => (
+          <div key={semester} className="card fade-in" style={{ marginBottom: '20px' }}>
+            <div className="card-header">
+              <h3 className="card-title">Semester {semester}</h3>
+              <span className="badge">{grades.length} Courses</span>
+            </div>
+            <div className="card-body" style={{ padding: 0 }}>
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Course</th>
+                    <th>Midterm</th>
+                    <th>Assignments</th>
+                    <th>Quizzes</th>
+                    <th>Current Grade</th>
+                    <th>Letter</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <EmptyState title="No Grades Available" icon="Book" message="Your grades haven't been published yet." />
-          )}
-        </div>
-      </div>
+                </thead>
+                <tbody>
+                  {grades.map((grade, i) => (
+                    <tr key={i}>
+                      <td>
+                        <b>{grade.course_code}</b>
+                        <br />
+                        <small style={{ color: 'var(--text-muted)' }}>{grade.course_name}</small>
+                      </td>
+                      <td>{grade.midterm_score.toFixed(1)}</td>
+                      <td>{grade.assignment_avg.toFixed(1)}</td>
+                      <td>{grade.quiz_avg.toFixed(1)}</td>
+                      <td><b style={{ color: getGradeColor(grade.status) }}>{grade.current_grade.toFixed(1)}</b></td>
+                      <td><span className={`badge badge-${grade.status === 'Excellent' || grade.status === 'Good' ? 'success' : 'warning'}`}>{grade.grade_letter}</span></td>
+                      <td>
+                        <span style={{ color: getGradeColor(grade.status), fontSize: '13px' }}>
+                          {grade.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))
+      ) : (
+        <EmptyState title="No Grades Available" icon="Book" message="Your grades haven't been published yet." />
+      )}
 
-      {grades.some(g => g.status === 'At Risk' || g.status === 'Critical') && (
+      {allGrades.some(g => g.status === 'At Risk' || g.status === 'Critical') && (
         <div className="card fade-in" style={{ marginTop: '20px' }}>
           <div className="card-body" style={{ padding: '16px', background: 'var(--warning-bg)', borderLeft: '4px solid var(--warning)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -1571,6 +1597,134 @@ function StudentGrades({ user }) {
             </div>
           </div>
         </div>
+      )}
+    </>
+  )
+}
+
+function StudentCourses({ user }) {
+  const [coursesBySemester, setCoursesBySemester] = useState({})
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        const data = await fetchAPI(`/data/student/${studentId}/courses`)
+        setCoursesBySemester(data || {})
+      } catch (e) {
+        console.error('Error loading courses:', e)
+      }
+      setLoading(false)
+    }
+    load()
+  }, [user])
+
+  if (loading) return <LoadingSpinner />
+
+  const allCourses = Object.values(coursesBySemester).flat()
+  const avgGrade = allCourses.length > 0 
+    ? (allCourses.reduce((sum, c) => sum + c.current_grade, 0) / allCourses.length).toFixed(1)
+    : 0
+  const avgAttendance = allCourses.length > 0
+    ? (allCourses.reduce((sum, c) => sum + c.attendance_rate, 0) / allCourses.length).toFixed(1)
+    : 0
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Excellent': return 'success'
+      case 'Good': return 'info'
+      case 'Needs Support': return 'warning'
+      case 'At Risk': return 'warning'
+      case 'Critical': return 'danger'
+      default: return 'info'
+    }
+  }
+
+  return (
+    <>
+      <div className="page-header">
+        <h1 className="page-title">My Courses</h1>
+        <p className="page-description">View all your enrolled courses by semester</p>
+      </div>
+
+      {allCourses.length > 0 && (
+        <div className="stats-grid fade-in" style={{ marginBottom: '20px' }}>
+          <div className="stat-card info">
+            <div className="stat-value">{allCourses.length}</div>
+            <div className="stat-label">Total Courses</div>
+          </div>
+          <div className="stat-card success">
+            <div className="stat-value">{avgGrade}</div>
+            <div className="stat-label">Average Grade</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-value">{avgAttendance}%</div>
+            <div className="stat-label">Average Attendance</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-value">{Object.keys(coursesBySemester).length}</div>
+            <div className="stat-label">Semesters</div>
+          </div>
+        </div>
+      )}
+
+      {Object.keys(coursesBySemester).length > 0 ? (
+        Object.entries(coursesBySemester).sort(([a], [b]) => parseInt(a) - parseInt(b)).map(([semester, courses]) => (
+          <div key={semester} className="card fade-in" style={{ marginBottom: '20px' }}>
+            <div className="card-header">
+              <h3 className="card-title">Semester {semester}</h3>
+              <span className="badge">{courses.length} Courses</span>
+            </div>
+            <div className="card-body" style={{ padding: 0 }}>
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                    <th>Current Grade</th>
+                    <th>Letter Grade</th>
+                    <th>Attendance</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {courses.map((course, i) => (
+                    <tr key={i}>
+                      <td><span className="badge">{course.course_code}</span></td>
+                      <td><b>{course.course_name}</b></td>
+                      <td><b>{course.current_grade.toFixed(1)}</b></td>
+                      <td><span className={`badge badge-${getStatusColor(course.status)}`}>{course.grade_letter}</span></td>
+                      <td>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <div className="progress-bar" style={{ flex: 1, maxWidth: '100px' }}>
+                            <div className="progress-fill" style={{ 
+                              width: `${course.attendance_rate}%`,
+                              background: course.attendance_rate >= 75 ? 'var(--success)' : 'var(--warning)'
+                            }}></div>
+                          </div>
+                          <span style={{ fontSize: '13px', color: course.attendance_rate >= 75 ? 'var(--success)' : 'var(--warning)' }}>
+                            {course.attendance_rate.toFixed(0)}%
+                          </span>
+                        </div>
+                        <small style={{ color: 'var(--text-muted)', fontSize: '12px' }}>
+                          {course.attended}/{course.total_classes} classes
+                        </small>
+                      </td>
+                      <td>
+                        <span className={`badge badge-${getStatusColor(course.status)}`}>
+                          {course.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))
+      ) : (
+        <EmptyState title="No Courses Found" icon="Book" message="You are not enrolled in any courses yet." />
       )}
     </>
   )
@@ -1995,7 +2149,7 @@ function LoginPage({ onLogin }) {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <div className="login-logo"><div className="logo-mark">UoH</div><div><div className="login-title">University of Hyderabad</div><div className="login-subtitle">Academic Intelligence Platform</div></div></div>
+          <div className="login-logo"><div className="logo-mark">TRACE</div><div><div className="login-title">TRACE</div><div className="login-subtitle">Transparent Results & Attendance Compliance Engine</div></div></div>
         </div>
         <div className="login-roles">
           {Object.keys(demoCredentials).map(role => (
@@ -2038,7 +2192,7 @@ function Sidebar({ activeNav, setActiveNav, user, onLogout }) {
       ]
     } else {
       return [
-        { group: 'Learning', items: [{ id: 'dashboard', label: 'Dashboard', icon: 'Dashboard' }, { id: 'grades', label: 'My Grades', icon: 'CheckCircle' }, { id: 'assignments', label: 'Assignments', icon: 'FileText' }, { id: 'attendance', label: 'Attendance', icon: 'Clock' }] },
+        { group: 'Learning', items: [{ id: 'dashboard', label: 'Dashboard', icon: 'Dashboard' }, { id: 'courses', label: 'My Courses', icon: 'Book' }, { id: 'grades', label: 'My Grades', icon: 'CheckCircle' }, { id: 'assignments', label: 'Assignments', icon: 'FileText' }, { id: 'attendance', label: 'Attendance', icon: 'Clock' }] },
         { group: 'Resources', items: [{ id: 'resources', label: 'Study Materials', icon: 'FileText' }, { id: 'ai-assistant', label: 'AI Assistant', icon: 'Bot' }] }
       ]
     }
@@ -2046,7 +2200,7 @@ function Sidebar({ activeNav, setActiveNav, user, onLogout }) {
 
   return (
     <aside className="sidebar">
-      <div className="sidebar-header"><div className="logo"><div className="logo-mark">UoH</div><span className="logo-text">UoH Academic</span></div></div>
+      <div className="sidebar-header"><div className="logo"><div className="logo-mark">TRACE</div><span className="logo-text">TRACE</span></div></div>
       <nav className="nav-container">
         {getNavItems().map((group, i) => (
           <div key={i} className="nav-group">
@@ -2135,8 +2289,10 @@ function App() {
     } else {
       switch (activeNav) {
         case 'dashboard': return <StudentDashboard {...commonProps} />
+        case 'courses': return <StudentCourses {...commonProps} />
         case 'grades': return <StudentGrades {...commonProps} />
         case 'assignments': return <StudentAssignments {...commonProps} />
+        case 'attendance': return <StudentAttendance {...commonProps} />
         case 'resources': return <ResourcesView {...commonProps} />
         case 'ai-assistant': return <AIAssistant {...commonProps} />
         default: return <EmptyState title="Coming Soon" icon="Settings" message="This module is under development." />

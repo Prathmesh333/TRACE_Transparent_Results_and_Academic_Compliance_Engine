@@ -1,6 +1,6 @@
-id,name,email,department,designation
-f-SLS-0,Dr. Faculty SLS 0,f0@sls.uohyd.ac.in,Main Dept,Professor
-f-SLS-1,Dr. Faculty SLS 1,f1@sls.uohyd.ac.in,Main Dept,Professor
-f-SLS-2,Dr. Faculty SLS 2,f2@sls.uohyd.ac.in,Main Dept,Professor
-f-SLS-3,Dr. Faculty SLS 3,f3@sls.uohyd.ac.in,Main Dept,Professor
-f-SLS-4,Dr. Faculty SLS 4,f4@sls.uohyd.ac.in,Main Dept,Professor
+id,name,email,designation
+f-SLS-1,Dr. Atharv Desai,faculty1@sls.uohyd.ac.in,Assistant Professor
+f-SLS-2,Dr. Advait Menon,faculty2@sls.uohyd.ac.in,Assistant Professor
+f-SLS-3,Dr. Pranav Krishnan,faculty3@sls.uohyd.ac.in,Assistant Professor
+f-SLS-4,Dr. Dhruv Bhat,faculty4@sls.uohyd.ac.in,Associate Professor
+f-SLS-5,Dr. Kabir Agarwal,faculty5@sls.uohyd.ac.in,Associate Professor
