@@ -614,6 +614,7 @@ function RiskMonitorView() {
 
 function TeacherDashboard({ user }) {
   const [stats, setStats] = useState(null)
+  const [gradingStats, setGradingStats] = useState(null)
   const [courses, setCourses] = useState([])
   const [loading, setLoading] = useState(true)
   const trend = [1, 2, 3, 4, 5, 6, 7]
@@ -621,15 +622,18 @@ function TeacherDashboard({ user }) {
   useEffect(() => {
     async function loadData() {
       try {
-        const [statsData, coursesData] = await Promise.all([
+        const [statsData, coursesData, gradingData] = await Promise.all([
           fetchAPI(`/data/teacher/stats?teacher_email=${user.email}`),
-          fetchAPI(`/data/teacher/courses?teacher_email=${user.email}`)
+          fetchAPI(`/data/teacher/courses?teacher_email=${user.email}`),
+          fetchAPI(`/data/teacher/grading-stats?teacher_email=${user.email}`)
         ])
         setStats(statsData)
         setCourses(coursesData || [])
+        setGradingStats(gradingData)
       } catch (e) {
         console.error('Error loading teacher data:', e)
         setStats({ total_students: 0, total_courses: 0, avg_attendance: 0, at_risk_students: 0 })
+        setGradingStats({ total_submissions: 0, pending_review: 0, approved: 0, ai_accuracy: 0 })
       }
       setLoading(false)
     }
@@ -651,6 +655,27 @@ function TeacherDashboard({ user }) {
         <StatCard label="Avg Attendance" value={`${stats?.avg_attendance || 0}%`} data={trend} positive={stats?.avg_attendance > 75} variant={stats?.avg_attendance > 75 ? 'success' : 'warning'} icon="Clock" />
         <StatCard label="At-Risk Students" value={stats?.at_risk_students || 0} data={trend} positive={false} variant="danger" icon="AlertTriangle" />
       </div>
+
+      {gradingStats && (
+        <div className="stats-grid fade-in" style={{ marginTop: '20px' }}>
+          <div className="stat-card">
+            <div className="stat-value">{gradingStats.total_submissions}</div>
+            <div className="stat-label">Total Submissions</div>
+          </div>
+          <div className="stat-card warning">
+            <div className="stat-value">{gradingStats.pending_review}</div>
+            <div className="stat-label">Pending Review</div>
+          </div>
+          <div className="stat-card success">
+            <div className="stat-value">{gradingStats.approved}</div>
+            <div className="stat-label">Approved</div>
+          </div>
+          <div className="stat-card info">
+            <div className="stat-value">{gradingStats.ai_accuracy}%</div>
+            <div className="stat-label">AI Accuracy</div>
+          </div>
+        </div>
+      )}
 
       <div className="card fade-in" style={{ marginTop: 20 }}>
         <div className="card-header"><h3 className="card-title">My Teaching Courses</h3></div>
@@ -831,6 +856,340 @@ function TeacherCoursesView({ user }) {
   )
 }
 
+function AIGradingView({ user }) {
+  const [courses, setCourses] = useState([])
+  const [selectedCourse, setSelectedCourse] = useState(null)
+  const [assignments, setAssignments] = useState([])
+  const [selectedAssignment, setSelectedAssignment] = useState(null)
+  const [submissions, setSubmissions] = useState([])
+  const [selectedSubmission, setSelectedSubmission] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [verifying, setVerifying] = useState(false)
+  const [teacherScore, setTeacherScore] = useState(0)
+  const [teacherFeedback, setTeacherFeedback] = useState('')
+
+  useEffect(() => {
+    async function load() {
+      const data = await fetchAPI(`/data/teacher/courses?teacher_email=${user.email}`)
+      setCourses(data || [])
+      setLoading(false)
+    }
+    load()
+  }, [user.email])
+
+  const loadAssignments = async (courseCode) => {
+    const data = await fetchAPI(`/data/course/${courseCode}/assignments`)
+    setAssignments(data || [])
+  }
+
+  const loadSubmissions = async (assignmentId) => {
+    const data = await fetchAPI(`/data/assignment/${assignmentId}/submissions`)
+    setSubmissions(data || [])
+  }
+
+  const handleCourseSelect = (course) => {
+    setSelectedCourse(course)
+    setSelectedAssignment(null)
+    setSelectedSubmission(null)
+    loadAssignments(course.course_code)
+  }
+
+  const handleAssignmentSelect = (assignment) => {
+    setSelectedAssignment(assignment)
+    setSelectedSubmission(null)
+    loadSubmissions(assignment.id)
+  }
+
+  const handleSubmissionSelect = (submission) => {
+    setSelectedSubmission(submission)
+    setTeacherScore(submission.teacher_score || submission.ai_score)
+    setTeacherFeedback(submission.teacher_feedback || '')
+  }
+
+  const handleVerify = async (approved) => {
+    if (!selectedSubmission) return
+    setVerifying(true)
+    try {
+      await fetchAPI(`/data/submission/${selectedSubmission.id}/verify`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          teacher_score: teacherScore,
+          teacher_feedback: teacherFeedback,
+          approved: approved
+        })
+      })
+      // Reload submissions
+      await loadSubmissions(selectedAssignment.id)
+      setSelectedSubmission(null)
+      setTeacherScore(0)
+      setTeacherFeedback('')
+    } catch (e) {
+      console.error('Error verifying submission:', e)
+    }
+    setVerifying(false)
+  }
+
+  if (loading) return <LoadingSpinner />
+
+  // Submission Detail View
+  if (selectedSubmission) {
+    const scoreDiff = Math.abs(teacherScore - selectedSubmission.ai_score)
+    const isClose = scoreDiff <= 5
+
+    return (
+      <>
+        <div className="page-header">
+          <button className="btn btn-sm btn-ghost" onClick={() => setSelectedSubmission(null)} style={{ marginBottom: '10px' }}>← Back to Submissions</button>
+          <h1 className="page-title">Review Submission</h1>
+          <p className="page-description">{selectedSubmission.student_name} ({selectedSubmission.student_reg})</p>
+        </div>
+
+        <div className="content-grid content-grid-equal fade-in">
+          <div className="card">
+            <div className="card-header"><h3 className="card-title">Student Submission</h3></div>
+            <div className="card-body">
+              <div style={{ marginBottom: '12px' }}>
+                <strong>File:</strong> {selectedSubmission.file_name}
+              </div>
+              <div style={{ marginBottom: '12px' }}>
+                <strong>Submitted:</strong> {selectedSubmission.submitted_at}
+              </div>
+              <div style={{ padding: '12px', background: 'var(--surface)', borderRadius: '8px', fontSize: '14px', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>
+                {selectedSubmission.submission_text}
+              </div>
+            </div>
+          </div>
+
+          <div className="card">
+            <div className="card-header">
+              <h3 className="card-title">AI Grading Analysis</h3>
+              <span className={`badge ${isClose ? 'badge-success' : 'badge-warning'}`} style={{ marginLeft: '8px' }}>
+                AI Score: {selectedSubmission.ai_score}/100
+              </span>
+            </div>
+            <div className="card-body">
+              <div style={{ marginBottom: '16px' }}>
+                <strong style={{ display: 'block', marginBottom: '8px' }}>AI Feedback:</strong>
+                <div style={{ padding: '12px', background: 'var(--surface)', borderRadius: '8px', fontSize: '14px' }}>
+                  {selectedSubmission.ai_feedback}
+                </div>
+              </div>
+              <div>
+                <strong style={{ display: 'block', marginBottom: '8px' }}>AI Reasoning:</strong>
+                <div style={{ padding: '12px', background: 'var(--surface)', borderRadius: '8px', fontSize: '14px', lineHeight: '1.6' }}>
+                  {selectedSubmission.ai_reasoning}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="card fade-in" style={{ marginTop: '20px' }}>
+          <div className="card-header"><h3 className="card-title">Teacher Verification</h3></div>
+          <div className="card-body">
+            <div className="form-group">
+              <label className="form-label">Final Score (0-100)</label>
+              <input 
+                type="number" 
+                className="form-input" 
+                value={teacherScore}
+                onChange={(e) => setTeacherScore(parseInt(e.target.value) || 0)}
+                min="0"
+                max="100"
+                style={{ maxWidth: '200px' }}
+              />
+              {scoreDiff > 0 && (
+                <div style={{ marginTop: '8px', fontSize: '13px', color: isClose ? 'var(--success)' : 'var(--warning)' }}>
+                  {isClose ? '✓' : '⚠'} Difference from AI: {scoreDiff > 0 ? '+' : ''}{teacherScore - selectedSubmission.ai_score} points
+                </div>
+              )}
+            </div>
+            <div className="form-group">
+              <label className="form-label">Teacher Feedback</label>
+              <textarea 
+                className="form-textarea" 
+                rows="4"
+                value={teacherFeedback}
+                onChange={(e) => setTeacherFeedback(e.target.value)}
+                placeholder="Add your feedback for the student..."
+              />
+            </div>
+            <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
+              <button 
+                className="btn btn-primary" 
+                onClick={() => handleVerify(true)}
+                disabled={verifying}
+              >
+                {verifying ? 'Approving...' : 'Approve & Publish'}
+              </button>
+              <button 
+                className="btn btn-ghost" 
+                onClick={() => handleVerify(false)}
+                disabled={verifying}
+              >
+                Request Revision
+              </button>
+              <button 
+                className="btn btn-ghost" 
+                onClick={() => setSelectedSubmission(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </>
+    )
+  }
+
+  // Submissions List View
+  if (selectedAssignment) {
+    const pendingSubmissions = submissions.filter(s => s.status === 'pending_review')
+    const approvedSubmissions = submissions.filter(s => s.status === 'approved')
+
+    return (
+      <>
+        <div className="page-header">
+          <button className="btn btn-sm btn-ghost" onClick={() => setSelectedAssignment(null)} style={{ marginBottom: '10px' }}>← Back to Assignments</button>
+          <h1 className="page-title">{selectedAssignment.assignment_title}</h1>
+          <p className="page-description">{selectedAssignment.description}</p>
+        </div>
+
+        <div className="stats-grid fade-in" style={{ marginBottom: '20px' }}>
+          <div className="stat-card">
+            <div className="stat-value">{submissions.length}</div>
+            <div className="stat-label">Total Submissions</div>
+          </div>
+          <div className="stat-card warning">
+            <div className="stat-value">{pendingSubmissions.length}</div>
+            <div className="stat-label">Pending Review</div>
+          </div>
+          <div className="stat-card success">
+            <div className="stat-value">{approvedSubmissions.length}</div>
+            <div className="stat-label">Approved</div>
+          </div>
+          <div className="stat-card info">
+            <div className="stat-value">{selectedAssignment.max_score}</div>
+            <div className="stat-label">Max Score</div>
+          </div>
+        </div>
+
+        {pendingSubmissions.length > 0 && (
+          <div className="card fade-in" style={{ marginBottom: '20px' }}>
+            <div className="card-header"><h3 className="card-title">Pending Review ({pendingSubmissions.length})</h3></div>
+            <div className="card-body" style={{ padding: 0 }}>
+              <table className="data-table">
+                <thead>
+                  <tr><th>Student</th><th>Submitted</th><th>AI Score</th><th>AI Feedback</th><th>Action</th></tr>
+                </thead>
+                <tbody>
+                  {pendingSubmissions.map((sub, i) => (
+                    <tr key={i}>
+                      <td><b>{sub.student_name}</b><br /><small>{sub.student_reg}</small></td>
+                      <td>{sub.submitted_at}</td>
+                      <td><span className="badge badge-info">{sub.ai_score}/100</span></td>
+                      <td style={{ maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sub.ai_feedback}</td>
+                      <td>
+                        <button className="btn btn-sm btn-primary" onClick={() => handleSubmissionSelect(sub)}>
+                          Review
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {approvedSubmissions.length > 0 && (
+          <div className="card fade-in">
+            <div className="card-header"><h3 className="card-title">Approved ({approvedSubmissions.length})</h3></div>
+            <div className="card-body" style={{ padding: 0 }}>
+              <table className="data-table">
+                <thead>
+                  <tr><th>Student</th><th>AI Score</th><th>Final Score</th><th>Teacher Feedback</th></tr>
+                </thead>
+                <tbody>
+                  {approvedSubmissions.map((sub, i) => (
+                    <tr key={i}>
+                      <td><b>{sub.student_name}</b><br /><small>{sub.student_reg}</small></td>
+                      <td>{sub.ai_score}/100</td>
+                      <td><span className="badge badge-success">{sub.teacher_score}/100</span></td>
+                      <td style={{ maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sub.teacher_feedback || 'No additional feedback'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {submissions.length === 0 && <EmptyState title="No Submissions Yet" icon="FileText" message="Students haven't submitted any assignments yet." />}
+      </>
+    )
+  }
+
+  // Assignments List View
+  if (selectedCourse) {
+    return (
+      <>
+        <div className="page-header">
+          <button className="btn btn-sm btn-ghost" onClick={() => setSelectedCourse(null)} style={{ marginBottom: '10px' }}>← Back to Courses</button>
+          <h1 className="page-title">{selectedCourse.course_name}</h1>
+          <p className="page-description">Assignments & AI Grading</p>
+        </div>
+
+        <div className="schools-grid fade-in">
+          {assignments.map((assignment, i) => (
+            <div key={i} className="card" onClick={() => handleAssignmentSelect(assignment)} style={{ cursor: 'pointer' }}>
+              <div className="card-body">
+                <h3 style={{ margin: 0, fontSize: '18px', marginBottom: '8px' }}>{assignment.assignment_title}</h3>
+                <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '12px' }}>{assignment.description}</p>
+                <div style={{ display: 'flex', gap: '12px', fontSize: '13px', marginBottom: '12px' }}>
+                  <span>📅 Due: {assignment.due_date}</span>
+                  <span>📊 Max: {assignment.max_score} pts</span>
+                </div>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <span className="badge badge-info">{assignment.submission_count} Submissions</span>
+                  {assignment.pending_review > 0 && (
+                    <span className="badge badge-warning">{assignment.pending_review} Pending</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+          {assignments.length === 0 && <EmptyState title="No Assignments" icon="FileText" message="No assignments created for this course yet." />}
+        </div>
+      </>
+    )
+  }
+
+  // Courses List View
+  return (
+    <>
+      <div className="page-header">
+        <h1 className="page-title">AI Grading Dashboard</h1>
+        <p className="page-description">Review AI-graded assignments and verify scores</p>
+      </div>
+      <div className="schools-grid fade-in">
+        {courses.map((c, i) => (
+          <div key={i} className="card" onClick={() => handleCourseSelect(c)} style={{ cursor: 'pointer' }}>
+            <div className="card-body">
+              <h3 style={{ margin: 0, fontSize: '18px' }}>{c.course_name}</h3>
+              <div style={{ color: 'var(--text-dim)', fontSize: '14px', fontFamily: 'monospace', margin: '4px 0' }}>{c.course_code}</div>
+              <div style={{ marginTop: '12px', fontSize: '13px', color: 'var(--text-muted)' }}>
+                <span>📚 Semester {c.semester}</span> • <span>👥 {c.total_students} Students</span>
+              </div>
+            </div>
+          </div>
+        ))}
+        {courses.length === 0 && <EmptyState title="No Courses" icon="Book" message="You don't have any courses assigned." />}
+      </div>
+    </>
+  )
+}
+
 function FaceAttendance({ user }) {
   const [image, setImage] = useState(null)
   const [processing, setProcessing] = useState(false)
@@ -957,17 +1316,22 @@ function StudentDashboard({ user }) {
   useEffect(() => {
     async function loadData() {
       try {
-        const data = await fetchAPI('/data/attendance/stats')
+        // Use student ID from user object or construct from email
+        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        const data = await fetchAPI(`/data/student/dashboard?student_id=${studentId}`)
         setStats(data)
       } catch (e) {
-        setStats({ attendance_rate: 78, present_count: 42, absent_count: 5 })
+        console.error('Error loading student data:', e)
+        setStats({ attendance_rate: 0, total_classes: 0, attended: 0, absent_days: 0, avg_grade: 0, total_courses: 0, total_submissions: 0, pending_submissions: 0 })
       }
       setLoading(false)
     }
     loadData()
-  }, [])
+  }, [user])
 
   if (loading) return <LoadingSpinner />
+
+  const attendanceStatus = stats.attendance_rate >= 75 ? 'success' : 'warning'
 
   return (
     <>
@@ -977,36 +1341,563 @@ function StudentDashboard({ user }) {
       </div>
 
       <div className="stats-grid fade-in">
-        <StatCard label="Attendance" value={`${stats?.attendance_rate || 0}%`} data={trend} positive={stats?.attendance_rate > 75} variant={stats?.attendance_rate > 75 ? 'success' : 'warning'} icon="Clock" />
-        <StatCard label="Attended" value={stats?.present_count || 0} data={trend} positive={true} icon="CheckCircle" />
-        <StatCard label="Missed" value={stats?.absent_count || 0} data={trend} positive={false} variant="danger" icon="AlertTriangle" />
-        <StatCard label="Semester" value={user.semester || 1} data={trend} icon="GraduationCap" />
+        <StatCard 
+          label="Attendance" 
+          value={`${stats.attendance_rate.toFixed(1)}%`} 
+          data={trend} 
+          positive={stats.attendance_rate >= 75} 
+          variant={attendanceStatus} 
+          icon="Clock" 
+        />
+        <StatCard 
+          label="Average Grade" 
+          value={stats.avg_grade.toFixed(1)} 
+          data={trend} 
+          positive={stats.avg_grade >= 70} 
+          variant={stats.avg_grade >= 70 ? 'success' : 'warning'} 
+          icon="CheckCircle" 
+        />
+        <StatCard 
+          label="Total Courses" 
+          value={stats.total_courses} 
+          data={trend} 
+          positive={true} 
+          icon="Book" 
+        />
+        <StatCard 
+          label="Assignments" 
+          value={stats.total_submissions} 
+          data={trend} 
+          positive={true} 
+          variant="info" 
+          icon="FileText" 
+        />
       </div>
 
-      <div className="card fade-in">
-        <div className="card-header"><h3 className="card-title">My Profile</h3></div>
-        <div className="card-body">
-          <div className="info-grid">
-            <div className="info-item"><span className="info-label">Reg. No</span><span className="info-value">{user.registration_number || 'N/A'}</span></div>
-            <div className="info-item"><span className="info-label">Program</span><span className="info-value">{user.program || 'N/A'}</span></div>
-            <div className="info-item"><span className="info-label">Department</span><span className="info-value">{user.department || 'N/A'}</span></div>
-            <div className="info-item"><span className="info-label">Email</span><span className="info-value">{user.email}</span></div>
+      <div className="content-grid content-grid-equal fade-in" style={{ marginTop: '20px' }}>
+        <div className="card">
+          <div className="card-header"><h3 className="card-title">Attendance Summary</h3></div>
+          <div className="card-body">
+            <div className="info-grid">
+              <div className="info-item">
+                <span className="info-label">Total Classes</span>
+                <span className="info-value">{stats.total_classes}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Attended</span>
+                <span className="info-value" style={{ color: 'var(--success)' }}>{stats.attended}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Absent</span>
+                <span className="info-value" style={{ color: 'var(--danger)' }}>{stats.absent_days}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Attendance Rate</span>
+                <span className="info-value" style={{ color: stats.attendance_rate >= 75 ? 'var(--success)' : 'var(--warning)' }}>
+                  {stats.attendance_rate.toFixed(1)}%
+                </span>
+              </div>
+            </div>
+            {stats.attendance_rate < 75 && (
+              <div style={{ marginTop: '16px', padding: '12px', background: 'var(--warning-bg)', borderRadius: '8px', fontSize: '14px' }}>
+                ⚠️ Your attendance is below 75%. Please attend classes regularly to avoid academic issues.
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="card-header"><h3 className="card-title">My Profile</h3></div>
+          <div className="card-body">
+            <div className="info-grid">
+              <div className="info-item">
+                <span className="info-label">Reg. No</span>
+                <span className="info-value">{user.registration_number || 'N/A'}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Program</span>
+                <span className="info-value">{user.program || 'N/A'}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Department</span>
+                <span className="info-value">{user.department || 'N/A'}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Email</span>
+                <span className="info-value">{user.email}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      {stats.pending_submissions > 0 && (
+        <div className="card fade-in" style={{ marginTop: '20px' }}>
+          <div className="card-body" style={{ padding: '16px', background: 'var(--info-bg)', borderLeft: '4px solid var(--info)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ fontSize: '24px' }}>📝</div>
+              <div>
+                <strong>You have {stats.pending_submissions} assignment{stats.pending_submissions > 1 ? 's' : ''} pending review</strong>
+                <div style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                  Your submissions are being graded by AI and reviewed by your teachers.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
 
-function StudentGrades() {
+function StudentGrades({ user }) {
+  const [grades, setGrades] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        const data = await fetchAPI(`/data/student/${studentId}/grades`)
+        setGrades(data || [])
+      } catch (e) {
+        console.error('Error loading grades:', e)
+      }
+      setLoading(false)
+    }
+    load()
+  }, [user])
+
+  if (loading) return <LoadingSpinner />
+
+  // Calculate overall statistics
+  const avgGrade = grades.length > 0 
+    ? (grades.reduce((sum, g) => sum + g.current_grade, 0) / grades.length).toFixed(1)
+    : 0
+
+  const getGradeColor = (status) => {
+    switch (status) {
+      case 'Excellent': return 'var(--success)'
+      case 'Good': return 'var(--info)'
+      case 'At Risk': return 'var(--warning)'
+      case 'Critical': return 'var(--danger)'
+      default: return 'var(--text-primary)'
+    }
+  }
+
   return (
     <>
-      <div className="page-header"><h1 className="page-title">My Grades</h1></div>
+      <div className="page-header">
+        <h1 className="page-title">My Grades</h1>
+        <p className="page-description">View your academic performance across all courses</p>
+      </div>
+
+      {grades.length > 0 && (
+        <div className="stats-grid fade-in" style={{ marginBottom: '20px' }}>
+          <div className="stat-card">
+            <div className="stat-value">{avgGrade}</div>
+            <div className="stat-label">Overall Average</div>
+          </div>
+          <div className="stat-card success">
+            <div className="stat-value">{grades.filter(g => g.status === 'Excellent' || g.status === 'Good').length}</div>
+            <div className="stat-label">Performing Well</div>
+          </div>
+          <div className="stat-card warning">
+            <div className="stat-value">{grades.filter(g => g.status === 'At Risk').length}</div>
+            <div className="stat-label">Need Improvement</div>
+          </div>
+          <div className="stat-card info">
+            <div className="stat-value">{grades.length}</div>
+            <div className="stat-label">Total Courses</div>
+          </div>
+        </div>
+      )}
+
       <div className="card fade-in">
-        <div className="card-body">
-          <EmptyState title="Grades Not Released" icon="Book" message="Your grades for the current semester have not been published yet." />
+        <div className="card-header"><h3 className="card-title">Course Grades</h3></div>
+        <div className="card-body" style={{ padding: 0 }}>
+          {grades.length > 0 ? (
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>Midterm</th>
+                  <th>Assignments</th>
+                  <th>Quizzes</th>
+                  <th>Current Grade</th>
+                  <th>Letter</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {grades.map((grade, i) => (
+                  <tr key={i}>
+                    <td>
+                      <b>{grade.course_code}</b>
+                      <br />
+                      <small style={{ color: 'var(--text-muted)' }}>{grade.course_name}</small>
+                    </td>
+                    <td>{grade.midterm_score.toFixed(1)}</td>
+                    <td>{grade.assignment_avg.toFixed(1)}</td>
+                    <td>{grade.quiz_avg.toFixed(1)}</td>
+                    <td><b style={{ color: getGradeColor(grade.status) }}>{grade.current_grade.toFixed(1)}</b></td>
+                    <td><span className={`badge badge-${grade.status === 'Excellent' || grade.status === 'Good' ? 'success' : 'warning'}`}>{grade.grade_letter}</span></td>
+                    <td>
+                      <span style={{ color: getGradeColor(grade.status), fontSize: '13px' }}>
+                        {grade.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <EmptyState title="No Grades Available" icon="Book" message="Your grades haven't been published yet." />
+          )}
         </div>
       </div>
+
+      {grades.some(g => g.status === 'At Risk' || g.status === 'Critical') && (
+        <div className="card fade-in" style={{ marginTop: '20px' }}>
+          <div className="card-body" style={{ padding: '16px', background: 'var(--warning-bg)', borderLeft: '4px solid var(--warning)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ fontSize: '24px' }}>⚠️</div>
+              <div>
+                <strong>Academic Alert</strong>
+                <div style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                  You have courses that need attention. Please consult with your teachers or use the AI Assistant for study recommendations.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+function StudentAssignments({ user }) {
+  const [assignments, setAssignments] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        const data = await fetchAPI(`/data/student/${studentId}/assignments`)
+        setAssignments(data || [])
+      } catch (e) {
+        console.error('Error loading assignments:', e)
+      }
+      setLoading(false)
+    }
+    load()
+  }, [user])
+
+  if (loading) return <LoadingSpinner />
+
+  const pendingAssignments = assignments.filter(a => !a.submitted)
+  const submittedAssignments = assignments.filter(a => a.submitted)
+  const gradedAssignments = submittedAssignments.filter(a => a.teacher_verified)
+
+  return (
+    <>
+      <div className="page-header">
+        <h1 className="page-title">My Assignments</h1>
+        <p className="page-description">Track your assignments and view AI-graded feedback</p>
+      </div>
+
+      <div className="stats-grid fade-in" style={{ marginBottom: '20px' }}>
+        <div className="stat-card warning">
+          <div className="stat-value">{pendingAssignments.length}</div>
+          <div className="stat-label">Not Submitted</div>
+        </div>
+        <div className="stat-card info">
+          <div className="stat-value">{submittedAssignments.length - gradedAssignments.length}</div>
+          <div className="stat-label">Under Review</div>
+        </div>
+        <div className="stat-card success">
+          <div className="stat-value">{gradedAssignments.length}</div>
+          <div className="stat-label">Graded</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-value">{assignments.length}</div>
+          <div className="stat-label">Total Assignments</div>
+        </div>
+      </div>
+
+      {pendingAssignments.length > 0 && (
+        <div className="card fade-in" style={{ marginBottom: '20px' }}>
+          <div className="card-header">
+            <h3 className="card-title">Pending Submissions ({pendingAssignments.length})</h3>
+          </div>
+          <div className="card-body" style={{ padding: 0 }}>
+            <table className="data-table">
+              <thead>
+                <tr><th>Course</th><th>Assignment</th><th>Due Date</th><th>Max Score</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                {pendingAssignments.map((assignment, i) => (
+                  <tr key={i}>
+                    <td><b>{assignment.course_code}</b></td>
+                    <td>{assignment.assignment_title}</td>
+                    <td>{assignment.due_date}</td>
+                    <td>{assignment.max_score}</td>
+                    <td><span className="badge badge-warning">Not Submitted</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {gradedAssignments.length > 0 && (
+        <div className="card fade-in" style={{ marginBottom: '20px' }}>
+          <div className="card-header">
+            <h3 className="card-title">Graded Assignments ({gradedAssignments.length})</h3>
+          </div>
+          <div className="card-body" style={{ padding: 0 }}>
+            <table className="data-table">
+              <thead>
+                <tr><th>Course</th><th>Assignment</th><th>AI Score</th><th>Final Score</th><th>Feedback</th></tr>
+              </thead>
+              <tbody>
+                {gradedAssignments.map((assignment, i) => (
+                  <tr key={i}>
+                    <td><b>{assignment.course_code}</b></td>
+                    <td>{assignment.assignment_title}</td>
+                    <td><span className="badge badge-info">{assignment.ai_score}/{assignment.max_score}</span></td>
+                    <td><span className="badge badge-success">{assignment.teacher_score}/{assignment.max_score}</span></td>
+                    <td style={{ maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {assignment.teacher_feedback || assignment.ai_feedback}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {submittedAssignments.length > gradedAssignments.length && (
+        <div className="card fade-in">
+          <div className="card-header">
+            <h3 className="card-title">Under Review ({submittedAssignments.length - gradedAssignments.length})</h3>
+          </div>
+          <div className="card-body" style={{ padding: 0 }}>
+            <table className="data-table">
+              <thead>
+                <tr><th>Course</th><th>Assignment</th><th>AI Score</th><th>AI Feedback</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                {submittedAssignments.filter(a => !a.teacher_verified).map((assignment, i) => (
+                  <tr key={i}>
+                    <td><b>{assignment.course_code}</b></td>
+                    <td>{assignment.assignment_title}</td>
+                    <td><span className="badge badge-info">{assignment.ai_score}/{assignment.max_score}</span></td>
+                    <td style={{ maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {assignment.ai_feedback}
+                    </td>
+                    <td><span className="badge badge-warning">Teacher Review</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {assignments.length === 0 && (
+        <EmptyState title="No Assignments" icon="FileText" message="You don't have any assignments yet." />
+      )}
+    </>
+  )
+}
+
+function StudentAttendance({ user }) {
+  const [attendance, setAttendance] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        const data = await fetchAPI(`/data/student/dashboard?student_id=${studentId}`)
+        setAttendance(data)
+      } catch (e) {
+        console.error('Error loading attendance:', e)
+      }
+      setLoading(false)
+    }
+    load()
+  }, [user])
+
+  if (loading) return <LoadingSpinner />
+
+  const attendanceRate = attendance?.attendance_rate || 0
+  const totalClasses = attendance?.total_classes || 0
+  const attended = attendance?.attended || 0
+  const absentDays = attendance?.absent_days || 0
+  const lateDays = 0 // Not in current data structure
+
+  const getAttendanceStatus = () => {
+    if (attendanceRate >= 90) return { label: 'Excellent', color: 'success' }
+    if (attendanceRate >= 75) return { label: 'Good', color: 'info' }
+    if (attendanceRate >= 60) return { label: 'Warning', color: 'warning' }
+    return { label: 'Critical', color: 'danger' }
+  }
+
+  const status = getAttendanceStatus()
+
+  return (
+    <>
+      <div className="page-header">
+        <h1 className="page-title">My Attendance</h1>
+        <p className="page-description">Track your class attendance and maintain good academic standing</p>
+      </div>
+
+      <div className="stats-grid fade-in" style={{ marginBottom: '20px' }}>
+        <div className={`stat-card ${status.color}`}>
+          <div className="stat-value">{attendanceRate.toFixed(1)}%</div>
+          <div className="stat-label">Attendance Rate</div>
+        </div>
+        <div className="stat-card success">
+          <div className="stat-value">{attended}</div>
+          <div className="stat-label">Classes Attended</div>
+        </div>
+        <div className="stat-card danger">
+          <div className="stat-value">{absentDays}</div>
+          <div className="stat-label">Absent Days</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-value">{totalClasses}</div>
+          <div className="stat-label">Total Classes</div>
+        </div>
+      </div>
+
+      <div className="content-grid content-grid-equal fade-in">
+        <div className="card">
+          <div className="card-header">
+            <h3 className="card-title">Attendance Summary</h3>
+            <span className={`badge badge-${status.color}`} style={{ marginLeft: '8px' }}>{status.label}</span>
+          </div>
+          <div className="card-body">
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span>Attendance Progress</span>
+                <span><b>{attendanceRate.toFixed(1)}%</b></span>
+              </div>
+              <div className="progress-bar" style={{ height: '12px' }}>
+                <div 
+                  className="progress-fill" 
+                  style={{ 
+                    width: `${attendanceRate}%`,
+                    background: attendanceRate >= 75 ? 'var(--success)' : 'var(--warning)'
+                  }}
+                ></div>
+              </div>
+            </div>
+
+            <div className="info-grid">
+              <div className="info-item">
+                <span className="info-label">Total Classes</span>
+                <span className="info-value">{totalClasses}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Attended</span>
+                <span className="info-value" style={{ color: 'var(--success)' }}>{attended}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Absent</span>
+                <span className="info-value" style={{ color: 'var(--danger)' }}>{absentDays}</span>
+              </div>
+              <div className="info-item">
+                <span className="info-label">Remaining</span>
+                <span className="info-value">{totalClasses - attended - absentDays}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="card-header"><h3 className="card-title">Attendance Guidelines</h3></div>
+          <div className="card-body">
+            <div style={{ marginBottom: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span className="badge badge-success">Excellent</span>
+                <span style={{ fontSize: '14px' }}>≥ 90%</span>
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginLeft: '24px' }}>
+                Outstanding attendance. Keep up the great work!
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span className="badge badge-info">Good</span>
+                <span style={{ fontSize: '14px' }}>75% - 89%</span>
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginLeft: '24px' }}>
+                Meeting minimum requirements. Try to improve further.
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span className="badge badge-warning">Warning</span>
+                <span style={{ fontSize: '14px' }}>60% - 74%</span>
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginLeft: '24px' }}>
+                Below requirements. Immediate improvement needed.
+              </p>
+            </div>
+
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span className="badge badge-danger">Critical</span>
+                <span style={{ fontSize: '14px' }}>&lt; 60%</span>
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginLeft: '24px' }}>
+                Critical level. May affect academic eligibility.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {attendanceRate < 75 && (
+        <div className="card fade-in" style={{ marginTop: '20px' }}>
+          <div className="card-body" style={{ padding: '16px', background: 'var(--warning-bg)', borderLeft: '4px solid var(--warning)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ fontSize: '24px' }}>⚠️</div>
+              <div>
+                <strong>Attendance Alert</strong>
+                <div style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                  Your attendance is below the required 75%. Please attend classes regularly to avoid academic consequences. 
+                  Contact your teachers if you have any concerns.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {attendanceRate >= 90 && (
+        <div className="card fade-in" style={{ marginTop: '20px' }}>
+          <div className="card-body" style={{ padding: '16px', background: 'var(--success-bg)', borderLeft: '4px solid var(--success)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ fontSize: '24px' }}>🎉</div>
+              <div>
+                <strong>Excellent Attendance!</strong>
+                <div style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '4px' }}>
+                  You're maintaining excellent attendance. Keep up the great work!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
@@ -1147,7 +2038,7 @@ function Sidebar({ activeNav, setActiveNav, user, onLogout }) {
       ]
     } else {
       return [
-        { group: 'Learning', items: [{ id: 'dashboard', label: 'Dashboard', icon: 'Dashboard' }, { id: 'grades', label: 'My Grades', icon: 'CheckCircle' }, { id: 'attendance', label: 'Attendance', icon: 'Clock' }] },
+        { group: 'Learning', items: [{ id: 'dashboard', label: 'Dashboard', icon: 'Dashboard' }, { id: 'grades', label: 'My Grades', icon: 'CheckCircle' }, { id: 'assignments', label: 'Assignments', icon: 'FileText' }, { id: 'attendance', label: 'Attendance', icon: 'Clock' }] },
         { group: 'Resources', items: [{ id: 'resources', label: 'Study Materials', icon: 'FileText' }, { id: 'ai-assistant', label: 'AI Assistant', icon: 'Bot' }] }
       ]
     }
@@ -1233,6 +2124,7 @@ function App() {
       switch (activeNav) {
         case 'dashboard': return <TeacherDashboard {...commonProps} />
         case 'courses': return <TeacherCoursesView {...commonProps} />
+        case 'ai-grading': return <AIGradingView {...commonProps} />
         case 'face-attendance': return <FaceAttendance {...commonProps} />
         case 'my-students': return <AdminStudentsView {...commonProps} /> // Reuse
         case 'alerts': return <RiskMonitorView {...commonProps} /> // Reuse
@@ -1244,6 +2136,7 @@ function App() {
       switch (activeNav) {
         case 'dashboard': return <StudentDashboard {...commonProps} />
         case 'grades': return <StudentGrades {...commonProps} />
+        case 'assignments': return <StudentAssignments {...commonProps} />
         case 'resources': return <ResourcesView {...commonProps} />
         case 'ai-assistant': return <AIAssistant {...commonProps} />
         default: return <EmptyState title="Coming Soon" icon="Settings" message="This module is under development." />
@@ -1251,7 +2144,7 @@ function App() {
     }
   }
 
-  const titles = { dashboard: 'Dashboard', students: 'Students', risk: 'Risk Monitor', courses: 'Courses', 'face-attendance': 'AI Attendance', 'my-students': 'My Students', alerts: 'Alerts', notifications: 'Notifications', resources: 'Resources', grades: 'Grades', 'ai-assistant': 'AI Assistant', schools: 'Schools', 'school-details': 'School Details', analytics: 'Analytics' }
+  const titles = { dashboard: 'Dashboard', students: 'Students', risk: 'Risk Monitor', courses: 'Courses', 'ai-grading': 'AI Grading', 'face-attendance': 'AI Attendance', 'my-students': 'My Students', alerts: 'Alerts', notifications: 'Notifications', resources: 'Resources', grades: 'Grades', assignments: 'Assignments', attendance: 'Attendance', 'ai-assistant': 'AI Assistant', schools: 'Schools', 'school-details': 'School Details', analytics: 'Analytics' }
 
   return (
     <div className="app">

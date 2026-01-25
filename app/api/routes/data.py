@@ -249,3 +249,113 @@ async def update_attendance(attendance_id: str, attended: int):
 @router.get("/exams")
 async def get_exams():
     return []
+
+@router.get("/student/dashboard")
+async def get_student_dashboard(student_id: str):
+    """Get dashboard data for a student."""
+    try:
+        # Get attendance
+        attendance_data = await csv_db._read_csv(f"{csv_db.data_dir}/attendance_summary.csv")
+        student_attendance = next((a for a in attendance_data if a["student_id"] == student_id), None)
+        
+        # Get grades
+        grades_data = await csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
+        student_grades = [g for g in grades_data if g["student_id"] == student_id]
+        
+        # Calculate average grade
+        avg_grade = 0
+        if student_grades:
+            total = sum(float(g["current_grade"]) for g in student_grades)
+            avg_grade = round(total / len(student_grades), 1)
+        
+        # Get submissions
+        submissions_data = await csv_db._read_csv(f"{csv_db.data_dir}/submissions.csv")
+        student_submissions = [s for s in submissions_data if s["student_id"] == student_id]
+        
+        return {
+            "attendance_rate": float(student_attendance["attendance_rate"]) * 100 if student_attendance else 0,
+            "total_classes": int(student_attendance["total_classes"]) if student_attendance else 0,
+            "attended": int(student_attendance["attended"]) if student_attendance else 0,
+            "absent_days": int(student_attendance["absent_days"]) if student_attendance else 0,
+            "avg_grade": avg_grade,
+            "total_courses": len(student_grades),
+            "total_submissions": len(student_submissions),
+            "pending_submissions": sum(1 for s in student_submissions if s["status"] == "pending_review")
+        }
+    except Exception as e:
+        print(f"Error getting student dashboard: {e}")
+        return {
+            "attendance_rate": 0,
+            "total_classes": 0,
+            "attended": 0,
+            "absent_days": 0,
+            "avg_grade": 0,
+            "total_courses": 0,
+            "total_submissions": 0,
+            "pending_submissions": 0
+        }
+
+@router.get("/student/{student_id}/grades")
+async def get_student_grades(student_id: str):
+    """Get grades for a student."""
+    try:
+        grades_data = await csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
+        student_grades = []
+        for g in grades_data:
+            if g["student_id"] == student_id:
+                student_grades.append({
+                    "course_code": g["course_code"],
+                    "course_name": g["course_name"],
+                    "midterm_score": float(g["midterm_score"]),
+                    "assignment_avg": float(g["assignment_avg"]),
+                    "quiz_avg": float(g["quiz_avg"]),
+                    "current_grade": float(g["current_grade"]),
+                    "grade_letter": g["grade_letter"],
+                    "status": g["status"]
+                })
+        return student_grades
+    except Exception as e:
+        print(f"Error getting student grades: {e}")
+        return []
+
+@router.get("/student/{student_id}/assignments")
+async def get_student_assignments(student_id: str):
+    """Get assignments and submissions for a student."""
+    try:
+        # Get student's courses from grades
+        grades_data = await csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
+        student_courses = list(set(g["course_code"] for g in grades_data if g["student_id"] == student_id))
+        
+        # Get all assignments for student's courses
+        assignments_data = await csv_db._read_csv(f"{csv_db.data_dir}/assignments.csv")
+        student_assignments = [a for a in assignments_data if a["course_code"] in student_courses]
+        
+        # Get student's submissions
+        submissions_data = await csv_db._read_csv(f"{csv_db.data_dir}/submissions.csv")
+        student_submissions = {s["assignment_id"]: s for s in submissions_data if s["student_id"] == student_id}
+        
+        result = []
+        for assignment in student_assignments:
+            submission = student_submissions.get(assignment["id"])
+            result.append({
+                "id": assignment["id"],
+                "course_code": assignment["course_code"],
+                "course_name": assignment["course_name"],
+                "assignment_title": assignment["assignment_title"],
+                "description": assignment["description"],
+                "max_score": int(assignment["max_score"]),
+                "due_date": assignment["due_date"],
+                "submitted": submission is not None,
+                "submission_id": submission["id"] if submission else None,
+                "ai_score": int(submission["ai_score"]) if submission and submission["ai_score"] else None,
+                "ai_feedback": submission["ai_feedback"] if submission else None,
+                "teacher_verified": submission["teacher_verified"] == "true" if submission else False,
+                "teacher_score": int(submission["teacher_score"]) if submission and submission["teacher_score"] else None,
+                "teacher_feedback": submission["teacher_feedback"] if submission else None,
+                "status": submission["status"] if submission else "not_submitted"
+            })
+        
+        return result
+    except Exception as e:
+        print(f"Error getting student assignments: {e}")
+        return []
