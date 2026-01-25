@@ -1,11 +1,11 @@
 id,registration_number,name,email,department,phone
-s-SoC-5-0,23SoC500,Student SoC 5-0,23soc500@uohyd.ac.in,Main Dept,9876543210
-s-SoC-5-1,23SoC501,Student SoC 5-1,23soc501@uohyd.ac.in,Main Dept,9876543210
-s-SoC-5-2,23SoC502,Student SoC 5-2,23soc502@uohyd.ac.in,Main Dept,9876543210
-s-SoC-5-3,23SoC503,Student SoC 5-3,23soc503@uohyd.ac.in,Main Dept,9876543210
-s-SoC-5-4,23SoC504,Student SoC 5-4,23soc504@uohyd.ac.in,Main Dept,9876543210
-s-SoC-5-5,23SoC505,Student SoC 5-5,23soc505@uohyd.ac.in,Main Dept,9876543210
-s-SoC-5-6,23SoC506,Student SoC 5-6,23soc506@uohyd.ac.in,Main Dept,9876543210
-s-SoC-5-7,23SoC507,Student SoC 5-7,23soc507@uohyd.ac.in,Main Dept,9876543210
-s-SoC-5-8,23SoC508,Student SoC 5-8,23soc508@uohyd.ac.in,Main Dept,9876543210
-s-SoC-5-9,23SoC509,Student SoC 5-9,23soc509@uohyd.ac.in,Main Dept,9876543210
+s-SoC-5-0,23SoC500,Student SoC 5-0,23soc500@uohyd.ac.in,M.Sc Organic Chemistry,9876543210
+s-SoC-5-1,23SoC501,Student SoC 5-1,23soc501@uohyd.ac.in,M.Sc Organic Chemistry,9876543210
+s-SoC-5-2,23SoC502,Student SoC 5-2,23soc502@uohyd.ac.in,M.Sc Organic Chemistry,9876543210
+s-SoC-5-3,23SoC503,Student SoC 5-3,23soc503@uohyd.ac.in,M.Sc Inorganic Chemistry,9876543210
+s-SoC-5-4,23SoC504,Student SoC 5-4,23soc504@uohyd.ac.in,M.Sc Inorganic Chemistry,9876543210
+s-SoC-5-5,23SoC505,Student SoC 5-5,23soc505@uohyd.ac.in,M.Sc Inorganic Chemistry,9876543210
+s-SoC-5-6,23SoC506,Student SoC 5-6,23soc506@uohyd.ac.in,M.Sc Physical Chemistry,9876543210
+s-SoC-5-7,23SoC507,Student SoC 5-7,23soc507@uohyd.ac.in,M.Sc Physical Chemistry,9876543210
+s-SoC-5-8,23SoC508,Student SoC 5-8,23soc508@uohyd.ac.in,M.Sc Physical Chemistry,9876543210
+s-SoC-5-9,23SoC509,Student SoC 5-9,23soc509@uohyd.ac.in,M.Sc Physical Chemistry,9876543210

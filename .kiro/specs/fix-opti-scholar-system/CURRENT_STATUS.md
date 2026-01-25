@@ -8,12 +8,14 @@
 
 ## Executive Summary
 
-TRACE is a fully functional academic management system for the University of Hyderabad with comprehensive dashboards for Admin, Teachers, and Students. The system currently operates on a CSV-based backend with 189 grade records, 170 attendance records, 25 AI-graded submissions, and data for 577 students across 5 schools.
+TRACE is a fully functional academic management system for the University of Hyderabad with comprehensive dashboards for Admin, Teachers, and Students. The system operates on a CSV-based backend with 189 grade records, 170 attendance records, 25 AI-graded submissions, and data for 630 students across 8 schools.
 
 **Current Status:** ✅ Core Features Operational  
+**System Name:** TRACE - Transparent Results & Attendance Compliance Engine  
 **Data Backend:** CSV-based (9 files)  
 **User Roles:** Admin, Teacher, Student (all functional)  
-**Test Data:** Comprehensive UoH-realistic data
+**Test Data:** Comprehensive UoH-realistic data for all 8 schools  
+**Sign Out:** ✅ Functional button in sidebar footer
 
 ---
 
@@ -27,7 +29,7 @@ TRACE is a fully functional academic management system for the University of Hyd
 - **Authentication:** Email-based with demo accounts
 
 ### Data Files
-1. `schools.csv` - 5 schools (SCIS, SoP, SoC, SMS, SLS)
+1. `schools.csv` - 8 schools (SCIS, SoP, SoC, SMS, SLS, SoE, SoH, SoSS)
 2. `users.csv` - User accounts (admin, teachers, students)
 3. `teacher_courses.csv` - Teacher-course assignments
 4. `course_attendance.csv` - 170 course attendance records
@@ -36,6 +38,17 @@ TRACE is a fully functional academic management system for the University of Hyd
 7. `assignments.csv` - 20 assignments across multiple courses
 8. `submissions.csv` - 25 submissions with AI grading
 9. `risk_assessments.csv` - 10 at-risk student records
+
+### Student Distribution by School
+- **SCIS** (Computer & Information Sciences): 97 students across 6 semesters
+- **SoP** (Physics): 114 students across 6 semesters
+- **SoC** (Chemistry): 75 students across 6 semesters
+- **SMS** (Mathematics & Statistics): 134 students across 6 semesters
+- **SLS** (Life Sciences): 114 students across 6 semesters
+- **SoE** (Economics): 34 students across 2 semesters
+- **SoH** (Humanities): 30 students across 2 semesters
+- **SoSS** (Social Sciences): 32 students across 2 semesters
+- **TOTAL**: 630 students
 
 ---
 
@@ -213,12 +226,15 @@ TRACE is a fully functional academic management system for the University of Hyd
 
 ## Data Statistics
 
-### Schools (5 Active)
+### Schools (8 Active)
 - **SCIS** - Computer & Information Sciences: 97 students
-- **SoP** - Physics: 15 students
-- **SoC** - Chemistry: 0 students (placeholder)
-- **SMS** - Mathematics & Statistics: 0 students (placeholder)
-- **SLS** - Life Sciences: 0 students (placeholder)
+- **SoP** - Physics: 114 students
+- **SoC** - Chemistry: 75 students
+- **SMS** - Mathematics & Statistics: 134 students
+- **SLS** - Life Sciences: 114 students
+- **SoE** - Economics: 34 students
+- **SoH** - Humanities: 30 students
+- **SoSS** - Social Sciences: 32 students
 
 ### Courses
 - **Total Courses:** 20+
@@ -229,11 +245,16 @@ TRACE is a fully functional academic management system for the University of Hyd
 - **Semester 1 Physics:** PHY501-PHY503 (3 courses)
 
 ### Students
-- **Total Students:** 577 (in system)
-- **Active Students:** 51 (with data)
-- **SCIS Semester 1:** 20 students
-- **SCIS Semester 2:** 16 students
-- **SoP Semester 1:** 15 students
+- **Total Students:** 630 (in system)
+- **Active Students:** 630 (with data across all schools)
+- **SCIS:** 97 students (6 semesters)
+- **SoP:** 114 students (6 semesters)
+- **SoC:** 75 students (6 semesters)
+- **SMS:** 134 students (6 semesters)
+- **SLS:** 114 students (6 semesters)
+- **SoE:** 34 students (2 semesters)
+- **SoH:** 30 students (2 semesters)
+- **SoSS:** 32 students (2 semesters)
 
 ### Academic Data
 - **Grade Records:** 189 entries

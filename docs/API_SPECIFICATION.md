@@ -1,6 +1,6 @@
-# 📡 Opti-Scholar: API Specification
+# 📡 TRACE: API Specification
 
-> RESTful API reference for the Opti-Scholar platform.
+> RESTful API reference for the TRACE platform (Transparent Results & Attendance Compliance Engine).
 
 ---
 
@@ -81,7 +81,7 @@ Check processing status of uploaded document.
   "student_id": "STU-404",
   "id_confidence": 0.94,
   "extraction_method": "ocr",
-  "document_url": "https://storage.opti-scholar.com/...",
+  "document_url": "https://storage.trace-system.com/...",
   "processing_time_ms": 2500
 }
 ```
@@ -451,7 +451,7 @@ Get personalized resource recommendations.
     {
       "title": "Heat Transfer Practice Quiz",
       "type": "quiz",
-      "url": "https://resources.opti-scholar.com/quiz/...",
+      "url": "https://resources.trace.com/quiz/...",
       "difficulty": "beginner",
       "relevance_score": 0.87,
       "question_count": 10

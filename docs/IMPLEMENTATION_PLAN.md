@@ -1,4 +1,4 @@
-# 🚀 Opti-Scholar: Implementation Plan
+# 🚀 TRACE: Implementation Plan
 
 > A phased development roadmap for building the complete platform.
 
@@ -23,8 +23,8 @@ mkdir -p app/{api,core,services} dashboard ml tests docs
 pip install fastapi uvicorn sqlalchemy alembic pydantic
 
 # Database
-docker run -d --name optischolar-db -p 5432:5432 \
-    -e POSTGRES_DB=opti_scholar \
+docker run -d --name trace-db -p 5432:5432 \
+    -e POSTGRES_DB=trace \
     -e POSTGRES_PASSWORD=dev123 \
     postgres:15
 ```
@@ -323,7 +323,7 @@ tenacity==8.2.3
 ```env
 # .env.example
 # Database
-DATABASE_URL=postgresql://user:pass@localhost:5432/opti_scholar
+DATABASE_URL=postgresql://user:pass@localhost:5432/trace
 
 # OpenAI
 OPENAI_API_KEY=sk-...
@@ -337,7 +337,7 @@ ANTHROPIC_MODEL=claude-3-opus-20240229
 S3_ENDPOINT=http://localhost:9000
 S3_ACCESS_KEY=minioadmin
 S3_SECRET_KEY=minioadmin
-S3_BUCKET=opti-scholar-docs
+S3_BUCKET=trace-docs
 
 # Security
 JWT_SECRET=your-secret-key

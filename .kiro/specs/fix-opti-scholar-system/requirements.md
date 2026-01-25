@@ -1,5 +1,7 @@
 # Requirements Document: TRACE System for University of Hyderabad
 
+**System Name:** TRACE - Transparent Results & Attendance Compliance Engine
+
 ## Introduction
 
 TRACE (Transparent Results & Attendance Compliance Engine) is an AI-powered academic assessment and student success platform designed specifically for the University of Hyderabad (UoH). The system supports UoH's multi-school hierarchical structure with role-based access for Admin, Teachers, and Students. The system has been successfully rebranded from Opti-Scholar to TRACE and now operates with a CSV-based data backend for rapid development and testing. This specification documents the current functional state and remaining features to be implemented for full UoH integration.

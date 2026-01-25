@@ -39,10 +39,47 @@
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
+/* Light Mode Theme - TRACE Colors */
+[data-theme="light"] {
+  /* TRACE Light Mode Colors */
+  --primary: #03045e;
+  --primary-dark: #02033d;
+  --primary-light: #0077b6;
+  --secondary: #0077b6;
+  --accent: #00b4d8;
+  --success: #22c55e;
+  --warning: #eab308;
+  --danger: #ef4444;
+  --info: #00b4d8;
+
+  /* Light Backgrounds */
+  --bg-dark: #ffffff;
+  --bg-primary: #caf0f8;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #90e0ef;
+  --bg-elevated: #00b4d8;
+
+  /* Light Text Colors */
+  --text-primary: #03045e;
+  --text-secondary: #0077b6;
+  --text-muted: #00b4d8;
+  --text-dim: #90e0ef;
+
+  /* Light Borders */
+  --border-color: #90e0ef;
+  --border-light: #caf0f8;
+
+  /* Light Shadows */
+  --shadow-sm: 0 1px 2px rgba(3, 4, 94, 0.1);
+  --shadow-md: 0 4px 12px rgba(3, 4, 94, 0.08);
+  --shadow-lg: 0 8px 24px rgba(3, 4, 94, 0.12);
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 body {

@@ -255,11 +255,11 @@ async def get_student_dashboard(student_id: str):
     """Get dashboard data for a student."""
     try:
         # Get attendance
-        attendance_data = await csv_db._read_csv(f"{csv_db.data_dir}/attendance_summary.csv")
+        attendance_data = csv_db._read_csv(f"{csv_db.data_dir}/attendance_summary.csv")
         student_attendance = next((a for a in attendance_data if a["student_id"] == student_id), None)
         
         # Get grades
-        grades_data = await csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
+        grades_data = csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
         student_grades = [g for g in grades_data if g["student_id"] == student_id]
         
         # Calculate average grade
@@ -269,7 +269,7 @@ async def get_student_dashboard(student_id: str):
             avg_grade = round(total / len(student_grades), 1)
         
         # Get submissions
-        submissions_data = await csv_db._read_csv(f"{csv_db.data_dir}/submissions.csv")
+        submissions_data = csv_db._read_csv(f"{csv_db.data_dir}/submissions.csv")
         student_submissions = [s for s in submissions_data if s["student_id"] == student_id]
         
         return {
@@ -299,7 +299,7 @@ async def get_student_dashboard(student_id: str):
 async def get_student_grades(student_id: str):
     """Get grades for a student."""
     try:
-        grades_data = await csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
+        grades_data = csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
         student_grades = []
         for g in grades_data:
             if g["student_id"] == student_id:
@@ -323,8 +323,8 @@ async def get_student_grades(student_id: str):
 async def get_student_courses(student_id: str):
     """Get courses for a student grouped by semester."""
     try:
-        grades_data = await csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
-        course_attendance = await csv_db._read_csv(f"{csv_db.data_dir}/course_attendance.csv")
+        grades_data = csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
+        course_attendance = csv_db._read_csv(f"{csv_db.data_dir}/course_attendance.csv")
         
         # Get unique courses for student
         courses_by_semester = {}
@@ -359,15 +359,15 @@ async def get_student_assignments(student_id: str):
     """Get assignments and submissions for a student."""
     try:
         # Get student's courses from grades
-        grades_data = await csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
+        grades_data = csv_db._read_csv(f"{csv_db.data_dir}/grades_summary.csv")
         student_courses = list(set(g["course_code"] for g in grades_data if g["student_id"] == student_id))
         
         # Get all assignments for student's courses
-        assignments_data = await csv_db._read_csv(f"{csv_db.data_dir}/assignments.csv")
+        assignments_data = csv_db._read_csv(f"{csv_db.data_dir}/assignments.csv")
         student_assignments = [a for a in assignments_data if a["course_code"] in student_courses]
         
         # Get student's submissions
-        submissions_data = await csv_db._read_csv(f"{csv_db.data_dir}/submissions.csv")
+        submissions_data = csv_db._read_csv(f"{csv_db.data_dir}/submissions.csv")
         student_submissions = {s["assignment_id"]: s for s in submissions_data if s["student_id"] == student_id}
         
         result = []

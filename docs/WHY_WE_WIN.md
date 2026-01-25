@@ -1,4 +1,4 @@
-# 🏆 Opti-Scholar: Why We Win
+# 🏆 TRACE: Why We Win
 
 > A strategic analysis of hackathon-winning differentiators.
 
@@ -27,7 +27,7 @@ Unlike competitors who build monolithic AI grading systems, we designed 15 indep
 
 **Why Judges Love It:**
 
-| Aspect | Monolithic (Competitors) | Opti-Scholar |
+| Aspect | Monolithic (Competitors) | TRACE |
 |--------|--------------------------|--------------|
 | Debugging | "The AI broke" | "Semantic Scorer returned low confidence" |
 | Demo Risk | All or nothing | Show Pattern Miner even if Grading fails |
@@ -163,7 +163,7 @@ Attendance Data → Pattern Miner → Correlation Engine → Risk Classifier
 
 ## 📊 Competitive Analysis
 
-| Feature | Gradescope | Turnitin | Opti-Scholar |
+| Feature | Gradescope | Turnitin | TRACE |
 |---------|------------|----------|--------------|
 | AI Grading | ✅ Basic | ❌ | ✅ Advanced (semantic + partial credit) |
 | Confidence Flagging | ❌ | ❌ | ✅ Per-grade |

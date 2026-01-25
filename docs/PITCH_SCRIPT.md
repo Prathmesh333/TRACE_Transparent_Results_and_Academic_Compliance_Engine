@@ -1,4 +1,4 @@
-# 🎤 Opti-Scholar: Pitch Deck Script
+# 🎤 TRACE: Pitch Deck Script
 
 > A 5-minute presentation narrative for hackathon judges.
 
@@ -14,7 +14,7 @@
 
 > *"What if that same teacher could grade every paper in 2 hours—AND know exactly which students are about to fail, before it happens?"*
 
-> *"This is Opti-Scholar."*
+> *"This is TRACE."*
 
 ---
 
@@ -42,7 +42,7 @@
 
 **[SLIDE 3: Solution Overview]**
 
-> *"Opti-Scholar is an intelligent academic assessment platform with 15 micro-components across 5 layers."*
+> *"TRACE is an intelligent academic assessment platform with 15 micro-components across 5 layers."*
 
 *[SLIDE 4: Architecture Diagram]*
 
@@ -69,7 +69,7 @@
 
 **[SLIDE 5: Differentiators]**
 
-> *"Three reasons Opti-Scholar isn't just another EdTech AI:"*
+> *"Three reasons TRACE isn't just another EdTech AI:"*
 
 **1. Micro-Component Architecture**
 > *"This isn't a monolithic black box. Each of our 15 components is debuggable, swappable, and demonstrable independently. If grading fails during demo, we still show the amazing pattern miner."*
@@ -153,7 +153,7 @@
 
 **[SLIDE 10: Team & Contact]**
 
-> *"Thank you. We're the Opti-Scholar team, and we believe every student deserves personalized attention—at scale."*
+> *"Thank you. We're the TRACE team, and we believe every student deserves personalized attention—at scale."*
 
 > *"Questions?"*
 

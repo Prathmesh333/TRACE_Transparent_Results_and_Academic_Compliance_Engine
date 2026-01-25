@@ -1,4 +1,4 @@
-# 🏗️ Opti-Scholar: Technical Architecture
+# 🏗️ TRACE: Technical Architecture
 
 > A deep-dive into the micro-component architecture powering intelligent academic assessment.
 
@@ -21,7 +21,7 @@
 
 Traditional monolithic AI systems fail in education contexts because:
 
-| Problem | Monolithic Approach | Opti-Scholar Approach |
+| Problem | Monolithic Approach | TRACE Approach |
 |---------|--------------------|-----------------------|
 | Debugging | "The AI broke" | "The Semantic Scorer returned low confidence" |
 | Scalability | Rewrite everything | Swap GPT-4 for Claude in one config change |
@@ -715,4 +715,4 @@ CREATE TABLE audit_log (
 
 ---
 
-*Architecture Document v1.0 | Opti-Scholar Team*
+*Architecture Document v1.0 | TRACE Team*

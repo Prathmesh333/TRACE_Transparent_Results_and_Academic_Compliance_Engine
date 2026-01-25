@@ -122,8 +122,10 @@ async def demo_login(login_data: LoginRequest):
     profile_data = {}
     
     if user["role"] == "student":
-        # Mock profile data for CSV mode
-         profile_data = {
+        # Get student_id from user record
+        student_id = user.get("student_id", "")
+        profile_data = {
+            "student_id": student_id,
             "registration_number": "2023101103",
             "school_id": "1",
             "department": "SCIS",

@@ -1,11 +1,11 @@
-id,email,password,role,full_name
-u1,admin@uohyd.ac.in,demo123,admin,Dr. Rajesh Kumar (System Admin)
-u2,teacher@uohyd.ac.in,demo123,teacher,Dr. Anjali Verma
-u3,student@uohyd.ac.in,demo123,student,Aarav Sharma
-u4,pjn@uohyd.ac.in,demo123,admin,Prof. P. J. Narayanan
-u5,23scis100@uohyd.ac.in,demo123,student,Aarav Sharma
-u6,23scis101@uohyd.ac.in,demo123,student,Priya Patel
-u7,23scis102@uohyd.ac.in,demo123,student,Rohan Kumar
-u8,23scis103@uohyd.ac.in,demo123,student,Ananya Reddy
-u9,faculty.cs@uohyd.ac.in,demo123,teacher,Dr. Suresh Babu
-u10,faculty.ai@uohyd.ac.in,demo123,teacher,Dr. Lakshmi Narasimhan
+id,email,password,role,full_name,student_id
+u1,admin@uohyd.ac.in,demo123,admin,Dr. Rajesh Kumar (System Admin),
+u2,teacher@uohyd.ac.in,demo123,teacher,Dr. Anjali Verma,
+u3,student@uohyd.ac.in,demo123,student,Aarav Sharma,s-SCIS-1-0
+u4,pjn@uohyd.ac.in,demo123,admin,Prof. P. J. Narayanan,
+u5,23scis100@uohyd.ac.in,demo123,student,Aarav Sharma,s-SCIS-1-0
+u6,23scis101@uohyd.ac.in,demo123,student,Priya Patel,s-SCIS-1-1
+u7,23scis102@uohyd.ac.in,demo123,student,Rohan Kumar,s-SCIS-1-2
+u8,23scis103@uohyd.ac.in,demo123,student,Ananya Reddy,s-SCIS-1-3
+u9,faculty.cs@uohyd.ac.in,demo123,teacher,Dr. Suresh Babu,
+u10,faculty.ai@uohyd.ac.in,demo123,teacher,Dr. Lakshmi Narasimhan,

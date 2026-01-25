@@ -1,9 +1,9 @@
-# Opti-Scholar Implementation Status
+# TRACE Implementation Status
 
 ## Date: January 25, 2026
 
 ## Overview
-This document tracks the implementation progress of the Opti-Scholar system for University of Hyderabad (UoH).
+This document tracks the implementation progress of the TRACE system for University of Hyderabad (UoH).
 
 ---
 

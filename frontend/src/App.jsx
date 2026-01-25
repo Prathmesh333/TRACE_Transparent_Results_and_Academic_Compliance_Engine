@@ -41,7 +41,9 @@ const Icons = {
   Building: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2" /><line x1="9" y1="22" x2="9" y2="2" /><line x1="14" y1="2" x2="14" y2="22" /></svg>,
   Message: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>,
   Search: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>,
-  Bot: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="10" rx="2" /><circle cx="12" cy="5" r="2" /><path d="M12 7v4" /><line x1="8" y1="16" x2="8" y2="16" /><line x1="16" y1="16" x2="16" y2="16" /></svg>
+  Bot: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="10" rx="2" /><circle cx="12" cy="5" r="2" /><path d="M12 7v4" /><line x1="8" y1="16" x2="8" y2="16" /><line x1="16" y1="16" x2="16" y2="16" /></svg>,
+  Sun: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" /></svg>,
+  Moon: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
 }
 
 // Mini Sparkline Graph
@@ -190,12 +192,19 @@ function AdminDashboard({ user }) {
       </div>
 
       <div className="schools-grid fade-in">
-        {['SCIS', 'SoP', 'SoC', 'SMS', 'SLS'].map((code, i) => (
+        {['SCIS', 'SoP', 'SoC', 'SMS', 'SLS', 'SoE', 'SoH', 'SoSS'].map((code, i) => (
           <div key={i} className="school-card">
             <div className="school-icon">{Icons.Building()}</div>
             <div className="school-code">{code}</div>
             <div className="school-name">{{
-              SCIS: 'Computer & Information Sciences', SoP: 'Physics', SoC: 'Chemistry', SMS: 'Maths & Stats', SLS: 'Life Sciences'
+              SCIS: 'Computer & Information Sciences', 
+              SoP: 'Physics', 
+              SoC: 'Chemistry', 
+              SMS: 'Maths & Stats', 
+              SLS: 'Life Sciences',
+              SoE: 'Economics',
+              SoH: 'Humanities',
+              SoSS: 'Social Sciences'
             }[code]}</div>
           </div>
         ))}
@@ -365,7 +374,10 @@ function AdminAnalyticsView() {
                 'SoP': 'Physics',
                 'SoC': 'Chemistry',
                 'SMS': 'Mathematics & Statistics',
-                'SLS': 'Life Sciences'
+                'SLS': 'Life Sciences',
+                'SoE': 'Economics',
+                'SoH': 'Humanities',
+                'SoSS': 'Social Sciences'
               }
               const maxCount = Math.max(...Object.values(data.department_distribution))
               return (
@@ -1326,8 +1338,8 @@ function StudentDashboard({ user }) {
   useEffect(() => {
     async function loadData() {
       try {
-        // Use student ID from user object or construct from email
-        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        // Use student_id from user object
+        const studentId = user.student_id || 's-SCIS-1-0' // Fallback for demo
         const data = await fetchAPI(`/data/student/dashboard?student_id=${studentId}`)
         setStats(data)
       } catch (e) {
@@ -1467,7 +1479,7 @@ function StudentGrades({ user }) {
   useEffect(() => {
     async function load() {
       try {
-        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        const studentId = user.student_id || 's-SCIS-1-0' // Fallback for demo
         const data = await fetchAPI(`/data/student/${studentId}/grades`)
         
         // Group grades by semester
@@ -1609,7 +1621,7 @@ function StudentCourses({ user }) {
   useEffect(() => {
     async function load() {
       try {
-        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        const studentId = user.student_id || 's-SCIS-1-0' // Fallback for demo
         const data = await fetchAPI(`/data/student/${studentId}/courses`)
         setCoursesBySemester(data || {})
       } catch (e) {
@@ -1733,11 +1745,15 @@ function StudentCourses({ user }) {
 function StudentAssignments({ user }) {
   const [assignments, setAssignments] = useState([])
   const [loading, setLoading] = useState(true)
+  const [uploading, setUploading] = useState(false)
+  const [uploadSuccess, setUploadSuccess] = useState(null)
+  const [selectedAssignment, setSelectedAssignment] = useState(null)
+  const fileInputRef = useRef(null)
 
   useEffect(() => {
     async function load() {
       try {
-        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        const studentId = user.student_id || 's-SCIS-1-0' // Fallback for demo
         const data = await fetchAPI(`/data/student/${studentId}/assignments`)
         setAssignments(data || [])
       } catch (e) {
@@ -1747,6 +1763,62 @@ function StudentAssignments({ user }) {
     }
     load()
   }, [user])
+
+  const handleFileUpload = async (event, assignment) => {
+    const file = event.target.files[0]
+    if (!file) return
+
+    // Validate file type
+    if (!file.name.endsWith('.txt')) {
+      alert('Please upload a .txt file only')
+      return
+    }
+
+    setUploading(true)
+    setUploadSuccess(null)
+
+    try {
+      // Read file content
+      const text = await file.text()
+      
+      // Submit to backend for AI grading
+      const response = await fetch(`${API_BASE}/grading/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          student_id: user.student_id || 's-SCIS-1-0',
+          student_name: user.name,
+          assignment_id: assignment.assignment_id,
+          assignment_title: assignment.assignment_title,
+          course_code: assignment.course_code,
+          submission_text: text,
+          max_score: assignment.max_score
+        })
+      })
+
+      if (response.ok) {
+        const result = await response.json()
+        setUploadSuccess({
+          assignment: assignment.assignment_title,
+          ai_score: result.ai_score,
+          ai_feedback: result.ai_feedback
+        })
+        
+        // Reload assignments to show updated status
+        const studentId = user.student_id || 's-SCIS-1-0'
+        const data = await fetchAPI(`/data/student/${studentId}/assignments`)
+        setAssignments(data || [])
+      } else {
+        alert('Failed to submit assignment. Please try again.')
+      }
+    } catch (error) {
+      console.error('Upload error:', error)
+      alert('Error uploading file. Please try again.')
+    } finally {
+      setUploading(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
 
   if (loading) return <LoadingSpinner />
 
@@ -1760,6 +1832,24 @@ function StudentAssignments({ user }) {
         <h1 className="page-title">My Assignments</h1>
         <p className="page-description">Track your assignments and view AI-graded feedback</p>
       </div>
+
+      {uploadSuccess && (
+        <div className="card fade-in" style={{ marginBottom: '20px', background: 'rgba(34, 197, 94, 0.1)', borderColor: 'var(--success)' }}>
+          <div className="card-body">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ color: 'var(--success)' }}>{Icons.CheckCircle()}</div>
+              <div>
+                <h4 style={{ color: 'var(--success)', marginBottom: '4px' }}>Submission Successful!</h4>
+                <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: 0 }}>
+                  <b>{uploadSuccess.assignment}</b> has been submitted and graded by AI. 
+                  Score: <b>{uploadSuccess.ai_score}</b> • Awaiting teacher review.
+                </p>
+              </div>
+              <button className="btn btn-sm btn-ghost" onClick={() => setUploadSuccess(null)} style={{ marginLeft: 'auto' }}>×</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="stats-grid fade-in" style={{ marginBottom: '20px' }}>
         <div className="stat-card warning">
@@ -1788,7 +1878,7 @@ function StudentAssignments({ user }) {
           <div className="card-body" style={{ padding: 0 }}>
             <table className="data-table">
               <thead>
-                <tr><th>Course</th><th>Assignment</th><th>Due Date</th><th>Max Score</th><th>Status</th></tr>
+                <tr><th>Course</th><th>Assignment</th><th>Due Date</th><th>Max Score</th><th>Action</th></tr>
               </thead>
               <tbody>
                 {pendingAssignments.map((assignment, i) => (
@@ -1797,7 +1887,19 @@ function StudentAssignments({ user }) {
                     <td>{assignment.assignment_title}</td>
                     <td>{assignment.due_date}</td>
                     <td>{assignment.max_score}</td>
-                    <td><span className="badge badge-warning">Not Submitted</span></td>
+                    <td>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept=".txt"
+                        style={{ display: 'none' }}
+                        onChange={(e) => handleFileUpload(e, assignment)}
+                        id={`file-upload-${i}`}
+                      />
+                      <label htmlFor={`file-upload-${i}`} className="btn btn-sm btn-primary" style={{ cursor: 'pointer', margin: 0 }}>
+                        {uploading ? 'Uploading...' : 'Upload .txt'}
+                      </label>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -1876,7 +1978,7 @@ function StudentAttendance({ user }) {
   useEffect(() => {
     async function load() {
       try {
-        const studentId = user.id || 's-SCIS-1-0' // Fallback for demo
+        const studentId = user.student_id || 's-SCIS-1-0' // Fallback for demo
         const data = await fetchAPI(`/data/student/dashboard?student_id=${studentId}`)
         setAttendance(data)
       } catch (e) {
@@ -2228,11 +2330,16 @@ function Sidebar({ activeNav, setActiveNav, user, onLogout }) {
   )
 }
 
-function TopBar({ title, user }) {
+function TopBar({ title, user, theme, toggleTheme }) {
   return (
     <header className="topbar">
       <div className="topbar-left"><div className="breadcrumb"><span>UoH Academic</span><span style={{ margin: '0 8px' }}>/</span><span className="breadcrumb-current">{title}</span></div></div>
-      <div className="topbar-right"><span className={`role-badge role-${user.role}`}>{user.role}</span></div>
+      <div className="topbar-right">
+        <button className="icon-btn" onClick={toggleTheme} title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+          {theme === 'dark' ? Icons.Sun() : Icons.Moon()}
+        </button>
+        <span className={`role-badge role-${user.role}`}>{user.role}</span>
+      </div>
     </header>
   )
 }
@@ -2242,6 +2349,20 @@ function App() {
   const [activeNav, setActiveNav] = useState('dashboard')
   const [selectedSchool, setSelectedSchool] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [theme, setTheme] = useState(() => {
+    // Load theme from localStorage or default to 'dark'
+    return localStorage.getItem('uoh_theme') || 'dark'
+  })
+
+  // Apply theme to document root
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('uoh_theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark')
+  }
 
   useEffect(() => {
     const savedUser = localStorage.getItem('uoh_user')
@@ -2306,7 +2427,7 @@ function App() {
     <div className="app">
       <Sidebar activeNav={activeNav} setActiveNav={setActiveNav} user={user} onLogout={handleLogout} />
       <main className="main-content">
-        <TopBar title={titles[activeNav] || 'Dashboard'} user={user} />
+        <TopBar title={titles[activeNav] || 'Dashboard'} user={user} theme={theme} toggleTheme={toggleTheme} />
         <div className="page-container">{renderPage()}</div>
       </main>
     </div>

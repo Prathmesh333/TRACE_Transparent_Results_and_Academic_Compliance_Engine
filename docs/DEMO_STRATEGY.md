@@ -1,4 +1,4 @@
-# 🎬 Opti-Scholar: Demo Strategy Guide
+# 🎬 TRACE: Demo Strategy Guide
 
 > Ensuring a flawless live demonstration.
 
@@ -134,7 +134,7 @@
 **Action:** Show recommendation panel
 
 **Say:**
-> *"And Opti-Scholar doesn't just flag—it acts."*
+> *"And TRACE doesn't just flag—it acts."*
 
 **Show:**
 - Recommended resource: "Thermodynamics Remedial Video"

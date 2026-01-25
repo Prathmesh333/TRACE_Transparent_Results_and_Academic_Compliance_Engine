@@ -1,29 +1,29 @@
 id,registration_number,name,email,department,phone
-s-SMS-5-0,23SMS500,Student SMS 5-0,23sms500@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-1,23SMS501,Student SMS 5-1,23sms501@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-2,23SMS502,Student SMS 5-2,23sms502@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-3,23SMS503,Student SMS 5-3,23sms503@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-4,23SMS504,Student SMS 5-4,23sms504@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-5,23SMS505,Student SMS 5-5,23sms505@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-6,23SMS506,Student SMS 5-6,23sms506@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-7,23SMS507,Student SMS 5-7,23sms507@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-8,23SMS508,Student SMS 5-8,23sms508@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-9,23SMS509,Student SMS 5-9,23sms509@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-10,23SMS510,Student SMS 5-10,23sms510@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-11,23SMS511,Student SMS 5-11,23sms511@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-12,23SMS512,Student SMS 5-12,23sms512@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-13,23SMS513,Student SMS 5-13,23sms513@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-14,23SMS514,Student SMS 5-14,23sms514@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-15,23SMS515,Student SMS 5-15,23sms515@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-16,23SMS516,Student SMS 5-16,23sms516@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-17,23SMS517,Student SMS 5-17,23sms517@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-18,23SMS518,Student SMS 5-18,23sms518@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-19,23SMS519,Student SMS 5-19,23sms519@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-20,23SMS520,Student SMS 5-20,23sms520@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-21,23SMS521,Student SMS 5-21,23sms521@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-22,23SMS522,Student SMS 5-22,23sms522@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-23,23SMS523,Student SMS 5-23,23sms523@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-24,23SMS524,Student SMS 5-24,23sms524@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-25,23SMS525,Student SMS 5-25,23sms525@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-26,23SMS526,Student SMS 5-26,23sms526@uohyd.ac.in,Main Dept,9876543210
-s-SMS-5-27,23SMS527,Student SMS 5-27,23sms527@uohyd.ac.in,Main Dept,9876543210
+s-SMS-5-0,23SMS500,Student SMS 5-0,23sms500@uohyd.ac.in,M.Sc Mathematics,9876543210
+s-SMS-5-1,23SMS501,Student SMS 5-1,23sms501@uohyd.ac.in,M.Sc Mathematics,9876543210
+s-SMS-5-2,23SMS502,Student SMS 5-2,23sms502@uohyd.ac.in,M.Sc Mathematics,9876543210
+s-SMS-5-3,23SMS503,Student SMS 5-3,23sms503@uohyd.ac.in,M.Sc Mathematics,9876543210
+s-SMS-5-4,23SMS504,Student SMS 5-4,23sms504@uohyd.ac.in,M.Sc Mathematics,9876543210
+s-SMS-5-5,23SMS505,Student SMS 5-5,23sms505@uohyd.ac.in,M.Sc Mathematics,9876543210
+s-SMS-5-6,23SMS506,Student SMS 5-6,23sms506@uohyd.ac.in,M.Sc Mathematics,9876543210
+s-SMS-5-7,23SMS507,Student SMS 5-7,23sms507@uohyd.ac.in,M.Sc Mathematics,9876543210
+s-SMS-5-8,23SMS508,Student SMS 5-8,23sms508@uohyd.ac.in,M.Sc Mathematics,9876543210
+s-SMS-5-9,23SMS509,Student SMS 5-9,23sms509@uohyd.ac.in,M.Sc Statistics,9876543210
+s-SMS-5-10,23SMS510,Student SMS 5-10,23sms510@uohyd.ac.in,M.Sc Statistics,9876543210
+s-SMS-5-11,23SMS511,Student SMS 5-11,23sms511@uohyd.ac.in,M.Sc Statistics,9876543210
+s-SMS-5-12,23SMS512,Student SMS 5-12,23sms512@uohyd.ac.in,M.Sc Statistics,9876543210
+s-SMS-5-13,23SMS513,Student SMS 5-13,23sms513@uohyd.ac.in,M.Sc Statistics,9876543210
+s-SMS-5-14,23SMS514,Student SMS 5-14,23sms514@uohyd.ac.in,M.Sc Statistics,9876543210
+s-SMS-5-15,23SMS515,Student SMS 5-15,23sms515@uohyd.ac.in,M.Sc Statistics,9876543210
+s-SMS-5-16,23SMS516,Student SMS 5-16,23sms516@uohyd.ac.in,M.Sc Statistics,9876543210
+s-SMS-5-17,23SMS517,Student SMS 5-17,23sms517@uohyd.ac.in,M.Sc Statistics,9876543210
+s-SMS-5-18,23SMS518,Student SMS 5-18,23sms518@uohyd.ac.in,M.Sc Applied Mathematics,9876543210
+s-SMS-5-19,23SMS519,Student SMS 5-19,23sms519@uohyd.ac.in,M.Sc Applied Mathematics,9876543210
+s-SMS-5-20,23SMS520,Student SMS 5-20,23sms520@uohyd.ac.in,M.Sc Applied Mathematics,9876543210
+s-SMS-5-21,23SMS521,Student SMS 5-21,23sms521@uohyd.ac.in,M.Sc Applied Mathematics,9876543210
+s-SMS-5-22,23SMS522,Student SMS 5-22,23sms522@uohyd.ac.in,M.Sc Applied Mathematics,9876543210
+s-SMS-5-23,23SMS523,Student SMS 5-23,23sms523@uohyd.ac.in,M.Sc Applied Mathematics,9876543210
+s-SMS-5-24,23SMS524,Student SMS 5-24,23sms524@uohyd.ac.in,M.Sc Applied Mathematics,9876543210
+s-SMS-5-25,23SMS525,Student SMS 5-25,23sms525@uohyd.ac.in,M.Sc Applied Mathematics,9876543210
+s-SMS-5-26,23SMS526,Student SMS 5-26,23sms526@uohyd.ac.in,M.Sc Applied Mathematics,9876543210
+s-SMS-5-27,23SMS527,Student SMS 5-27,23sms527@uohyd.ac.in,M.Sc Applied Mathematics,9876543210

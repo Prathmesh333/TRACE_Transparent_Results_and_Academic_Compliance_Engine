@@ -561,9 +561,21 @@ Be fair, constructive, and specific in your evaluation."""
         """Get attendance statistics."""
         attendance_data = self._read_csv(f"{self.data_dir}/attendance_summary.csv")
         
-        total_students = len(attendance_data)
+        # Get actual total students from all schools
+        schools = self._read_csv(f"{self.data_dir}/schools.csv")
+        actual_total_students = 0
+        for school in schools:
+            students_dir = f"{self.data_dir}/{school['code']}/students"
+            if os.path.exists(students_dir):
+                for fname in os.listdir(students_dir):
+                    if fname.endswith('.csv'):
+                        students = self._read_csv(f"{students_dir}/{fname}")
+                        actual_total_students += len(students)
+        
+        # Calculate attendance stats from attendance_summary.csv
+        students_with_attendance = len(attendance_data)
         total_attendance = sum(float(r["attendance_rate"]) for r in attendance_data)
-        avg_attendance = (total_attendance / total_students * 100) if total_students > 0 else 0
+        avg_attendance = (total_attendance / students_with_attendance * 100) if students_with_attendance > 0 else 0
         
         # Count by attendance ranges
         excellent = sum(1 for r in attendance_data if float(r["attendance_rate"]) >= 0.90)
@@ -572,7 +584,8 @@ Be fair, constructive, and specific in your evaluation."""
         
         return {
             "average_attendance": round(avg_attendance, 1),
-            "total_students": total_students,
+            "total_students": actual_total_students,  # Use actual total from all schools
+            "students_with_attendance": students_with_attendance,  # Students with attendance records
             "excellent_attendance": excellent,
             "good_attendance": good,
             "poor_attendance": poor,

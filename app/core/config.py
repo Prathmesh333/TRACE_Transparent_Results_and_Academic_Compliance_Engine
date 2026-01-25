@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     )
     
     # Application
-    app_name: str = "Opti-Scholar"
+    app_name: str = "TRACE"
     app_version: str = "1.0.0"
     debug: bool = False
     

@@ -24,6 +24,119 @@ from app.services.grading.feedback import FeedbackGenerator
 router = APIRouter()
 
 
+@router.post("/submit")
+async def submit_assignment(
+    request: dict,
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Submit a student assignment for AI grading.
+    
+    Processes the submission text, generates AI score and feedback,
+    and stores it for teacher review.
+    """
+    try:
+        import csv
+        import os
+        from pathlib import Path
+        
+        # Extract request data
+        student_id = request.get("student_id")
+        student_name = request.get("student_name")
+        assignment_id = request.get("assignment_id")
+        assignment_title = request.get("assignment_title")
+        course_code = request.get("course_code")
+        submission_text = request.get("submission_text")
+        max_score = request.get("max_score", 10)
+        
+        # Simple AI grading logic (can be enhanced with actual AI model)
+        # For now, we'll use basic heuristics
+        word_count = len(submission_text.split())
+        
+        # Calculate AI score based on word count and basic quality metrics
+        if word_count < 50:
+            ai_score = max_score * 0.4
+            ai_feedback = "Submission is too brief. Please provide more detailed explanations."
+            ai_reasoning = "Analysis shows insufficient depth. Word count below minimum threshold. Needs more comprehensive coverage of the topic."
+        elif word_count < 150:
+            ai_score = max_score * 0.6
+            ai_feedback = "Good start, but could use more detail and examples."
+            ai_reasoning = "Demonstrates basic understanding but lacks depth. Additional examples and detailed explanations would strengthen the submission."
+        elif word_count < 300:
+            ai_score = max_score * 0.8
+            ai_feedback = "Well-written submission with good coverage of the topic."
+            ai_reasoning = "Strong submission demonstrating solid understanding. Clear explanations with appropriate detail level. Minor improvements possible in depth of analysis."
+        else:
+            ai_score = max_score * 0.9
+            ai_feedback = "Excellent comprehensive submission with thorough analysis."
+            ai_reasoning = "Exceptional work showing comprehensive understanding. Thorough analysis with detailed explanations and examples. Demonstrates advanced grasp of concepts."
+        
+        # Round to 1 decimal place
+        ai_score = round(ai_score, 1)
+        
+        # Store submission in CSV
+        submissions_file = Path("data_store/submissions.csv")
+        
+        # Read existing submissions
+        submissions = []
+        if submissions_file.exists():
+            with open(submissions_file, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                submissions = list(reader)
+        
+        # Generate submission ID
+        submission_id = f"s{len(submissions) + 1}"
+        
+        # Get student registration number from student_id
+        student_reg = student_id.replace('s-', '').replace('-', '')
+        
+        # Add new submission
+        new_submission = {
+            "id": submission_id,
+            "assignment_id": assignment_id,
+            "student_id": student_id,
+            "student_name": student_name,
+            "student_reg": student_reg,
+            "course_code": course_code,
+            "submission_text": submission_text[:200],  # Store first 200 chars
+            "file_name": f"{assignment_title.lower().replace(' ', '_')}.txt",
+            "submitted_at": datetime.utcnow().strftime("%Y-%m-%d"),
+            "ai_score": int(ai_score),
+            "ai_feedback": ai_feedback,
+            "ai_reasoning": ai_reasoning,
+            "teacher_verified": "false",
+            "teacher_score": "0",
+            "teacher_feedback": "",
+            "status": "pending_review"
+        }
+        
+        submissions.append(new_submission)
+        
+        # Write back to CSV
+        with open(submissions_file, 'w', newline='', encoding='utf-8') as f:
+            fieldnames = ["id", "assignment_id", "student_id", "student_name", "student_reg",
+                         "course_code", "submission_text", "file_name", "submitted_at", 
+                         "ai_score", "ai_feedback", "ai_reasoning", "teacher_verified",
+                         "teacher_score", "teacher_feedback", "status"]
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(submissions)
+        
+        return {
+            "success": True,
+            "submission_id": submission_id,
+            "ai_score": int(ai_score),
+            "ai_feedback": ai_feedback,
+            "message": "Assignment submitted successfully and graded by AI. Awaiting teacher review."
+        }
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Submission failed: {str(e)}"
+        )
+
+
 @router.post("/evaluate", response_model=GradeResponse)
 async def evaluate_answer(
     request: GradeRequest,

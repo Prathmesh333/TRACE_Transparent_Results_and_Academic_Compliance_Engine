@@ -1,4 +1,6 @@
-# Implementation Tasks: Fix Opti-Scholar System for University of Hyderabad
+# Implementation Tasks: TRACE System for University of Hyderabad
+
+**System Name:** TRACE - Transparent Results & Attendance Compliance Engine
 
 ## Task List
 

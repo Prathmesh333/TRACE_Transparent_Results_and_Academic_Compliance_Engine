@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Opti-Scholar Logo" width="180"/>
+  <img src="assets/logo.png" alt="TRACE Logo" width="180"/>
 </p>
 
-<h1 align="center">🎓 Opti-Scholar</h1>
+<h1 align="center">🎓 TRACE</h1>
 <h3 align="center"><em>Intelligent Academic Assessment & Student Success Platform</em></h3>
 
 <p align="center">
@@ -28,7 +28,7 @@ Traditional education systems suffer from:
 
 ## 💡 Our Solution
 
-**Opti-Scholar** is a **micro-component AI architecture** that transforms academic assessment from a manual burden into an intelligent, automated pipeline—while keeping humans in control.
+**TRACE** is a **micro-component AI architecture** that transforms academic assessment from a manual burden into an intelligent, automated pipeline—while keeping humans in control.
 
 ### ✨ Core Pillars
 
@@ -45,7 +45,7 @@ Traditional education systems suffer from:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                        🎓 OPTI-SCHOLAR PLATFORM                         │
+│                        🎓 TRACE PLATFORM                         │
 ├─────────────────────────────────────────────────────────────────────────┤
 │                                                                         │
 │  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐              │
@@ -128,8 +128,8 @@ Traditional education systems suffer from:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/opti-scholar.git
-cd opti-scholar
+git clone https://github.com/yourusername/trace.git
+cd trace
 
 # Create virtual environment
 python -m venv venv
@@ -167,7 +167,7 @@ streamlit run dashboard/app.py
 
 ---
 
-## 🎯 Why Opti-Scholar Wins
+## 🎯 Why TRACE Wins
 
 ### 1. **Micro-Component Architecture**
 Unlike monolithic AI solutions, each component is:
@@ -195,7 +195,7 @@ From upload → grading → verification → intervention → improvement
 ## 📂 Project Structure
 
 ```
-opti-scholar/
+trace/
 ├── app/
 │   ├── main.py              # FastAPI entry point
 │   ├── api/
@@ -246,7 +246,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <b>🎓 Opti-Scholar: Where AI Meets Education Excellence</b>
+  <b>🎓 TRACE: Where AI Meets Education Excellence</b>
   <br/>
   <em>Built with ❤️ for the future of learning</em>
 </p>

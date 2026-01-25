@@ -1,31 +1,31 @@
 id,registration_number,name,email,department,phone
-s-SoP-2-0,23SoP200,Student SoP 2-0,23sop200@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-1,23SoP201,Student SoP 2-1,23sop201@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-2,23SoP202,Student SoP 2-2,23sop202@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-3,23SoP203,Student SoP 2-3,23sop203@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-4,23SoP204,Student SoP 2-4,23sop204@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-5,23SoP205,Student SoP 2-5,23sop205@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-6,23SoP206,Student SoP 2-6,23sop206@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-7,23SoP207,Student SoP 2-7,23sop207@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-8,23SoP208,Student SoP 2-8,23sop208@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-9,23SoP209,Student SoP 2-9,23sop209@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-10,23SoP210,Student SoP 2-10,23sop210@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-11,23SoP211,Student SoP 2-11,23sop211@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-12,23SoP212,Student SoP 2-12,23sop212@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-13,23SoP213,Student SoP 2-13,23sop213@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-14,23SoP214,Student SoP 2-14,23sop214@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-15,23SoP215,Student SoP 2-15,23sop215@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-16,23SoP216,Student SoP 2-16,23sop216@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-17,23SoP217,Student SoP 2-17,23sop217@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-18,23SoP218,Student SoP 2-18,23sop218@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-19,23SoP219,Student SoP 2-19,23sop219@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-20,23SoP220,Student SoP 2-20,23sop220@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-21,23SoP221,Student SoP 2-21,23sop221@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-22,23SoP222,Student SoP 2-22,23sop222@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-23,23SoP223,Student SoP 2-23,23sop223@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-24,23SoP224,Student SoP 2-24,23sop224@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-25,23SoP225,Student SoP 2-25,23sop225@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-26,23SoP226,Student SoP 2-26,23sop226@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-27,23SoP227,Student SoP 2-27,23sop227@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-28,23SoP228,Student SoP 2-28,23sop228@uohyd.ac.in,Main Dept,9876543210
-s-SoP-2-29,23SoP229,Student SoP 2-29,23sop229@uohyd.ac.in,Main Dept,9876543210
+s-SoP-2-0,23SoP200,Student SoP 2-0,23sop200@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-1,23SoP201,Student SoP 2-1,23sop201@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-2,23SoP202,Student SoP 2-2,23sop202@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-3,23SoP203,Student SoP 2-3,23sop203@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-4,23SoP204,Student SoP 2-4,23sop204@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-5,23SoP205,Student SoP 2-5,23sop205@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-6,23SoP206,Student SoP 2-6,23sop206@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-7,23SoP207,Student SoP 2-7,23sop207@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-8,23SoP208,Student SoP 2-8,23sop208@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-9,23SoP209,Student SoP 2-9,23sop209@uohyd.ac.in,M.Sc Condensed Matter Physics,9876543210
+s-SoP-2-10,23SoP210,Student SoP 2-10,23sop210@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-11,23SoP211,Student SoP 2-11,23sop211@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-12,23SoP212,Student SoP 2-12,23sop212@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-13,23SoP213,Student SoP 2-13,23sop213@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-14,23SoP214,Student SoP 2-14,23sop214@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-15,23SoP215,Student SoP 2-15,23sop215@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-16,23SoP216,Student SoP 2-16,23sop216@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-17,23SoP217,Student SoP 2-17,23sop217@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-18,23SoP218,Student SoP 2-18,23sop218@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-19,23SoP219,Student SoP 2-19,23sop219@uohyd.ac.in,M.Sc High Energy Physics,9876543210
+s-SoP-2-20,23SoP220,Student SoP 2-20,23sop220@uohyd.ac.in,M.Sc Astrophysics,9876543210
+s-SoP-2-21,23SoP221,Student SoP 2-21,23sop221@uohyd.ac.in,M.Sc Astrophysics,9876543210
+s-SoP-2-22,23SoP222,Student SoP 2-22,23sop222@uohyd.ac.in,M.Sc Astrophysics,9876543210
+s-SoP-2-23,23SoP223,Student SoP 2-23,23sop223@uohyd.ac.in,M.Sc Astrophysics,9876543210
+s-SoP-2-24,23SoP224,Student SoP 2-24,23sop224@uohyd.ac.in,M.Sc Astrophysics,9876543210
+s-SoP-2-25,23SoP225,Student SoP 2-25,23sop225@uohyd.ac.in,M.Sc Astrophysics,9876543210
+s-SoP-2-26,23SoP226,Student SoP 2-26,23sop226@uohyd.ac.in,M.Sc Astrophysics,9876543210
+s-SoP-2-27,23SoP227,Student SoP 2-27,23sop227@uohyd.ac.in,M.Sc Astrophysics,9876543210
+s-SoP-2-28,23SoP228,Student SoP 2-28,23sop228@uohyd.ac.in,M.Sc Astrophysics,9876543210
+s-SoP-2-29,23SoP229,Student SoP 2-29,23sop229@uohyd.ac.in,M.Sc Astrophysics,9876543210
