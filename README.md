@@ -2,7 +2,7 @@
   <img src="assets/logo.png" alt="TRACE Logo" width="180"/>
 </p>
 
-<h1 align="center">🎓 TRACE</h1>
+<h1 align="center"> TRACE</h1>
 <h3 align="center"><em>Intelligent Academic Assessment & Student Success Platform</em></h3>
 
 <p align="center">
@@ -14,73 +14,73 @@
 
 ---
 
-## 🌟 The Problem
+##  The Problem
 
 > **85% of teachers** spend more than **10 hours/week** on manual grading, leading to delayed feedback, inconsistent evaluations, and burnout. Meanwhile, **at-risk students** go undetected until it's too late.
 
 Traditional education systems suffer from:
 - ⏰ **Grading Bottleneck**: Hours spent on repetitive evaluation
-- 🎯 **Inconsistency**: Different standards across evaluators  
-- 🚨 **Late Intervention**: Students fail before anyone notices
-- 📊 **Data Silos**: Grades, attendance, and performance isolated
+-  **Inconsistency**: Different standards across evaluators  
+-  **Late Intervention**: Students fail before anyone notices
+-  **Data Silos**: Grades, attendance, and performance isolated
 
 ---
 
-## 💡 Our Solution
+##  Our Solution
 
 **TRACE** is a **micro-component AI architecture** that transforms academic assessment from a manual burden into an intelligent, automated pipeline—while keeping humans in control.
 
-### ✨ Core Pillars
+###  Core Pillars
 
 | Pillar | What It Does | Impact |
 |--------|--------------|--------|
 | 🤖 **AI Grading** | Context-aware semantic scoring with confidence quantification | 80% faster grading with explainable decisions |
-| 🔍 **Grade Verification** | Statistical anomaly detection + multi-model consensus | Catches 99% of grading errors before release |
-| 📈 **Predictive Analytics** | Attendance patterns → Dropout risk prediction | Identify at-risk students 4 weeks earlier |
-| 🎯 **Smart Intervention** | RAG-powered resource recommendations | Personalized help exactly when needed |
+|  **Grade Verification** | Statistical anomaly detection + multi-model consensus | Catches 99% of grading errors before release |
+|  **Predictive Analytics** | Attendance patterns → Dropout risk prediction | Identify at-risk students 4 weeks earlier |
+|  **Smart Intervention** | RAG-powered resource recommendations | Personalized help exactly when needed |
 
 ---
 
-## 🏗️ Architecture Overview
+##  Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        🎓 TRACE PLATFORM                         │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐              │
-│  │   LAYER 1    │    │   LAYER 2    │    │   LAYER 3    │              │
-│  │  Ingestion   │───▶│   Grading    │───▶│ Verification │              │
-│  │  & Identity  │    │  Assessment  │    │   Pipeline   │              │
-│  └──────────────┘    └──────────────┘    └──────────────┘              │
-│         │                   │                   │                       │
-│         ▼                   ▼                   ▼                       │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐              │
-│  │ Doc Gateway  │    │  Semantic    │    │   Anomaly    │              │
-│  │ ID Extractor │    │   Scorer     │    │  Detector    │              │
-│  │ Rubric Parse │    │  Confidence  │    │ Distribution │              │
-│  └──────────────┘    │  Feedback    │    │  Consensus   │              │
-│                      └──────────────┘    └──────────────┘              │
-│                                                                         │
-│  ┌──────────────┐    ┌──────────────┐                                  │
-│  │   LAYER 4    │    │   LAYER 5    │                                  │
-│  │  Attendance  │───▶│  Integrated  │                                  │
-│  │  Predictive  │    │  Management  │                                  │
-│  └──────────────┘    └──────────────┘                                  │
-│         │                   │                                           │
-│         ▼                   ▼                                           │
-│  ┌──────────────┐    ┌──────────────┐                                  │
-│  │ Pattern Mine │    │ RAG Recomm.  │                                  │
-│  │ Correlation  │    │  Sentiment   │                                  │
-│  │ Risk Classif │    │  XAI Visual  │                                  │
-│  └──────────────┘    └──────────────┘                                  │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+
+                         TRACE PLATFORM                         
+
+                                                                         
+                        
+     LAYER 1           LAYER 2           LAYER 3                  
+    Ingestion      Grading     Verification               
+    & Identity        Assessment         Pipeline                 
+                        
+                                                                      
+                                                                      
+                        
+   Doc Gateway        Semantic           Anomaly                  
+   ID Extractor        Scorer           Detector                  
+   Rubric Parse       Confidence       Distribution               
+        Feedback          Consensus                 
+                                        
+                                                                         
+                                        
+     LAYER 4           LAYER 5                                      
+    Attendance    Integrated                                    
+    Predictive        Management                                    
+                                        
+                                                                       
+                                                                       
+                                        
+   Pattern Mine      RAG Recomm.                                    
+   Correlation        Sentiment                                     
+   Risk Classif       XAI Visual                                    
+                                        
+                                                                         
+
 ```
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Component | Technology | Purpose |
 |-----------|------------|---------|
@@ -95,7 +95,7 @@ Traditional education systems suffer from:
 
 ---
 
-## 📦 15 Micro-Components
+##  15 Micro-Components
 
 ### Layer 1: Ingestion & Identity
 1. **Secure Document Gateway** - File upload validation & batch tracking
@@ -124,7 +124,7 @@ Traditional education systems suffer from:
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ```bash
 # Clone the repository
@@ -150,12 +150,12 @@ streamlit run dashboard/app.py
 ```
 
 **Access Points:**
-- 🔌 API Docs: `http://localhost:8000/docs`
-- 📊 Dashboard: `http://localhost:8501`
+-  API Docs: `http://localhost:8000/docs`
+-  Dashboard: `http://localhost:8501`
 
 ---
 
-## 📊 Impact Metrics (Projected)
+##  Impact Metrics (Projected)
 
 | Metric | Before | After | Improvement |
 |--------|--------|-------|-------------|
@@ -167,13 +167,13 @@ streamlit run dashboard/app.py
 
 ---
 
-## 🎯 Why TRACE Wins
+##  Why TRACE Wins
 
 ### 1. **Micro-Component Architecture**
 Unlike monolithic AI solutions, each component is:
-- ⚙️ **Debuggable** - Isolate failures to specific modules
-- 🔄 **Swappable** - Replace GPT-4 with Claude without breaking other systems
-- 📦 **Demonstrable** - Show any component standalone during demo
+-  **Debuggable** - Isolate failures to specific modules
+-  **Swappable** - Replace GPT-4 with Claude without breaking other systems
+-  **Demonstrable** - Show any component standalone during demo
 
 ### 2. **Human-in-the-Loop By Design**
 - Teachers approve flagged grades (not replaced by AI)
@@ -192,38 +192,38 @@ From upload → grading → verification → intervention → improvement
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 trace/
-├── app/
-│   ├── main.py              # FastAPI entry point
-│   ├── api/
-│   │   ├── routes/          # API endpoints
-│   │   └── dependencies.py  # DI container
-│   ├── core/
-│   │   ├── config.py        # Settings management
-│   │   └── security.py      # Auth & validation
-│   └── services/
-│       ├── grading/         # Layer 2 components
-│       ├── verification/    # Layer 3 components
-│       ├── prediction/      # Layer 4 components
-│       └── management/      # Layer 5 components
-├── dashboard/
-│   ├── app.py               # Streamlit entry
-│   └── components/          # UI components
-├── ml/
-│   ├── models/              # Trained models
-│   └── training/            # Training scripts
-├── tests/
-│   ├── unit/
-│   └── integration/
-├── docs/
-│   ├── ARCHITECTURE.md
-│   └── API.md
-├── requirements.txt
-├── docker-compose.yml
-└── README.md
+ app/
+    main.py              # FastAPI entry point
+    api/
+       routes/          # API endpoints
+       dependencies.py  # DI container
+    core/
+       config.py        # Settings management
+       security.py      # Auth & validation
+    services/
+        grading/         # Layer 2 components
+        verification/    # Layer 3 components
+        prediction/      # Layer 4 components
+        management/      # Layer 5 components
+ dashboard/
+    app.py               # Streamlit entry
+    components/          # UI components
+ ml/
+    models/              # Trained models
+    training/            # Training scripts
+ tests/
+    unit/
+    integration/
+ docs/
+    ARCHITECTURE.md
+    API.md
+ requirements.txt
+ docker-compose.yml
+ README.md
 ```
 
 ---
@@ -239,14 +239,14 @@ trace/
 
 ---
 
-## 📜 License
+##  License
 
 MIT License - See [LICENSE](LICENSE) for details.
 
 ---
 
 <p align="center">
-  <b>🎓 TRACE: Where AI Meets Education Excellence</b>
+  <b> TRACE: Where AI Meets Education Excellence</b>
   <br/>
-  <em>Built with ❤️ for the future of learning</em>
+  <em>Built with  for the future of learning</em>
 </p>

@@ -10,29 +10,29 @@ TRACE (Transparent Results & Attendance Compliance Engine) uses a CSV-based data
 ### Core CSV Files
 ```
 data_store/
-├── users.csv                    # User accounts (admin, teacher, student)
-├── grades_summary.csv           # Student grades per course
-├── attendance_summary.csv       # Overall attendance per student
-├── course_attendance.csv        # Attendance per course per student
-├── assignments.csv              # Assignment definitions
-├── submissions.csv              # Student submissions with AI grades
-├── risk_assessments.csv         # AI-predicted at-risk students
-└── schools.csv                  # School/department information
+ users.csv                    # User accounts (admin, teacher, student)
+ grades_summary.csv           # Student grades per course
+ attendance_summary.csv       # Overall attendance per student
+ course_attendance.csv        # Attendance per course per student
+ assignments.csv              # Assignment definitions
+ submissions.csv              # Student submissions with AI grades
+ risk_assessments.csv         # AI-predicted at-risk students
+ schools.csv                  # School/department information
 ```
 
 ### School-Specific Data
 ```
 data_store/{SCHOOL_CODE}/
-├── info.csv                     # School metadata
-├── courses.csv                  # Courses offered
-├── departments.csv              # Departments
-├── faculty.csv                  # Faculty members
-├── students/
-│   ├── sem_1.csv               # Semester 1 students
-│   ├── sem_2.csv               # Semester 2 students
-│   └── ...
-└── attendance/
-    └── {COURSE_CODE}.csv       # Course-specific attendance
+ info.csv                     # School metadata
+ courses.csv                  # Courses offered
+ departments.csv              # Departments
+ faculty.csv                  # Faculty members
+ students/
+    sem_1.csv               # Semester 1 students
+    sem_2.csv               # Semester 2 students
+    ...
+ attendance/
+     {COURSE_CODE}.csv       # Course-specific attendance
 ```
 
 ---
@@ -40,28 +40,28 @@ data_store/{SCHOOL_CODE}/
 ## 2. Data Flow Diagram
 
 ```
-┌─────────────────┐
-│   CSV Files     │
-│  (Data Store)   │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│   csv_db.py     │  ← Core data access layer
-│  (Data Layer)   │     Reads/writes CSV files
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│  data.py API    │  ← FastAPI endpoints
-│   (Backend)     │     Calculates metrics
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────┐
-│   App.jsx       │  ← React frontend
-│  (Frontend)     │     Displays data
-└─────────────────┘
+
+   CSV Files     
+  (Data Store)   
+
+         
+         
+
+   csv_db.py       ← Core data access layer
+  (Data Layer)        Reads/writes CSV files
+
+         
+         
+
+  data.py API      ← FastAPI endpoints
+   (Backend)          Calculates metrics
+
+         
+         
+
+   App.jsx         ← React frontend
+  (Frontend)          Displays data
+
 ```
 
 ---
@@ -434,22 +434,22 @@ required_fields = [
 ```
 Pattern: s-{SCHOOL}-{SEMESTER}-{INDEX}
 Example: s-SCIS-1-0
-         │  │    │  │
-         │  │    │  └─ Student index (0-based)
-         │  │    └──── Semester number
-         │  └───────── School code
-         └──────────── Student prefix
+                 
+                  Student index (0-based)
+                Semester number
+            School code
+          Student prefix
 ```
 
 **Registration Number Format:**
 ```
 Pattern: {YY}{SCHOOL}{INDEX}
 Example: 23SCIS100
-         ││ │   │
-         ││ │   └──── Sequential number
-         ││ └──────── School code
-         │└────────── Year (2023)
-         └─────────── Century prefix
+             
+              Sequential number
+           School code
+          Year (2023)
+          Century prefix
 ```
 
 ---

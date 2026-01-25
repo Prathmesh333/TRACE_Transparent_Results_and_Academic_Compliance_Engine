@@ -1,10 +1,10 @@
-# 🚀 TRACE: Implementation Plan
+#  TRACE: Implementation Plan
 
 > A phased development roadmap for building the complete platform.
 
 ---
 
-## 📋 Development Phases
+##  Development Phases
 
 ### Phase 0: Foundation (Day 1 - Setup)
 **Duration:** 4 hours
@@ -264,7 +264,7 @@ For hackathon demo:
 
 ---
 
-## ⏱️ Hackathon Timeline
+## ⏱ Hackathon Timeline
 
 | Day | Focus | Hours | Deliverable |
 |-----|-------|-------|-------------|
@@ -280,7 +280,7 @@ For hackathon demo:
 
 ---
 
-## 📦 Dependencies
+##  Dependencies
 
 ```txt
 # requirements.txt
@@ -318,7 +318,7 @@ tenacity==8.2.3
 
 ---
 
-## 🔧 Environment Variables
+##  Environment Variables
 
 ```env
 # .env.example
@@ -346,7 +346,7 @@ JWT_ALGORITHM=HS256
 
 ---
 
-## 🎯 MVP Feature Priority
+##  MVP Feature Priority
 
 | Priority | Feature | Impact | Effort |
 |----------|---------|--------|--------|

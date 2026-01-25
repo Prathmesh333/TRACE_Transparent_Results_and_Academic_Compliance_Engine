@@ -198,33 +198,33 @@ ai_response = response.text
 ## System Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    React Frontend                        │
-│  (Student/Faculty/Admin Dashboards)                     │
-└────────────────────┬────────────────────────────────────┘
-                     │
-                     ▼
-┌─────────────────────────────────────────────────────────┐
-│                  FastAPI Backend                         │
-│              (RESTful API Layer)                         │
-└────────────────────┬────────────────────────────────────┘
-                     │
-        ┌────────────┼────────────┐
-        ▼            ▼            ▼
-┌──────────────┐ ┌──────────┐ ┌──────────────┐
-│ AI Grading   │ │Analytics │ │ Risk Predict │
-│ Service      │ │ Service  │ │ Service      │
-│              │ │          │ │              │
-│ Gemini 1.5   │ │Real-time │ │ ML Model     │
-│ Flash        │ │Dashboards│ │ (Logistic)   │
-└──────────────┘ └──────────┘ └──────────────┘
-        │            │            │
-        └────────────┼────────────┘
-                     ▼
-        ┌────────────────────────┐
-        │     Data Store         │
-        │  (CSV/SQL Database)    │
-        └────────────────────────┘
+
+                    React Frontend                        
+  (Student/Faculty/Admin Dashboards)                     
+
+                     
+                     
+
+                  FastAPI Backend                         
+              (RESTful API Layer)                         
+
+                     
+        
+                                
+  
+ AI Grading    Analytics   Risk Predict 
+ Service        Service    Service      
+                                        
+ Gemini 1.5    Real-time   ML Model     
+ Flash         Dashboards  (Logistic)   
+  
+                                
+        
+                     
+        
+             Data Store         
+          (CSV/SQL Database)    
+        
 ```
 
 ---

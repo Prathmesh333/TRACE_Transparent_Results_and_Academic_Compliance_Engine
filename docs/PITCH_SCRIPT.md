@@ -1,10 +1,10 @@
-# 🎤 TRACE: Pitch Deck Script
+#  TRACE: Pitch Deck Script
 
 > A 5-minute presentation narrative for hackathon judges.
 
 ---
 
-## 🎯 Opening Hook (30 seconds)
+##  Opening Hook (30 seconds)
 
 **[SLIDE 1: Title]**
 
@@ -18,7 +18,7 @@
 
 ---
 
-## 📊 The Problem (45 seconds)
+##  The Problem (45 seconds)
 
 **[SLIDE 2: The Pain Points]**
 
@@ -38,7 +38,7 @@
 
 ---
 
-## 💡 The Solution (60 seconds)
+##  The Solution (60 seconds)
 
 **[SLIDE 3: Solution Overview]**
 
@@ -65,7 +65,7 @@
 
 ---
 
-## 🏆 Why We Win (45 seconds)
+##  Why We Win (45 seconds)
 
 **[SLIDE 5: Differentiators]**
 
@@ -82,7 +82,7 @@
 
 ---
 
-## 📈 Demo (90 seconds)
+##  Demo (90 seconds)
 
 **[SLIDE 6: Live Demo or Video]**
 
@@ -109,7 +109,7 @@
 
 ---
 
-## 📊 Impact & Metrics (30 seconds)
+##  Impact & Metrics (30 seconds)
 
 **[SLIDE 7: Projected Impact]**
 
@@ -126,7 +126,7 @@
 
 ---
 
-## 🛣️ Roadmap (20 seconds)
+##  Roadmap (20 seconds)
 
 **[SLIDE 8: Future Vision]**
 
@@ -139,7 +139,7 @@
 
 ---
 
-## 🎯 The Ask (20 seconds)
+##  The Ask (20 seconds)
 
 **[SLIDE 9: Call to Action]**
 
@@ -149,7 +149,7 @@
 
 ---
 
-## 🙏 Closing (10 seconds)
+##  Closing (10 seconds)
 
 **[SLIDE 10: Team & Contact]**
 
@@ -159,7 +159,7 @@
 
 ---
 
-## 🎙️ Q&A Preparation
+##  Q&A Preparation
 
 ### Anticipated Questions
 

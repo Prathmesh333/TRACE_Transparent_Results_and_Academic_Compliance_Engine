@@ -1,10 +1,10 @@
-# 📡 TRACE: API Specification
+#  TRACE: API Specification
 
 > RESTful API reference for the TRACE platform (Transparent Results & Attendance Compliance Engine).
 
 ---
 
-## 🔐 Authentication
+##  Authentication
 
 All API endpoints require Bearer token authentication.
 
@@ -38,7 +38,7 @@ Authorization: Bearer <jwt_token>
 
 ---
 
-## 📄 Layer 1: Document Ingestion
+##  Layer 1: Document Ingestion
 
 ### POST /api/v1/documents/upload
 
@@ -139,7 +139,7 @@ Parse natural language rubric into structured format.
 
 ---
 
-## 📝 Layer 2: Grading
+##  Layer 2: Grading
 
 ### POST /api/v1/grades/evaluate
 
@@ -237,7 +237,7 @@ Get XAI explanation for grading decision.
 
 ---
 
-## 🔍 Layer 3: Verification
+##  Layer 3: Verification
 
 ### POST /api/v1/verification/anomaly
 
@@ -336,7 +336,7 @@ Run cross-model consistency check.
 
 ---
 
-## 📊 Layer 4: Prediction
+##  Layer 4: Prediction
 
 ### GET /api/v1/prediction/patterns/{student_id}
 
@@ -421,7 +421,7 @@ Get dropout risk assessment.
 
 ---
 
-## 🎯 Layer 5: Management
+##  Layer 5: Management
 
 ### POST /api/v1/resources/recommend
 
@@ -490,7 +490,7 @@ Route a student support ticket.
 
 ---
 
-## 📋 Common Response Codes
+##  Common Response Codes
 
 | Code | Meaning |
 |------|---------|
@@ -506,7 +506,7 @@ Route a student support ticket.
 
 ---
 
-## 🔄 Webhooks
+##  Webhooks
 
 Configure webhooks to receive real-time notifications.
 

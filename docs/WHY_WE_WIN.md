@@ -1,10 +1,10 @@
-# 🏆 TRACE: Why We Win
+#  TRACE: Why We Win
 
 > A strategic analysis of hackathon-winning differentiators.
 
 ---
 
-## 🎯 Judging Criteria Alignment
+##  Judging Criteria Alignment
 
 ### Typical Hackathon Criteria
 
@@ -18,7 +18,7 @@
 
 ---
 
-## 🌟 Unique Selling Points (USPs)
+##  Unique Selling Points (USPs)
 
 ### 1. Micro-Component Architecture (UNIQUE)
 
@@ -83,29 +83,29 @@ AI Grades → Confidence Check → ≥0.7? → Auto-approve (but reviewable)
 
 **Visual:**
 ```
-┌─────────────────────────────────────────────────┐
-│         GRADING DECISION FLOW                   │
-├─────────────────────────────────────────────────┤
-│                                                 │
-│  ┌────────┐    ┌────────────┐    ┌──────────┐  │
-│  │ AI     │───▶│ Confidence │───▶│ ≥ 0.7?   │  │
-│  │ Grades │    │ Quantifier │    │          │  │
-│  └────────┘    └────────────┘    └────┬─────┘  │
-│                                       │        │
-│                          ┌────────────┴───────┐│
-│                          ▼                    ▼│
-│                   ┌──────────┐        ┌───────┐│
-│                   │ AUTO     │        │ HUMAN ││
-│                   │ APPROVE  │        │ REVIEW││
-│                   └──────────┘        └───────┘│
-│                          │                    │ │
-│                          └──────┬─────────────┘ │
-│                                 ▼               │
-│                          ┌──────────┐          │
-│                          │  FINAL   │          │
-│                          │  GRADE   │          │
-│                          └──────────┘          │
-└─────────────────────────────────────────────────┘
+
+         GRADING DECISION FLOW                   
+
+                                                 
+            
+   AI      Confidence  ≥ 0.7?     
+   Grades      Quantifier                 
+            
+                                               
+                          
+                                              
+                           
+                    AUTO              HUMAN 
+                    APPROVE           REVIEW
+                           
+                                               
+                           
+                                                
+                                    
+                            FINAL             
+                            GRADE             
+                                    
+
 ```
 
 ---
@@ -124,17 +124,17 @@ Every grade comes with a visual explanation.
 ```
 Score: 7/10
 Explanation:
-- ✅ "Newton's first law" mentioned → +5
-- ✅ "F = ma" formula correct → +3
-- ⚠️ "5 × 2 = 11" calculation wrong → -1
-- ❌ No conclusion provided → -0
+-  "Newton's first law" mentioned → +5
+-  "F = ma" formula correct → +3
+-  "5 × 2 = 11" calculation wrong → -1
+-  No conclusion provided → -0
 
 [HIGHLIGHT VIEW]
 "The student correctly stated Newton's first law and 
  wrote the formula F = ma. However, the calculation 
- ╔═══════════╗
- ║5 × 2 = 11 ║ ← Error: Should be 10
- ╚═══════════╝
+ 
+ 5 × 2 = 11  ← Error: Should be 10
+ 
  resulted in a 1-point deduction."
 ```
 
@@ -161,22 +161,22 @@ Attendance Data → Pattern Miner → Correlation Engine → Risk Classifier
 
 ---
 
-## 📊 Competitive Analysis
+##  Competitive Analysis
 
 | Feature | Gradescope | Turnitin | TRACE |
 |---------|------------|----------|--------------|
-| AI Grading | ✅ Basic | ❌ | ✅ Advanced (semantic + partial credit) |
-| Confidence Flagging | ❌ | ❌ | ✅ Per-grade |
-| Anomaly Detection | ❌ | ❌ | ✅ Z-score + distribution |
-| Dropout Prediction | ❌ | ❌ | ✅ Logistic regression |
-| Resource Recommendation | ❌ | ❌ | ✅ RAG-powered |
-| Multi-Model Consensus | ❌ | ❌ | ✅ GPT-4 + Claude |
-| Explainable AI | ❌ | ❌ | ✅ SHAP + highlighting |
-| Micro-Component Architecture | ❌ | ❌ | ✅ 15 modules |
+| AI Grading |  Basic |  |  Advanced (semantic + partial credit) |
+| Confidence Flagging |  |  |  Per-grade |
+| Anomaly Detection |  |  |  Z-score + distribution |
+| Dropout Prediction |  |  |  Logistic regression |
+| Resource Recommendation |  |  |  RAG-powered |
+| Multi-Model Consensus |  |  |  GPT-4 + Claude |
+| Explainable AI |  |  |  SHAP + highlighting |
+| Micro-Component Architecture |  |  |  15 modules |
 
 ---
 
-## 🎓 SDG Alignment (Bonus Points)
+##  SDG Alignment (Bonus Points)
 
 **SDG 4: Quality Education**
 
@@ -190,7 +190,7 @@ Attendance Data → Pattern Miner → Correlation Engine → Risk Classifier
 
 ---
 
-## 💰 Business Viability (Bonus for Some Hackathons)
+##  Business Viability (Bonus for Some Hackathons)
 
 ### Revenue Model
 
@@ -207,7 +207,7 @@ Attendance Data → Pattern Miner → Correlation Engine → Risk Classifier
 
 ---
 
-## 🏅 What Judges Remember
+##  What Judges Remember
 
 After seeing 50+ projects, judges remember:
 
@@ -225,7 +225,7 @@ After seeing 50+ projects, judges remember:
 
 ---
 
-## 🎯 Winning Checklist
+##  Winning Checklist
 
 - [x] Solves a real, painful problem (grading burden)
 - [x] Uses AI innovatively (not just ChatGPT wrapper)
@@ -237,4 +237,4 @@ After seeing 50+ projects, judges remember:
 
 ---
 
-*Differentiators Document v1.0 | Built to win! 🏆*
+*Differentiators Document v1.0 | Built to win! *

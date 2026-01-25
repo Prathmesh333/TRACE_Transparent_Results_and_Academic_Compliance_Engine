@@ -1,10 +1,10 @@
-# 🎬 TRACE: Demo Strategy Guide
+#  TRACE: Demo Strategy Guide
 
 > Ensuring a flawless live demonstration.
 
 ---
 
-## 🎯 Demo Objective
+##  Demo Objective
 
 **In 90 seconds, prove:**
 1. The platform works end-to-end
@@ -14,7 +14,7 @@
 
 ---
 
-## 🛠️ Pre-Demo Checklist
+##  Pre-Demo Checklist
 
 ### 2 Hours Before
 - [ ] All services running (API, DB, Dashboard)
@@ -38,7 +38,7 @@
 
 ---
 
-## 📋 Demo Script (90 Seconds)
+##  Demo Script (90 Seconds)
 
 ### Scene 1: Upload (0:00 - 0:15)
 
@@ -147,7 +147,7 @@
 
 ---
 
-## 🔥 Wow Moments to Emphasize
+##  Wow Moments to Emphasize
 
 | Moment | What to Say | Why It Impresses |
 |--------|-------------|------------------|
@@ -159,7 +159,7 @@
 
 ---
 
-## 🆘 Backup Plans
+##  Backup Plans
 
 ### If API Fails
 **Fallback:** Switch to pre-recorded video
@@ -190,7 +190,7 @@
 
 ---
 
-## 🎨 Visual Polish Tips
+##  Visual Polish Tips
 
 ### Dashboard Appearance
 - Dark mode (looks more modern)
@@ -211,7 +211,7 @@
 
 ---
 
-## ⏱️ Timing Practice
+## ⏱ Timing Practice
 
 | Section | Target | Actual (Practice 1) | Actual (Practice 2) |
 |---------|--------|---------------------|---------------------|
@@ -227,7 +227,7 @@
 
 ---
 
-## 🎙️ Demo Tips
+##  Demo Tips
 
 1. **Talk while things load** - Never silence during spinners
 2. **Point, don't click randomly** - Deliberate UI interaction
@@ -237,7 +237,7 @@
 
 ---
 
-## 📱 Demo Environment Setup
+##  Demo Environment Setup
 
 ```bash
 # 1. Start all services
@@ -260,7 +260,7 @@ start http://localhost:8501        # Dashboard (demo)
 
 ---
 
-## 📦 Demo Data Requirements
+##  Demo Data Requirements
 
 ### Demo Student (#404)
 ```json
