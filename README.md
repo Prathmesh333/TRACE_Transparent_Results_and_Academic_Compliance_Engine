@@ -1,6 +1,4 @@
-<p align="center">
-  <img src"logo.jpeg" alt="TRACE Logo" width="180"/>
-</p>
+
 
 <h1 align="center"> TRACE</h1>
 <h3 align="center"><em>Intelligent Academic Assessment & Student Success Platform</em></h3>
