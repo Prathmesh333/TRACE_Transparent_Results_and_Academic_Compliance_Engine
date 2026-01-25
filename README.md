@@ -226,16 +226,9 @@ trace/
 
 ---
 
-## 🤝 Team
 
-| Role | Responsibility |
-|------|----------------|
-| **AI Engineer** | Grading pipeline, LLM integration |
-| **ML Engineer** | Prediction models, anomaly detection |
-| **Full-Stack Dev** | API, Dashboard, Integrations |
-| **UX Designer** | User experience, XAI visualizations |
 
----
+
 
 ##  License
 
