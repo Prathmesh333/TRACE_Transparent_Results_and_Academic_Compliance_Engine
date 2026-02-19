@@ -182,7 +182,7 @@ Unlike monolithic AI solutions, each component is:
 Not just LLM magic—we use:
 - Z-score analysis for temporal anomalies
 - Pearson correlation for subject-attendance relationships
-- Kurtosis/Skewness for grade distribution in health
+- Kurtosis/Skewness for grade distribution in the health
 - Multi-model consensus for reliability
 
 ### 4. **End-to-End Solution**
