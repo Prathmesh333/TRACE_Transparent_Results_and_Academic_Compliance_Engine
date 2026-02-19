@@ -20,7 +20,7 @@ Traditional education systems suffer from:
 - ⏰ **Grading Bottleneck**: Hours spent on repetitive evaluation
 -  **Inconsistency**: Different standards across evaluators  
 -  **Late Intervention**: Students fail before anyone notices
--  **Data Silos**: Grades, attendance, and performance isolated
+-  **Data Silos**: Grades, attendance, and performance are isolated
 
 ---
 
@@ -171,18 +171,18 @@ streamlit run dashboard/app.py
 Unlike monolithic AI solutions, each component is:
 -  **Debuggable** - Isolate failures to specific modules
 -  **Swappable** - Replace GPT-4 with Claude without breaking other systems
--  **Demonstrable** - Show any component standalone during demo process
+-  **Demonstrable** - Show any component standalone during the demo
 
 ### 2. **Human-in-the-Loop By Design**
 - Teachers approve flagged grades (not replaced by AI)
 - Confidence thresholds ensure quality control
 - XAI ensures every decision is explainable
 
-### 3. **Statistical Rigor**
+### 3. **Statistical Rigour**
 Not just LLM magic—we use:
-- Z-Score analysis for temporal anomalies
+- Z-score analysis for temporal anomalies
 - Pearson correlation for subject-attendance relationships
-- Kurtosis/Skewness for grade distribution health
+- Kurtosis/Skewness for grade distribution in health
 - Multi-model consensus for reliability
 
 ### 4. **End-to-End Solution**
@@ -239,5 +239,5 @@ MIT License - See [LICENSE](LICENSE) for details.
 <p align="center">
   <b> TRACE: Where AI Meets Education Excellence</b>
   <br/>
-  <em>Built with  for the future of learning</em>
+  <em>Built  for the future of learning</em>
 </p>
