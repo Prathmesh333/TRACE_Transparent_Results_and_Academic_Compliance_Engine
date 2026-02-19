@@ -171,7 +171,7 @@ streamlit run dashboard/app.py
 Unlike monolithic AI solutions, each component is:
 -  **Debuggable** - Isolate failures to specific modules
 -  **Swappable** - Replace GPT-4 with Claude without breaking other systems
--  **Demonstrable** - Show any component standalone during demo
+-  **Demonstrable** - Show any component standalone during demo process
 
 ### 2. **Human-in-the-Loop By Design**
 - Teachers approve flagged grades (not replaced by AI)
